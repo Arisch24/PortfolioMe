@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %} {% endblock %}</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/base.css') }}"
+        />
+        {% block css %} {% endblock %}
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <img
+                    src="{{ url_for('static', filename='images/Hamburger.png') }}"
+                    alt="Hamburger Menu"
+                    id="hamburger"
+                />
+                <a href="#">PortfolioMe</a>
+            </div>
+            <nav class="navigation-bar">
+                <ul>
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Job Board</a>
+                    </li>
+                    <li>
+                        <a href="#">Resume</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="account">
+                <button id="profile">
+                    <img
+                        src="{{ url_for('static', filename='images/profile-circle.svg') }}"
+                        alt="Account Information"
+                    />
+                    <div class="profile-box">
+                        <a href="#">Edit Profile</a>
+                        <a href="#">Logout</a>
+                    </div>
+                </button>
+            </div>
+        </header>
+        {% block content %} {% endblock %}
+        <footer>
+            <div class="legalities">
+                <h4>Legalities</h4>
+                <a href="#">Terms of Use</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms &amp; Conditions</a>
+            </div>
+            <div class="about-us">
+                <h4>About Us</h4>
+                <p>
+                    PortfolioMe is an application designed to manage resumes for
+                    a company.
+                </p>
+            </div>
+            <div class="icons">
+                <a href="#"
+                    ><img
+                        src="{{ url_for('static', filename='images/instagram.svg') }}"
+                        alt="Instagram Page"
+                /></a>
+                <a href="#"
+                    ><img
+                        src="{{ url_for('static', filename='images/youtube.svg') }}"
+                        alt="YouTube Page"
+                /></a>
+                <a href="#"
+                    ><img
+                        src="{{ url_for('static', filename='images/github.svg') }}"
+                        alt="GitHub Page"
+                /></a>
+            </div>
+            <hr />
+            <div class="copyright">Copyright &copy; 2022</div>
+        </footer>
+    </body>
+    <script src="{{ url_for('static', filename='js/jquery-3.6.0.slim.js') }}"></script>
+    <script>
+        $('.logo').on('click', (e) => {
+            $('.navigation-bar').toggleClass('active');
+            $('body').toggleClass('stop-scrolling');
+        });
+
+        $('#profile').on('click', (e) => {
+            $('.profile-box').toggleClass('active');
+        });
+    </script>
+</html>

@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --pink: #eebbc3;
+    --dark-blue: #232946;
+    --light-blue: #b8c1ec;
+    --light-accent-blue: #575dfb;
+    --accent-blue: #6246ea;
+    --pure-white: #fff;
+}
+
+/* Necessary adjustments */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: clamp(0.5rem, 1rem, 10rem);
+}
+
+body {
+    line-height: 1.5;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+/* Prevent body from scrolling when sidebar menu is open */
+.stop-scrolling {
+    overflow: hidden;
+}
+
+input[type='text'] {
+    display: block;
+}
+
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Header section */
+header {
+    background-color: var(--light-blue);
+
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+}
+
+/* logo styles */
+.logo {
+    padding: 2em;
+}
+
+.logo > a {
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: var(--dark-blue);
+    font-weight: 700;
+}
+
+.logo img {
+    display: none;
+}
+
+/* Navigation bar styles */
+.navigation-bar > ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    list-style: none;
+}
+
+.navigation-bar li {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.navigation-bar li::after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 0;
+    background-color: var(--dark-blue);
+    position: absolute;
+    bottom: 0;
+    transition: width 200ms ease-in-out;
+}
+
+.navigation-bar li:hover::after {
+    width: 100%;
+}
+
+.navigation-bar a {
+    font-size: 1.25rem;
+    color: var(--dark-blue);
+    font-weight: 500;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Account styles */
+.account {
+    display: grid;
+    place-items: center;
+}
+
+.account > button {
+    border-radius: 100%;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.account img {
+    width: 55px;
+    height: 55px;
+}
+
+#profile .profile-box {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    row-gap: 0.75rem;
+    background-color: var(--pure-white);
+    border: 1px solid black;
+    width: 150px;
+    padding: 1rem;
+    text-align: left;
+    right: 0;
+}
+
+#profile .profile-box.active {
+    display: flex;
+}
+
+.profile-box a {
+    color: var(--dark-blue);
+    font-size: 1.15rem;
+}
+
+/* Tablet media query */
+@media screen and (max-width: 1200px) {
+}
+
+/* Smartphone media query */
+@media screen and (max-width: 800px) {
+    header {
+        grid-template-columns: 2fr 1fr;
+        position: relative;
+    }
+
+    .logo img {
+        display: inline;
+        cursor: pointer;
+        position: relative;
+        margin-right: 2rem;
+        z-index: 100;
+    }
+
+    .account {
+        place-items: center end;
+    }
+
+    .navigation-bar {
+        padding-block: 5rem;
+        position: absolute;
+        background-color: var(--dark-blue);
+        width: 60%;
+        height: 100vh;
+        transform: translateX(-100%);
+        transition: transform 250ms ease-in-out;
+    }
+
+    .navigation-bar.active {
+        transform: translateX(0);
+    }
+
+    .navigation-bar > ul {
+        flex-direction: column;
+    }
+
+    .navigation-bar li:after {
+        background-color: var(--light-blue);
+    }
+
+    .navigation-bar a {
+        color: var(--pure-white);
+    }
+
+    footer {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            'Legalities'
+            'AboutUs'
+            'Icons'
+            'Lining'
+            'Copyright';
+        gap: 1rem;
+    }
+}
+
+/* Footer section */
+footer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+        'Legalities AboutUs'
+        'Icons Icons'
+        'Lining Lining'
+        'Copyright Copyright';
+    row-gap: 1rem;
+    background-color: var(--dark-blue);
+    color: var(--pure-white);
+    padding: 2rem;
+}
+
+footer .legalities,
+footer .about-us {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 0.75rem;
+}
+
+.legalities {
+    grid-area: Legalities;
+}
+
+.about-us {
+    grid-area: AboutUs;
+}
+
+.legalities h4,
+.about-us h4 {
+    font-size: 1.25rem;
+}
+
+.legalities a,
+.about-us p {
+    color: var(--light-blue);
+}
+
+footer .icons,
+footer .copyright {
+    display: flex;
+    justify-content: center;
+    column-gap: 2rem;
+}
+
+.icons {
+    grid-area: Icons;
+}
+
+.copyright {
+    grid-area: Copyright;
+}
+
+footer hr {
+    grid-area: Lining;
+}
