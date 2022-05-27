@@ -39,3 +39,46 @@ select {
 a {
     text-decoration: none;
 }
+
+/* Alerts */
+.alert {
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    position: absolute;
+    top: -10rem;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: slide 5000ms linear forwards normal;
+}
+
+.alert.success {
+    background-color: hsl(var(--dark-blue));
+    color: hsl(var(--light-blue));
+}
+
+.alert.failed {
+    background-color: hsl(0, 95%, 86%);
+    color: hsl(0, 100%, 50%, 0.85);
+}
+
+@keyframes slide {
+    0% {
+        top: -10rem;
+        opacity: 0;
+    }
+    10% {
+        top: 3rem;
+        opacity: 1;
+    }
+    90% {
+        top: 3rem;
+        opacity: 1;
+    }
+    100% {
+        top: -10rem;
+        opacity: 0;
+    }
+}
