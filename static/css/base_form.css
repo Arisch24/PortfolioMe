@@ -2,47 +2,36 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: 500;
 }
 
-/* Alert for forms */
-.alert {
+input[type='text'],
+input[type='password'] {
+    display: block;
     padding: 0.5rem;
-    font-size: 1.1rem;
-    position: absolute;
-    top: -10rem;
-    left: 50%;
-    transform: translate(-50%, 0);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: slide 5000ms linear forwards normal;
+    border-radius: 0.25rem;
 }
 
-.alert.success {
-    background-color: hsl(var(--dark-blue));
-    color: hsl(var(--light-blue));
+input[type='submit'] {
+    cursor: pointer;
+    padding-inline: 2rem;
+    padding-block: 0.5rem;
+    border-radius: 0.25rem;
+    border: none;
+    font-weight: 500;
 }
 
-.alert.failed {
-    background-color: hsl(0, 95%, 86%);
-    color: hsl(0, 100%, 50%, 0.85);
+.register-header h1,
+.login-header h1 {
+    font-size: 3rem;
 }
 
-@keyframes slide {
-    0% {
-        top: -10rem;
-        opacity: 0;
-    }
-    10% {
-        top: 3rem;
-        opacity: 1;
-    }
-    90% {
-        top: 3rem;
-        opacity: 1;
-    }
-    100% {
-        top: -10rem;
-        opacity: 0;
-    }
+.login-header p,
+.register-header p,
+.form-container label {
+    font-size: 1.15rem;
+}
+
+a:hover {
+    text-decoration: underline;
 }
