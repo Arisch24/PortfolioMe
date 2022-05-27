@@ -274,3 +274,38 @@ footer .copyright {
 footer hr {
     grid-area: Lining;
 }
+
+/* Alert for forms */
+.alert {
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    position: absolute;
+    top: -10rem;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--dark-blue);
+    color: var(--light-blue);
+    animation: slide 5000ms linear forwards normal;
+}
+
+@keyframes slide {
+    0% {
+        top: -10rem;
+        opacity: 0;
+    }
+    10% {
+        top: 3rem;
+        opacity: 1;
+    }
+    90% {
+        top: 3rem;
+        opacity: 1;
+    }
+    100% {
+        top: -10rem;
+        opacity: 0;
+    }
+}
