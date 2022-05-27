@@ -16,6 +16,11 @@
         {% block css %} {% endblock %}
     </head>
     <body>
+        <!-- Alert message -->
+        {% with messages = get_flashed_messages(with_categories=true)%} {% if
+        messages %} {% for status, message in messages %}
+        <div class="alert {{ status }}">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %} {% block form %} {% endblock %}
         <header>
             <div class="logo">
                 <img
@@ -51,6 +56,7 @@
                 </button>
             </div>
         </header>
+        <!-- Content section -->
         {% block content %} {% endblock %}
         <footer>
             <div class="legalities">
@@ -87,7 +93,16 @@
             <div class="copyright">Copyright &copy; 2022</div>
         </footer>
     </body>
-    <script src="{{ url_for('static', filename='js/jquery-3.6.0.slim.js') }}"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.slim.js"
+        integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
+        crossorigin="anonymous"
+    ></script>
+    <script
+        src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+        integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+        crossorigin="anonymous"
+    ></script>
     <script>
         $('.logo').on('click', (e) => {
             $('.navigation-bar').toggleClass('active');
