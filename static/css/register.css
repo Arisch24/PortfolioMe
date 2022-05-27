@@ -14,7 +14,6 @@ body {
 }
 
 .register-header h1 {
-    font-size: 3rem;
     color: hsl(var(--light-accent-blue));
 }
 
@@ -28,32 +27,16 @@ body {
 }
 
 .form-container input[type='text'],
-.form-container input[type='text']:focus,
-.form-container input[type='password'],
-.form-container input[type='password']:focus {
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-    border: 2px solid hsl(var(--light-accent-blue));
-    width: 80%;
+.form-container input[type='password'] {
     margin-top: 0.5rem;
-    display: block;
-}
-
-.register-header p,
-.form-container label {
-    font-weight: 500;
-    font-size: 1.15rem;
+    width: 80%;
+    border: 2px solid hsl(var(--light-accent-blue));
 }
 
 .form-container input[type='submit'],
 .form-container input[type='submit']:focus {
     background-color: hsl(var(--light-accent-blue));
-    padding-inline: 2rem;
-    padding-block: 0.5rem;
-    border-radius: 0.25rem;
-    border: none;
     color: #fff;
-    cursor: pointer;
 }
 
 .form-container input[type='submit']:hover {
@@ -69,7 +52,7 @@ body {
 .form-container > div:last-child > a {
     display: flex;
     justify-content: flex-end;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
 }
 
 .form-container div span:last-child {
@@ -87,7 +70,7 @@ body {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 2px solid hsl(var(--light-accent-blue));
+    border: 0.15rem solid hsl(var(--light-accent-blue));
 }
 
 .form-container span input:checked::before {
@@ -98,7 +81,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 0.25rem;
+    border-radius: 50%;
     background-color: hsl(var(--light-accent-blue));
 }
 
