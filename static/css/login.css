@@ -1,0 +1,101 @@
+body {
+    background-color: hsl(var(--light-blue));
+}
+
+.login-container {
+    background-color: hsl(var(--dark-blue));
+    color: hsl(var(--pure-white));
+    padding: 4rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    min-width: 40%;
+    max-width: 60%;
+}
+
+.login-header h1 {
+    color: hsl(var(--pink));
+}
+
+.login-container a {
+    font-size: 1.15rem;
+    color: hsl(var(--pink));
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.form-container input[type='text'],
+.form-container input[type='password'] {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    border: 2px solid hsl(var(--pink));
+}
+
+.form-container input[type='submit'] {
+    background-color: hsl(var(--pink));
+}
+
+.form-help {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-help > div {
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+}
+
+/* Custom checkbox */
+.form-help input[type='checkbox'] {
+    appearance: none;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 0.15rem solid hsl(var(--pink));
+}
+
+.form-help input[type='checkbox']:checked:after {
+    content: '\2713';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: hsl(var(--pure-white));
+    background-color: hsl(var(--pink));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Adjacent sibling selector */
+.form-help input[type='checkbox'] + label {
+    opacity: 0.5;
+    transition: opacity 250ms ease;
+}
+
+.form-help input[type='checkbox']:checked + label {
+    opacity: 1;
+}
+
+/* Tablet media query */
+@media screen and (max-width: 1200px) {
+}
+
+/* Smartphone media query */
+@media screen and (max-width: 800px) {
+    .form-help {
+        flex-direction: column;
+        row-gap: 0.5rem;
+        align-items: center;
+    }
+}
