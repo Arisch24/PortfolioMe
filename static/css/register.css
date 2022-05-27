@@ -56,6 +56,10 @@ body {
     cursor: pointer;
 }
 
+.form-container input[type='submit']:hover {
+    background-color: hsl(var(--light-accent-blue) / 0.85);
+}
+
 .form-container div:nth-child(8) {
     grid-column: span 2;
     width: 50%;
