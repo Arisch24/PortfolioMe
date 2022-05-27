@@ -15,9 +15,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: slide 5000ms linear forwards normal;
+}
+
+.alert.success {
     background-color: hsl(var(--dark-blue));
     color: hsl(var(--light-blue));
-    animation: slide 5000ms linear forwards normal;
+}
+
+.alert.failed {
+    background-color: hsl(0, 95%, 86%);
+    color: hsl(0, 100%, 50%, 0.85);
 }
 
 @keyframes slide {
