@@ -16,9 +16,9 @@
         {% block css %}{% endblock %}
     </head>
     <body>
-        {% with messages = get_flashed_messages()%} {% if messages %} {% for
-        message in messages %}
-        <div class="alert">{{ message }}</div>
+        {% with messages = get_flashed_messages(with_categories=true)%} {% if
+        messages %} {% for status, message in messages %}
+        <div class="alert {{ status }}">{{ message }}</div>
         {% endfor %} {% endif %} {% endwith %} {% block form %} {% endblock %}
     </body>
 </html>
