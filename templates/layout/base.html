@@ -103,14 +103,18 @@
         integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
         crossorigin="anonymous"
     ></script>
-    <script>
-        $('.logo').on('click', (e) => {
-            $('.navigation-bar').toggleClass('active');
-            $('body').toggleClass('stop-scrolling');
-        });
-
-        $('#profile').on('click', (e) => {
-            $('.profile-box').toggleClass('active');
+    <script type="text/javascript">
+        $(document).on('click', (e) => {
+            if (e.target.matches('#hamburger')) {
+                $('.navigation-bar').toggleClass('active');
+                $('body').toggleClass('stop-scrolling');
+            } else if (e.target.matches('#profile img')) {
+                $('.profile-box').toggleClass('active');
+            } else {
+                $('.navigation-bar').removeClass('active');
+                $('body').removeClass('stop-scrolling');
+                $('.profile-box').removeClass('active');
+            }
         });
     </script>
 </html>
