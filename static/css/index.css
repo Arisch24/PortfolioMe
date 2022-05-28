@@ -1,7 +1,7 @@
 /* Main section */
 main {
     min-height: 80vh;
-    background: url('images/resume\ image.png') no-repeat 75% 3rem,
+    background: url('../images/resume\ image.png') no-repeat 75% 3rem,
         hsl(var(--light-blue));
 }
 
