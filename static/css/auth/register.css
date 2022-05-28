@@ -34,13 +34,13 @@ body {
     border: 2px solid hsl(var(--light-accent-blue));
 }
 
-.form-container input[type='submit'],
-.form-container input[type='submit']:focus {
+.form-container input[type='submit'] {
     background-color: hsl(var(--light-accent-blue));
     color: #fff;
 }
 
-.form-container input[type='submit']:hover {
+.form-container input[type='submit']:hover,
+.form-container input[type='submit']:focus {
     background-color: hsl(var(--light-accent-blue) / 0.85);
 }
 
