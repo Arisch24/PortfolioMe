@@ -1,0 +1,108 @@
+body {
+    background-color: hsl(var(--pink));
+}
+
+.register-container {
+    background-color: #fff;
+    padding: 4rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    min-width: 60%;
+    max-width: 80%;
+}
+
+.register-header h1 {
+    color: hsl(var(--light-accent-blue));
+}
+
+/* All form elements */
+.form-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    column-gap: 4rem;
+    row-gap: 0.5rem;
+    place-items: center normal;
+}
+
+.form-container input[type='text'],
+.form-container input[type='password'] {
+    margin-top: 0.5rem;
+    width: 80%;
+    border: 2px solid hsl(var(--light-accent-blue));
+}
+
+.form-container input[type='submit'],
+.form-container input[type='submit']:focus {
+    background-color: hsl(var(--light-accent-blue));
+    color: #fff;
+}
+
+.form-container input[type='submit']:hover {
+    background-color: hsl(var(--light-accent-blue) / 0.85);
+}
+
+.form-container div:nth-child(8) {
+    grid-column: span 2;
+    width: 50%;
+}
+
+.form-container > div:last-child,
+.form-container > div:last-child > a {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1.15rem;
+}
+
+.form-container div span:last-child {
+    margin-left: 1rem;
+}
+
+/* Custom checkbox */
+.form-container span ul {
+    list-style: none;
+}
+
+.form-container span input {
+    appearance: none;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 0.15rem solid hsl(var(--light-accent-blue));
+}
+
+.form-container span input:checked::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background-color: hsl(var(--light-accent-blue));
+}
+
+.form-container div .error-msg {
+    color: red;
+}
+
+/* Tablet media query */
+@media screen and (max-width: 1200px) {
+}
+
+/* Smartphone media query */
+@media screen and (max-width: 800px) {
+    .form-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(auto-fit, 1fr);
+    }
+
+    .form-container div:nth-child(8) {
+        grid-column: span 1;
+        width: 100%;
+    }
+}

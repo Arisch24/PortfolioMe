@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block title %}PortfolioMe : Edit Profile{% endblock
+%} {% block css %}<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/edit_profile.css') }}"
+/>{% endblock %} {% block content %}
+<main class="edit-profile-container">
+    <div class="edit-profile-header">
+        <h1>Edit Profile</h1>
+    </div>
+    <form method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <div>{{ form.username.label }} {{ form.username }}</div>
+        <div>
+            {{ form.gender.label }}
+            <span>{{ form.gender }}</span>
+        </div>
+        <div>{{ form.password.label }} {{ form.password }}</div>
+        <div>{{ form.email.label }} {{ form.email }}</div>
+        <div>{{ form.phone_number.label }} {{ form.phone_number }}</div>
+        <div>{{ form.organization.label }} {{ form.organization }}</div>
+        <div>{{ form.submit }}</div>
+    </form>
+</main>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "layout/base_form.html"%} {% block title %}PortfolioMe: Login{%
+endblock %} {% block css %}<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/auth/login.css') }}"
+/>{% endblock %} {% block form %}
+<main class="login-container">
+    <div class="login-header">
+        <h1>Login</h1>
+        <p>
+            Don't have an account?
+            <a href="{{ url_for('register') }}">Sign Up Now.</a>
+        </p>
+    </div>
+    <form method="POST" class="form-container" novalidate>
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.email.label }} {% if form.email.errors %} {{ form.email }}
+            <p class="error-msg">
+                {% for error in form.email.errors %} {{ error }} {% endfor %}
+            </p>
+            {% else %} {{ form.email(placeholder='Your email ex: abc@123.com')
+            }} {% endif %}
+        </div>
+        <div>
+            {{ form.password.label }} {% if form.password.errors %} {{
+            form.password }}
+            <p class="error-msg">
+                {% for error in form.password.errors %} {{ error }} {% endfor %}
+            </p>
+            <!-- prettier-ignore -->
+            {% else %} {{ form.password(placeholder='Your password ex: abc123@#$') }} {% endif %}
+            <div class="form-help">
+                <div>{{ form.remember }} {{ form.remember.label }}</div>
+                <div>
+                    <a href="#">Forgot Password?</a>
+                </div>
+            </div>
+        </div>
+        <div>{{ form.submit }}</div>
+    </form>
+</main>
+{% endblock %}

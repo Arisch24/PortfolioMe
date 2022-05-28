@@ -1,0 +1,85 @@
+{% extends "/layout/base_form.html" %} {% block title %}PortfolioMe: Register{%
+endblock %} {% block css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/auth/register.css') }}"
+/>{% endblock %} {% block form %}
+<main class="register-container">
+    <div class="register-header">
+        <h1>Register Now</h1>
+        <p>Register an account to access all of our features.</p>
+    </div>
+    <form method="POST" class="form-container" novalidate>
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.username.label }} {% if form.username.errors %} {{
+            form.username }}
+            <p class="error-msg">
+                {% for error in form.username.errors %} {{ error }} {% endfor %}
+            </p>
+            {% else %} {{ form.username(placeholder='John Doe') }} {% endif %}
+        </div>
+        <div>
+            {{ form.email.label }} {% if form.email.errors %} {{ form.email }}
+            <p class="error-msg">
+                {% for error in form.email.errors %} {{ error }} {% endfor %}
+            </p>
+            {% else %} {{ form.email(placeholder='john_doe@gmail.com') }} {%
+            endif %}
+        </div>
+        <div>
+            {{ form.password.label }} {% if form.password.errors %} {{
+            form.password }}
+            <p class="error-msg">
+                {% for error in form.password.errors %} {{ error }} {% endfor %}
+            </p>
+            {% else %} {{ form.password(placeholder='johndoe@1234') }} {% endif
+            %}
+        </div>
+        <div>
+            {{ form.confirm_password.label }} {% if form.confirm_password.errors
+            %} {{ form.confirm_password }}
+            <p class="error-msg">
+                {% for error in form.confirm_password.errors %} {{ error }} {%
+                endfor %}
+            </p>
+            {% else %} {{ form.confirm_password(placeholder='Same as password')
+            }} {% endif %}
+        </div>
+        <div>
+            {{ form.gender.label }}
+            <span>
+                {% if form.gender.errors %} {{ form.gender }}
+                <p class="error-msg">
+                    {% for error in form.gender.errors %} {{ error }} {% endfor
+                    %}
+                </p>
+                {% else %} {{ form.gender }} {% endif %}
+            </span>
+        </div>
+        <div>
+            {{ form.phone_number.label }} {% if form.phone_number.errors %} {{
+            form.phone_number }}
+            <p class="error-msg">
+                {% for error in form.phone_number.errors %} {{ error }} {%
+                endfor %}
+            </p>
+            {% else %} {{ form.phone_number(placeholder='XXX-XXXXXXX') }} {%
+            endif %}
+        </div>
+        <div>
+            {{ form.organization.label }} {% if form.organization.errors %} {{
+            form.organization }}
+            <p class="error-msg">
+                {% for error in form.organization.errors %} {{ error }} {%
+                endfor %}
+            </p>
+            {% else %} {{ form.organization(placeholder='Google') }} {% endif %}
+        </div>
+        <div>{{ form.submit }}</div>
+        <div>
+            Already have an account?<a href="{{ url_for('login') }}">Login.</a>
+        </div>
+    </form>
+</main>
+{% endblock %}
