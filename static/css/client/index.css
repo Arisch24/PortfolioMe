@@ -1,7 +1,7 @@
 /* Main section */
 main {
-    min-height: 80vh;
-    background: url('../../images/resume\ image.png') no-repeat 75% 3rem,
+    min-height: 100vh;
+    background: url('../../images/resume\ image.png') no-repeat 50% 16rem,
         hsl(var(--light-blue));
 }
 
@@ -33,13 +33,19 @@ main .info-section {
 
 /* Tablet media query */
 @media screen and (max-width: 1200px) {
+    main {
+        background-position: 6rem 16rem;
+    }
+
+    main .info-section {
+        padding: 2rem 0 2rem 5rem;
+    }
 }
 
 /* Smartphone media query */
 @media screen and (max-width: 800px) {
     main {
-        background-position: 2rem 21rem;
-        min-height: 100vh;
+        background-position: 1rem 18rem;
     }
 
     main .info-section {

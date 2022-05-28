@@ -92,10 +92,16 @@ body {
 
 /* Tablet media query */
 @media screen and (max-width: 1200px) {
+    .form-container {
+        column-gap: 1rem;
+    }
 }
 
 /* Smartphone media query */
 @media screen and (max-width: 800px) {
+    .register-container {
+        margin-block: 2rem;
+    }
     .form-container {
         grid-template-columns: 1fr;
         grid-template-rows: repeat(auto-fit, 1fr);

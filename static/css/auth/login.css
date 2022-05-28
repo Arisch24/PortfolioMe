@@ -89,10 +89,20 @@ body {
 
 /* Tablet media query */
 @media screen and (max-width: 1200px) {
+    .login-container {
+        min-width: 60%;
+    }
+    .form-help {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 /* Smartphone media query */
 @media screen and (max-width: 800px) {
+    .login-container {
+        min-width: 70%;
+    }
     .form-help {
         flex-direction: column;
         row-gap: 0.5rem;
