@@ -13,14 +13,15 @@ endblock %} {% block css %}
         {{ form.hidden_tag() }}
         <div>
             {{ form.username.label }} {% if form.username.errors %} {{
-            form.username }}
+            form.username(placeholder='John Doe') }}
             <p class="error-msg">
                 {% for error in form.username.errors %} {{ error }} {% endfor %}
             </p>
             {% else %} {{ form.username(placeholder='John Doe') }} {% endif %}
         </div>
         <div>
-            {{ form.email.label }} {% if form.email.errors %} {{ form.email }}
+            {{ form.email.label }} {% if form.email.errors %} {{
+            form.email(placeholder='john_doe@gmail.com') }}
             <p class="error-msg">
                 {% for error in form.email.errors %} {{ error }} {% endfor %}
             </p>
@@ -29,7 +30,7 @@ endblock %} {% block css %}
         </div>
         <div>
             {{ form.password.label }} {% if form.password.errors %} {{
-            form.password }}
+            form.password(placeholder='johndoe@1234') }}
             <p class="error-msg">
                 {% for error in form.password.errors %} {{ error }} {% endfor %}
             </p>
@@ -38,7 +39,7 @@ endblock %} {% block css %}
         </div>
         <div>
             {{ form.confirm_password.label }} {% if form.confirm_password.errors
-            %} {{ form.confirm_password }}
+            %} {{ form.confirm_password(placeholder='Same as password') }}
             <p class="error-msg">
                 {% for error in form.confirm_password.errors %} {{ error }} {%
                 endfor %}
@@ -59,7 +60,7 @@ endblock %} {% block css %}
         </div>
         <div>
             {{ form.phone_number.label }} {% if form.phone_number.errors %} {{
-            form.phone_number }}
+            form.phone_number(placeholder='XXX-XXXXXXX') }}
             <p class="error-msg">
                 {% for error in form.phone_number.errors %} {{ error }} {%
                 endfor %}
@@ -69,7 +70,7 @@ endblock %} {% block css %}
         </div>
         <div>
             {{ form.organization.label }} {% if form.organization.errors %} {{
-            form.organization }}
+            form.organization(placeholder='Google') }}
             <p class="error-msg">
                 {% for error in form.organization.errors %} {{ error }} {%
                 endfor %}
