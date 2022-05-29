@@ -110,7 +110,11 @@
                 $('body').toggleClass('stop-scrolling');
             } else if (e.target.matches('#profile img')) {
                 $('.profile-box').toggleClass('active');
-            } else {
+            } else if (
+                $('.navigation-bar').hasClass('active') ||
+                $('body').hasClass('stop-scrolling') ||
+                $('.profile-box').hasClass('active')
+            ) {
                 $('.navigation-bar').removeClass('active');
                 $('body').removeClass('stop-scrolling');
                 $('.profile-box').removeClass('active');
