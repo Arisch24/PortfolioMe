@@ -208,7 +208,7 @@ footer hr {
         cursor: pointer;
         position: relative;
         margin-right: 2rem;
-        z-index: 100;
+        z-index: 999;
     }
 
     .account {
