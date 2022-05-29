@@ -6,7 +6,8 @@ body {
 }
 
 input[type='text'],
-input[type='password'] {
+input[type='password'],
+input[type='email'] {
     display: block;
     padding: 0.5rem;
     border-radius: 0.25rem;
@@ -30,6 +31,10 @@ input[type='submit'] {
 .register-header p,
 .form-container label {
     font-size: 1.15rem;
+}
+
+.form-container div .error-msg {
+    color: red;
 }
 
 a:hover {
