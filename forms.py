@@ -35,7 +35,7 @@ class EditProfileForm(FlaskForm):
     phone_number = StringField('Phone Number', validators=[
                         DataRequired(), Length(min=8, max=11)])
     # Radio field
-    radio = ['Male', 'Female']
+    radio = ["Male", "Female", "Prefer not to say"]
     gender = RadioField('Gender', validators=[DataRequired()], choices=radio)
     #
     organization = StringField('Organization', validators=[DataRequired()])
