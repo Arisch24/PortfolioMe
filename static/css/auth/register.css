@@ -28,7 +28,8 @@ body {
 }
 
 .form-container input[type='text'],
-.form-container input[type='password'] {
+.form-container input[type='password'],
+.form-container input[type='email'] {
     margin-top: 0.5rem;
     width: 80%;
     border: 2px solid hsl(var(--light-accent-blue));
@@ -84,10 +85,6 @@ body {
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background-color: hsl(var(--light-accent-blue));
-}
-
-.form-container div .error-msg {
-    color: red;
 }
 
 /* Tablet media query */

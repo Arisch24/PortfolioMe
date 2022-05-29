@@ -30,7 +30,8 @@ body {
 }
 
 .form-container input[type='text'],
-.form-container input[type='password'] {
+.form-container input[type='password'],
+.form-container input[type='email'] {
     width: 100%;
     margin-bottom: 0.5rem;
     border: 2px solid hsl(var(--pink));
