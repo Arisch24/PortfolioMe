@@ -218,6 +218,7 @@ footer hr {
     .navigation-bar {
         padding-block: 5rem;
         position: absolute;
+        z-index: 200;
         background-color: hsl(var(--dark-blue));
         width: 60%;
         height: 100vh;
