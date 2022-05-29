@@ -18,8 +18,8 @@ endblock %} {% block css %}<link
             <p class="error-msg">
                 {% for error in form.email.errors %} {{ error }} {% endfor %}
             </p>
-            {% else %} {{ form.email(placeholder='Your email ex: abc@123.com')
-            }} {% endif %}
+            {% else %} {{ form.email(placeholder='Ex: abc@123.com') }} {% endif
+            %}
         </div>
         <div>
             {{ form.password.label }} {% if form.password.errors %} {{
@@ -28,7 +28,7 @@ endblock %} {% block css %}<link
                 {% for error in form.password.errors %} {{ error }} {% endfor %}
             </p>
             <!-- prettier-ignore -->
-            {% else %} {{ form.password(placeholder='Your password ex: abc123@#$') }} {% endif %}
+            {% else %} {{ form.password(placeholder='Ex: abc123@#$') }} {% endif %}
             <div class="form-help">
                 <div>{{ form.remember }} {{ form.remember.label }}</div>
                 <div>
