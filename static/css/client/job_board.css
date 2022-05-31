@@ -1,0 +1,92 @@
+.job-board-container {
+    background-color: hsl(var(--sky-blue));
+    padding-inline: 5rem;
+    padding-block: 2rem;
+}
+
+.job-board-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.job-board-header h1 {
+    display: inline-block;
+    font-size: 3rem;
+}
+
+.jobs-available {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem 1rem;
+    place-items: center start;
+    margin-bottom: 4rem;
+}
+
+.jobs-available div {
+    position: relative;
+    background-color: hsl(var(--pure-white));
+    padding: 1rem;
+    width: 20vw;
+    height: 25vh;
+    overflow: hidden;
+}
+
+.jobs-available div:hover {
+    box-shadow: 3px 3px 10px 2px hsla(0, 0%, 0%, 0.5);
+}
+
+.jobs-available div::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    background: -webkit-linear-gradient(top, transparent 80%, #fff);
+    pointer-events: none;
+}
+
+.jobs-available h2 {
+    font-size: 1.5rem;
+}
+
+.jobs-available span {
+    font-weight: 600;
+}
+
+.jobs-available a {
+    position: absolute;
+    z-index: 5;
+    right: 0.5rem;
+    bottom: 0.25rem;
+    color: hsl(var(--pink));
+}
+
+.jobs-available a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 1200px) {
+    .jobs-available {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .jobs-available div {
+        width: 20vw;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .job-board-container {
+        padding-inline: 1rem;
+        padding-block: 1rem;
+    }
+
+    .jobs-available {
+        place-items: center;
+    }
+
+    .jobs-available div {
+        width: 90%;
+    }
+}

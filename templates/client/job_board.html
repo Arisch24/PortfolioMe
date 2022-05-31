@@ -1,0 +1,74 @@
+{% extends "layout/base.html" %} {% block title %}PortfolioMe : Job Boards{%
+endblock %} {% block css %}<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/client/job_board.css') }}"
+/>
+{% endblock %} {% block content %}
+<main class="job-board-container">
+    <div class="job-board-header">
+        <img
+            src="{{ url_for('static', filename='images/folder.png') }}"
+            alt="A picture of a folder"
+        />
+        <h1>Job Board</h1>
+    </div>
+    <div class="jobs-available">
+        <div>
+            <h2>Accountant</h2>
+            <span>Part-Time</span>
+            <p>
+                Make critical financial decisions by collecting, tracking, and
+                correcting the company's finances. Responsible for ensuring
+                financial records are accurate throughout the year.
+            </p>
+            <a href="#">Details</a>
+        </div>
+        <div>
+            <h2>Manager</h2>
+            <span>Full-Time</span>
+            <p>
+                Responsible for planning directing, and overseeing the
+                operations of an operating unit within an organization.
+            </p>
+            <a href="#">Details</a>
+        </div>
+        <div>
+            <h2>Clerk</h2>
+            <span>Part-Time</span>
+            <p>
+                Responsible for performing administrative tasks to support daily
+                business operations.
+            </p>
+            <a href="#">Details</a>
+        </div>
+        <div>
+            <h2>Software Engineer</h2>
+            <span>Full-Time</span>
+            <p>
+                Research, design and write new software programs (e.g. business
+                applications or computer games) and computer operating systems.
+            </p>
+            <a href="#">Details</a>
+        </div>
+        <div>
+            <h2>Software Developer</h2>
+            <span>Full-Time</span>
+            <p>
+                Job Description: To be able to design and code algorithms
+                effectively and clean up code left by other developers.
+            </p>
+            <a href="#">Details</a>
+        </div>
+        <div>
+            <h2>Web Developer</h2>
+            <span>Full-Time</span>
+            <p>
+                Job Description: Design, maintain and construct websites. Ensure
+                that sites meet user expectations by ensuring they look good and
+                run smoothly.
+            </p>
+            <a href="#">Details</a>
+        </div>
+    </div>
+</main>
+{% endblock %}
