@@ -1,23 +1,73 @@
-{% extends "base.html" %} {% block title %}PortfolioMe : Edit Profile{% endblock
-%} {% block css %}<link
+{% extends "layout/base.html" %} {% block title %}PortfolioMe : Edit Profile{%
+endblock %} {% block css %}<link
     rel="stylesheet"
-    href="{{ url_for('static', filename='css/edit_profile.css') }}"
-/>{% endblock %} {% block content %}
+    href="{{ url_for('static', filename='css/client/edit_profile.css') }}"
+/>
+{% endblock %} {% block content %}
 <main class="edit-profile-container">
     <div class="edit-profile-header">
         <h1>Edit Profile</h1>
     </div>
-    <form method="POST" novalidate>
+    <form method="POST" class="form-container" novalidate>
         {{ form.hidden_tag() }}
-        <div>{{ form.username.label }} {{ form.username }}</div>
+        <div>
+            {{ form.username.label }} {% if form.username.errors %} {{
+            form.username(placeholder='New username') }}
+            <p class="error-msg">
+                {% for error in form.username.errors %} {{ error }} {% endfor %}
+            </p>
+            {% else %} {{ form.username(placeholder='New username') }} {% endif
+            %}
+        </div>
         <div>
             {{ form.gender.label }}
-            <span>{{ form.gender }}</span>
+            <span
+                >{% if form.gender.errors %} {{ form.gender }}
+                <p class="error-msg">
+                    {% for error in form.gender.errors %} {{ error }} {% endfor
+                    %}
+                </p>
+                {% else %} {{ form.gender }} {% endif %}
+            </span>
         </div>
-        <div>{{ form.password.label }} {{ form.password }}</div>
-        <div>{{ form.email.label }} {{ form.email }}</div>
-        <div>{{ form.phone_number.label }} {{ form.phone_number }}</div>
-        <div>{{ form.organization.label }} {{ form.organization }}</div>
+        <div>
+            {{ form.password.label }} {% if form.password.errors %} {{
+            form.password(placeholder='New password') }}
+            <p class="error-msg">
+                {% for error in form.password.errors %} {{ error }} {% endfor %}
+            </p>
+            {% else %} {{ form.password(placeholder='New password')}} {% endif
+            %}
+        </div>
+        <div>
+            {{ form.email.label }} {% if form.email.errors %} {{
+            form.email(placeholder='New email') }}
+            <p class="error-msg">
+                {% for error in form.email.errors %} {{ error }} {% endfor %}
+            </p>
+            {% else %} {{ form.email(placeholder='New email')}} {% endif %}
+        </div>
+        <div>
+            {{ form.phone_number.label }} {% if form.phone_number.errors %} {{
+            form.phone_number(placeholder='New phone number') }}
+            <p class="error-msg">
+                {% for error in form.phone_number.errors %} {{ error }} {%
+                endfor %}
+            </p>
+            {% else %} {{ form.phone_number(placeholder='New phone number')}} {%
+            endif %}
+        </div>
+        <div>
+            {{ form.organization.label }} {% if form.organization.errors %} {{
+            form.organization(placeholder='New organization') }}
+            <p class="error-msg">
+                {% for error in form.organization.errors %} {{ error }} {%
+                endfor %}
+            </p>
+            <!-- prettier-ignore -->
+            {% else %} {{ form.organization(placeholder='New organization')}}
+            {% endif %}
+        </div>
         <div>{{ form.submit }}</div>
     </form>
 </main>
