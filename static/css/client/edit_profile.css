@@ -1,0 +1,108 @@
+body {
+    font-weight: 500;
+}
+
+main.edit-profile-container {
+    padding-block: 2rem;
+    padding-inline: 12rem;
+    background-color: hsl(var(--pink));
+}
+
+.form-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='email'] {
+    border: 2px solid hsl(var(--dark-blue));
+    width: 70%;
+}
+
+input[type='submit'] {
+    background-color: hsl(var(--dark-blue));
+    color: hsl(var(--pure-white));
+    margin-top: 1rem;
+}
+
+input[type='submit']:hover,
+input[type='submit']:focus {
+    background-color: hsl(var(--dark-blue) / 0.9);
+}
+
+.edit-profile-header h1 {
+    font-size: 3rem;
+}
+
+.edit-profile-header p,
+.form-container label {
+    font-size: 1.15rem;
+}
+
+/* Custom checkbox */
+.form-container span ul {
+    list-style: none;
+    display: flex;
+    column-gap: 1rem;
+}
+
+.form-container span input {
+    appearance: none;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid hsl(var(--dark-blue));
+    background-color: hsl(var(--pure-white));
+}
+
+.form-container span input:checked::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background-color: hsl(var(--dark-blue));
+}
+
+.form-container div .error-msg {
+    color: red;
+}
+
+@media screen and (max-width: 1200px) {
+    main.edit-profile-container {
+        padding-inline: 6rem;
+    }
+
+    input[type='text'],
+    input[type='password'],
+    input[type='email'] {
+        width: 85%;
+    }
+
+    .form-container span ul {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    main.edit-profile-container {
+        padding-inline: 4rem;
+    }
+
+    input[type='text'],
+    input[type='password'],
+    input[type='email'] {
+        width: 90%;
+    }
+
+    .form-container span ul {
+        flex-direction: column;
+    }
+}
