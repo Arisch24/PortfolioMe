@@ -20,7 +20,7 @@
         {% with messages = get_flashed_messages(with_categories=true)%} {% if
         messages %} {% for status, message in messages %}
         <div class="alert {{ status }}">{{ message }}</div>
-        {% endfor %} {% endif %} {% endwith %} {% block form %} {% endblock %}
+        {% endfor %} {% endif %} {% endwith %}
         <header>
             <div class="logo">
                 <img
