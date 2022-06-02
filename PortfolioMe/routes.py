@@ -1,10 +1,9 @@
-from flask import Flask, redirect, url_for, render_template, request, flash
-from forms import EditProfileForm, RegistrationForm, LoginForm
+from flask import redirect, url_for, render_template, request, flash
+from PortfolioMe import app
+from PortfolioMe.forms import EditProfileForm, RegistrationForm, LoginForm
+from PortfolioMe.models import Applicant, Admin, Resume, JobBoard, Insights
 
-app = Flask(__name__)
-app.config["SECRET_KEY"] = "383ed93c7f5c33627fb4bf56036c7493"
-
-
+# Client routes
 @app.route("/")
 @app.route("/index")
 def home():
@@ -18,7 +17,7 @@ def register():
         if form.validate_on_submit():
             flash(f"Account created for {form.username.data}!", "success")
         else:
-            flash(f"Please fix the errors first.", "failed")
+            flash(f"Your data is invalid. Try again.", "failed")
 
     return render_template("auth/register.html", form=form)
 
@@ -36,7 +35,7 @@ def login():
     return render_template("auth/login.html", form=form)
 
 
-@app.route("/edit-profile", methods=["GET", "POST"])
+@app.route("/edit_profile", methods=["GET", "POST"])
 def edit_profile():
     form = EditProfileForm()
     if(request.method == "POST"):
@@ -46,6 +45,12 @@ def edit_profile():
             flash(f"There were some errors.", "failure")
     return render_template("client/edit_profile.html", form=form)
 
+@app.route("/job_board")
+def job_board():
+    return render_template("client/job_board.html")
 
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.route("/upload_resume", methods=["GET, POST"])
+def upload_resume():
+    return render_template("upload_resume.html")
+
+# Admin routes
