@@ -1,6 +1,7 @@
+import re
 from flask import redirect, url_for, render_template, request, flash
 from PortfolioMe import app
-from PortfolioMe.forms import EditProfileForm, RegistrationForm, LoginForm
+from PortfolioMe.forms import EditProfileForm, RegistrationForm, LoginForm, ResumeSubmissionForm
 from PortfolioMe.models import Applicant, Admin, Resume, JobBoard, Insights
 
 # Client routes
@@ -49,8 +50,10 @@ def edit_profile():
 def job_board():
     return render_template("client/job_board.html")
 
-@app.route("/upload_resume", methods=["GET, POST"])
+@app.route("/upload_resume", methods=["GET", "POST"])
 def upload_resume():
-    return render_template("upload_resume.html")
+    form = ResumeSubmissionForm()
+    if request.method == "GET":
+        return render_template("client/upload_resume.html", form=form)
 
 # Admin routes

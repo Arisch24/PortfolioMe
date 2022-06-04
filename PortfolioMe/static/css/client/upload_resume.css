@@ -1,0 +1,41 @@
+body {
+    font-weight: 500;
+}
+
+.upload-resume-container {
+    padding-block: 2rem;
+    padding-inline: 4rem;
+    background-color: hsl(var(--sky-blue));
+}
+
+.upload-resume-header > h1 {
+    font-size: 3rem;
+}
+
+.form-container {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr;
+    place-items: center;
+}
+
+.form-container div {
+    grid-row: 1 / 3;
+}
+
+.form-container div img {
+    display: block;
+    border: 1px solid #333;
+    width: 100%;
+    height: 50vh;
+    cursor: pointer;
+}
+
+#resume {
+    opacity: 0;
+}
+
+#submit {
+    background-color: hsl(var(--pink));
+}

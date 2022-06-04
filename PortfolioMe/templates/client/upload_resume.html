@@ -1,0 +1,36 @@
+{% extends "layout/base.html" %} {% block title %}PortfolioMe : Upload Resume{%
+endblock %} {% block css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/client/upload_resume.css') }}"
+/>
+{% endblock %} {% block content %}
+<main class="upload-resume-container">
+    <div class="upload-resume-header">
+        <h1>Resume</h1>
+        Upload your resumes here.
+    </div>
+    <form method="POST" class="form-container">
+        {{ form.hidden_tag() }}
+        <div>
+            <img
+                id="temp"
+                src="{{ url_for('static', filename='images/photo.png') }}"
+            />
+            {% if form.resume.errors %} {{ form.resume }}
+            <p class="error-msg">
+                {% for error in form.resume.errors %} {{ error }} {% endfor %}
+            </p>
+            {% else %} {{ form.resume }} {% endif %}
+        </div>
+        <div>{{ form.submit }}</div>
+        <div><textarea name="" id="" cols="30" rows="10"></textarea></div>
+    </form>
+</main>
+{% endblock %} {% block javascript %}
+<script>
+    $('#temp').on('click', () => {
+        $('#resume').click();
+    });
+</script>
+{% endblock %}

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField, FileField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 
@@ -40,3 +40,7 @@ class EditProfileForm(FlaskForm):
     #
     organization = StringField('Organization', validators=[DataRequired()])
     submit = SubmitField('Save Changes')
+
+class ResumeSubmissionForm(FlaskForm):
+    resume = FileField('Resume', validators=[DataRequired()])
+    submit = SubmitField('Send resume')
