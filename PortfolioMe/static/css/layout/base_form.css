@@ -7,7 +7,8 @@ body {
 
 input[type='text'],
 input[type='password'],
-input[type='email'] {
+input[type='email'],
+input[type='file'] {
     display: block;
     padding: 0.5rem;
     border-radius: 0.25rem;
