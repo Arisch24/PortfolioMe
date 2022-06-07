@@ -1,8 +1,12 @@
 from datetime import datetime
-from PortfolioMe import db
+from PortfolioMe import db, login_manager
+from flask_login import UserMixin
 
+@login_manager.user_loader
+def load_user(user_id):
+    return Applicant.query.get(int(user_id))
 
-class Applicant(db.Model):
+class Applicant(db.Model, UserMixin):
     __tablename__ = 'applicant'
 
     id = db.Column(db.Integer, primary_key=True)
