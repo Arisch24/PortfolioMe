@@ -1,7 +1,8 @@
+from xml.dom import ValidationErr
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField, FileField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, Regexp
-
+from wtforms.validators import DataRequired, Length, Email, EqualTo, Regexp, ValidationError
+from PortfolioMe.models import Applicant
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[
@@ -18,6 +19,16 @@ class RegistrationForm(FlaskForm):
     #
     organization = StringField('Organization', validators=[DataRequired()])
     submit = SubmitField('Register')
+
+    def validate_username(self, username):
+        applicant = Applicant.query.filter_by(username=username.data).first()
+        if applicant:
+            raise ValidationError('This username is taken. Please choose a different one.')
+
+    def validate_email(self, email):
+        applicant = Applicant.query.filter_by(email=email.data).first()
+        if applicant:
+            raise ValidationError('This email is taken. Please choose a different one.')
 
 
 class LoginForm(FlaskForm):
