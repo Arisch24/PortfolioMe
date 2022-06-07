@@ -6,7 +6,7 @@ class Applicant(db.Model):
     __tablename__ = 'applicant'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), unique=False, nullable=False)
+    username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(60), unique=False, nullable=False)
     gender = db.Column(db.String(10), unique=False, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
