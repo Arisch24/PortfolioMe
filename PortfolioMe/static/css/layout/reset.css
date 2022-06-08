@@ -38,8 +38,9 @@ select {
 }
 
 button[class$='btn'],
-a[class$='btn'] {
-    transition: 250ms ease-in-out;
+a[class$='btn'],
+input[type='submit'] {
+    transition: 200ms ease-in-out;
 }
 
 a {
