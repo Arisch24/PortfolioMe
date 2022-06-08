@@ -14,7 +14,7 @@ class Applicant(db.Model, UserMixin):
     password = db.Column(db.String(60), unique=False, nullable=False)
     gender = db.Column(db.String(10), unique=False, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
-    phone_number = db.Column(db.Integer, unique=False, nullable=False)
+    phone_number = db.Column(db.String(20), unique=False, nullable=False)
     organization = db.Column(db.String(50), unique=False, nullable=False)
     resumes_owned = db.relationship('Resume', backref='associated_applicant')
 
