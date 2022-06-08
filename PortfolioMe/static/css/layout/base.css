@@ -73,12 +73,12 @@ header {
 }
 
 /* Account styles */
-.account {
+.profile-container {
     display: grid;
     place-items: center;
 }
 
-.account > button {
+.profile-container > button {
     border-radius: 100%;
     outline: none;
     background-color: transparent;
@@ -87,7 +87,7 @@ header {
     position: relative;
 }
 
-.account img {
+.profile-container img {
     width: 55px;
     height: 55px;
 }
@@ -120,13 +120,9 @@ header {
     align-items: center;
 }
 
-.authentication-box .register-btn,
 .authentication-box .login-btn {
     border-radius: 1rem;
     padding: 1rem;
-}
-
-.authentication-box .login-btn {
     background-color: hsl(var(--dark-blue));
     color: hsl(var(--pure-white));
 }
@@ -229,7 +225,7 @@ footer hr {
         z-index: 999;
     }
 
-    .account {
+    .profile-container {
         place-items: center end;
     }
 

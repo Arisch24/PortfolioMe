@@ -55,6 +55,10 @@ a {
     animation: slide 5000ms linear forwards normal;
 }
 
+.alert.info {
+    background-color: #e7e7e7;
+}
+
 .alert.success {
     background-color: hsl(var(--dark-blue));
     color: hsl(var(--light-blue));
