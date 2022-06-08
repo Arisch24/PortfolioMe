@@ -51,8 +51,14 @@
                         alt="Account Information"
                     />
                     <div class="profile-box">
-                        <a href="{{ url_for('edit_profile') }}">Edit Profile</a>
-                        <a href="{{ url_for('logout') }}">Logout</a>
+                        <a
+                            href="{{ url_for('edit_profile') }}"
+                            class="edit-profile-btn"
+                            >Edit Profile</a
+                        >
+                        <a href="{{ url_for('logout') }}" class="logout-btn"
+                            >Logout</a
+                        >
                     </div>
                 </button>
             </div>
