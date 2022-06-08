@@ -1,11 +1,11 @@
-{% extends "layout/base.html" %} {% block css %}
+{% extends "layout/base.html" %} {% block title%}PortfolioMe : Home{% endblock
+%} {% block css %}
 <link
     rel="stylesheet"
     href="{{ url_for('static', filename='css/client/index.css') }}"
 />
-{% endblock %} {% block title%}PortfolioMe : Home{% endblock %} {% block content
-%}
-<main>
+{% endblock %}{% block content %}
+<main class="home-container">
     <div class="info-section">
         <h1 class="title">Management at its finest.</h1>
         <p>
