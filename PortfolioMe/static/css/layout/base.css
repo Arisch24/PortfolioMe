@@ -116,7 +116,7 @@ header {
 
 .authentication-box {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
 }
 
@@ -125,6 +125,10 @@ header {
     padding: 1rem;
     background-color: hsl(var(--dark-blue));
     color: hsl(var(--pure-white));
+}
+
+.authentication-box .login-btn:hover {
+    background-color: hsl(var(--dark-blue) / 0.85);
 }
 
 /* Forms standardized */
