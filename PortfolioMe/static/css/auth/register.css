@@ -29,6 +29,7 @@ body {
 
 .form-container input[type='text'],
 .form-container input[type='password'],
+.form-container input[type='tel'],
 .form-container input[type='email'] {
     margin-top: 0.5rem;
     width: 80%;
@@ -66,6 +67,7 @@ body {
     list-style: none;
     display: flex;
     column-gap: 1rem;
+    padding-inline-start: 0;
 }
 
 .form-container span input {

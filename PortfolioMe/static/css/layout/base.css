@@ -135,7 +135,8 @@ header {
 input[type='text'],
 input[type='password'],
 input[type='email'],
-input[type='file'] {
+input[type='file'],
+input[type='tel'] {
     display: block;
     padding: 0.5rem;
     border-radius: 0.25rem;

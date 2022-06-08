@@ -8,7 +8,8 @@ body {
 input[type='text'],
 input[type='password'],
 input[type='email'],
-input[type='file'] {
+input[type='file'],
+input[type='tel'] {
     display: block;
     padding: 0.5rem;
     border-radius: 0.25rem;
@@ -31,11 +32,13 @@ input[type='submit'] {
     cursor: pointer;
 }
 
+.account-card h1,
 .register-header h1,
 .login-header h1 {
     font-size: 3rem;
 }
 
+.account-card p,
 .login-header p,
 .register-header p,
 .form-container label {
