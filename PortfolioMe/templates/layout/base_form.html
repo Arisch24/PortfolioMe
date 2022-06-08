@@ -16,6 +16,7 @@
         {% block css %}{% endblock %}
     </head>
     <body>
+        <span id="close">&#10006;</span>
         {% with messages = get_flashed_messages(with_categories=true)%} {% if
         messages %} {% for status, message in messages %}
         <div class="alert {{ status }}">{{ message }}</div>
@@ -26,10 +27,10 @@
         integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
         crossorigin="anonymous"
     ></script>
-    <script
-        src="https://cdn.socket.io/4.5.0/socket.io.min.js"
-        integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
-        crossorigin="anonymous"
-    ></script>
+    <script>
+        $('#close').on('click', (e) => {
+            location = '../home';
+        });
+    </script>
     {% block javascript %}{% endblock %}
 </html>
