@@ -37,6 +37,11 @@ select {
     font-family: inherit;
 }
 
+button[class$='btn'],
+a[class$='btn'] {
+    transition: 250ms ease-in-out;
+}
+
 a {
     text-decoration: none;
 }
