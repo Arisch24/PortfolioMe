@@ -28,21 +28,22 @@
                     alt="Hamburger Menu"
                     id="hamburger"
                 />
-                <a href="#">PortfolioMe</a>
+                <a href="{{ url_for('home') }}">PortfolioMe</a>
             </div>
             <nav class="navigation-bar">
                 <ul>
                     <li>
-                        <a href="#">Home</a>
+                        <a href="{{ url_for('home') }}">Home</a>
                     </li>
                     <li>
-                        <a href="#">Job Board</a>
+                        <a href="{{ url_for('job_board') }}">Job Board</a>
                     </li>
                     <li>
-                        <a href="#">Resume</a>
+                        <a href="{{ url_for('upload_resume') }}">Resume</a>
                     </li>
                 </ul>
             </nav>
+            {% if current_user.is_authenticated %}
             <div class="account">
                 <button id="profile">
                     <img
@@ -50,11 +51,16 @@
                         alt="Account Information"
                     />
                     <div class="profile-box">
-                        <a href="#">Edit Profile</a>
-                        <a href="#">Logout</a>
+                        <a href="{{ url_for('edit_profile') }}">Edit Profile</a>
+                        <a href="{{ url_for('logout') }}">Logout</a>
                     </div>
                 </button>
             </div>
+            {% else %}
+            <div class="authentication-box">
+                <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+            </div>
+            {% endif %}
         </header>
         <!-- Content section -->
         {% block content %} {% endblock %}

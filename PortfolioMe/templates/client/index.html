@@ -13,7 +13,15 @@
             way. Automation with Artificial Inteligence (AI) has never been
             better.
         </p>
-        <button>Sign up now!</button>
+        {% if current_user.is_authenticated %} {% else %}
+        <button id="signUp">Sign up now!</button>
+        {% endif %}
     </div>
 </main>
+{% endblock %} {% block javascript %}
+<script>
+    $('#signUp').on('click', () => {
+        location = '../register';
+    });
+</script>
 {% endblock %}

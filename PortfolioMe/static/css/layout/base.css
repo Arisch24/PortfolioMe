@@ -114,6 +114,23 @@ header {
     font-size: 1.15rem;
 }
 
+.authentication-box {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.authentication-box .register-btn,
+.authentication-box .login-btn {
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.authentication-box .login-btn {
+    background-color: hsl(var(--dark-blue));
+    color: hsl(var(--pure-white));
+}
+
 /* Forms standardized */
 input[type='text'],
 input[type='password'],
