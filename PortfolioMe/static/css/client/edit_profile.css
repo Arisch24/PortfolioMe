@@ -1,11 +1,55 @@
 body {
     font-weight: 500;
+    z-index: 0;
 }
 
 main.edit-profile-container {
-    padding-block: 2rem;
+    padding-block: 4rem;
     padding-inline: 12rem;
     background-color: hsl(var(--pink));
+}
+
+section.account-info {
+    margin-inline: auto;
+    width: 75%;
+    padding: 3rem;
+    border-radius: 0.5rem;
+    border: 1px solid hsl(var(--dark-blue));
+}
+
+.account-info h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.account-card {
+    position: relative;
+    margin-inline: auto;
+    border-radius: 0.5rem;
+    background-color: hsl(var(--pure-white));
+    width: 50%;
+    background-clip: padding-box;
+    padding: 1rem;
+    border: 1px solid transparent;
+    z-index: 15;
+    box-shadow: 0px 15px 20px 0px hsl(var(--pure-black) / 0.5);
+}
+
+.account-card::before {
+    content: '';
+    margin: -5px;
+    background: linear-gradient(
+        hsl(var(--sky-blue)),
+        hsl(var(--light-accent-blue))
+    );
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+}
+
+.account-card h2 {
+    font-size: 1.75rem;
 }
 
 .form-container {
@@ -17,7 +61,8 @@ main.edit-profile-container {
 
 input[type='text'],
 input[type='password'],
-input[type='email'] {
+input[type='email'],
+input[type='tel'] {
     border: 2px solid hsl(var(--dark-blue));
     width: 70%;
 }
@@ -33,11 +78,6 @@ input[type='submit']:focus {
     background-color: hsl(var(--dark-blue) / 0.9);
 }
 
-.edit-profile-header h1 {
-    font-size: 3rem;
-}
-
-.edit-profile-header p,
 .form-container label {
     font-size: 1.15rem;
 }
@@ -47,6 +87,7 @@ input[type='submit']:focus {
     list-style: none;
     display: flex;
     column-gap: 1rem;
+    padding-inline-start: 0;
 }
 
 .form-container span input {

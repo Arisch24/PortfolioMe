@@ -5,70 +5,71 @@ endblock %} {% block css %}<link
 />
 {% endblock %} {% block content %}
 <main class="edit-profile-container">
-    <div class="edit-profile-header">
-        <h1>Edit Profile</h1>
-    </div>
-    <form method="POST" class="form-container" novalidate>
-        {{ form.hidden_tag() }}
-        <div>
-            {{ form.username.label }} {% if form.username.errors %} {{
-            form.username(placeholder='New username') }}
-            <p class="error-msg">
-                {% for error in form.username.errors %} {{ error }} {% endfor %}
-            </p>
-            {% else %} {{ form.username(placeholder='New username') }} {% endif
-            %}
+    <section class="account-info">
+        <h1>Account Information</h1>
+        <div class="account-card">
+            <h2>Username: {{ current_user.username }}</h2>
+            <p>Gender: {{ current_user.gender }}</p>
+            <p>Email: {{ current_user.email }}</p>
+            <p>Phone Number: {{ current_user.phone_number }}</p>
+            <p>Organization: {{ current_user.organization }}</p>
+            <p>Resumes: {{ current_user.associated_applicant }}</p>
         </div>
-        <div>
-            {{ form.gender.label }}
-            <span
-                >{% if form.gender.errors %} {{ form.gender }}
+        <form method="POST" class="form-container" novalidate>
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.username.label }} {% if form.username.errors %} {{
+                form.username(placeholder='New username') }}
                 <p class="error-msg">
-                    {% for error in form.gender.errors %} {{ error }} {% endfor
+                    {% for error in form.username.errors %} {{ error }} {%
+                    endfor %}
+                </p>
+                {% else %} {{ form.username(placeholder='New username') }} {%
+                endif %}
+            </div>
+            <div>
+                {{ form.gender.label }}
+                <span
+                    >{% if form.gender.errors %} {{ form.gender }}
+                    <p class="error-msg">
+                        {% for error in form.gender.errors %} {{ error }} {%
+                        endfor %}
+                    </p>
+                    {% else %} {{ form.gender }} {% endif %}
+                </span>
+            </div>
+            <div>
+                {{ form.email.label }} {% if form.email.errors %} {{
+                form.email(placeholder='New email') }}
+                <p class="error-msg">
+                    {% for error in form.email.errors %} {{ error }} {% endfor
                     %}
                 </p>
-                {% else %} {{ form.gender }} {% endif %}
-            </span>
-        </div>
-        <div>
-            {{ form.password.label }} {% if form.password.errors %} {{
-            form.password(placeholder='New password') }}
-            <p class="error-msg">
-                {% for error in form.password.errors %} {{ error }} {% endfor %}
-            </p>
-            {% else %} {{ form.password(placeholder='New password')}} {% endif
-            %}
-        </div>
-        <div>
-            {{ form.email.label }} {% if form.email.errors %} {{
-            form.email(placeholder='New email') }}
-            <p class="error-msg">
-                {% for error in form.email.errors %} {{ error }} {% endfor %}
-            </p>
-            {% else %} {{ form.email(placeholder='New email')}} {% endif %}
-        </div>
-        <div>
-            {{ form.phone_number.label }} {% if form.phone_number.errors %} {{
-            form.phone_number(placeholder='New phone number') }}
-            <p class="error-msg">
-                {% for error in form.phone_number.errors %} {{ error }} {%
-                endfor %}
-            </p>
-            {% else %} {{ form.phone_number(placeholder='New phone number')}} {%
-            endif %}
-        </div>
-        <div>
-            {{ form.organization.label }} {% if form.organization.errors %} {{
-            form.organization(placeholder='New organization') }}
-            <p class="error-msg">
-                {% for error in form.organization.errors %} {{ error }} {%
-                endfor %}
-            </p>
-            <!-- prettier-ignore -->
-            {% else %} {{ form.organization(placeholder='New organization')}}
-            {% endif %}
-        </div>
-        <div>{{ form.submit }}</div>
-    </form>
+                {% else %} {{ form.email(placeholder='New email')}} {% endif %}
+            </div>
+            <div>
+                {{ form.phone_number.label }} {% if form.phone_number.errors %}
+                {{ form.phone_number(placeholder='New phone number') }}
+                <p class="error-msg">
+                    {% for error in form.phone_number.errors %} {{ error }} {%
+                    endfor %}
+                </p>
+                <!-- prettier-ignore -->
+                {% else %} {{ form.phone_number(placeholder='New phone number')}} {% endif %}
+            </div>
+            <div>
+                {{ form.organization.label }} {% if form.organization.errors %}
+                {{ form.organization(placeholder='New organization') }}
+                <p class="error-msg">
+                    {% for error in form.organization.errors %} {{ error }} {%
+                    endfor %}
+                </p>
+                <!-- prettier-ignore -->
+                {% else %} {{ form.organization(placeholder='New organization')}}
+                    {% endif %}
+            </div>
+            <div>{{ form.submit }}</div>
+        </form>
+    </section>
 </main>
-{% endblock %}
+{% endblock %} {% block javascript %}{% endblock %}
