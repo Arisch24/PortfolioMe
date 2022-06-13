@@ -8,6 +8,11 @@ body {
     overflow: hidden;
 }
 
+/* Error message color */
+.error-msg {
+    color: red;
+}
+
 /* Header section */
 header {
     background-color: hsl(var(--light-blue));

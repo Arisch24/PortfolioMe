@@ -45,7 +45,7 @@ input[type='submit'] {
     font-size: 1.15rem;
 }
 
-.form-container div .error-msg {
+.error-msg {
     color: red;
 }
 
