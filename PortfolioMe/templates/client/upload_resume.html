@@ -10,27 +10,59 @@ endblock %} {% block css %}
         <h1>Resume</h1>
         Upload your resumes here.
     </div>
-    <form method="POST" class="form-container">
+    <form
+        method="POST"
+        class="form-container"
+        novalidate
+        enctype="multipart/form-data"
+    >
         {{ form.hidden_tag() }}
-        <div>
+        <div class="upload">
             <img
                 id="temp"
                 src="{{ url_for('static', filename='images/photo.png') }}"
             />
-            {% if form.resume.errors %} {{ form.resume }}
+            {{ form.resume }} {% if form.resume.errors %}
             <p class="error-msg">
                 {% for error in form.resume.errors %} {{ error }} {% endfor %}
             </p>
-            {% else %} {{ form.resume }} {% endif %}
+            {% endif %}
         </div>
         <div>{{ form.submit }}</div>
-        <div><textarea name="" id="" cols="30" rows="10"></textarea></div>
+        <div>{{ form.output }}</div>
     </form>
 </main>
 {% endblock %} {% block javascript %}
 <script>
     $('#temp').on('click', () => {
         $('#resume').click();
+    });
+
+    $('#resume').on('change', (e) => {
+        let allowedImageExtensions = ['jpg', 'png', 'jpeg'];
+        let file = e.target.files[0];
+        let chosenFileExtension = file.name.split('.')[1];
+
+        // if there is image extensions
+        if (allowedImageExtensions.includes(chosenFileExtension)) {
+            $('iframe').remove();
+            $('#temp').css('display', 'block');
+            $('#temp').attr('src', URL.createObjectURL(file));
+        }
+        // if the extension is pdf file
+        else if (chosenFileExtension === 'pdf') {
+            $('#temp').css('display', 'none');
+            let filename = URL.createObjectURL(file);
+            $('.upload').prepend(
+                `<iframe src="${filename}" width="500" height="600"></íframe>`
+            );
+        }
+        // else restore back to normal
+        else {
+            $('iframe').remove();
+            $('#temp').css('display', 'block');
+            $('#temp').attr('src', '/static/images/photo.png');
+        }
     });
 </script>
 {% endblock %}
