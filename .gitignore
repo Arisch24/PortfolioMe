@@ -1,2 +1,8 @@
+# Ignore all libraries
 /.venv
+
+# Ignore all pycache folders
 **/__pycache__
+
+# Ignore test files
+/test
