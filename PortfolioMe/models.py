@@ -16,10 +16,10 @@ class Applicant(db.Model, UserMixin):
     email = db.Column(db.String(50), unique=True, nullable=False)
     phone_number = db.Column(db.String(20), unique=False, nullable=False)
     organization = db.Column(db.String(50), unique=False, nullable=False)
-    resumes_owned = db.relationship('Resume', backref='associated_applicant')
+    resumes_owned = db.relationship('Resume', backref='associated_applicant', uselist=False)
 
     def __repr__(self):
-        return f"Applicant('{self.username}', '{self.password}', '{self.gender}', '{self.email}', '{self.phone_number}', {self.organization}', '{self.resumes_owned}'"
+        return f"Applicant('{self.username}', '{self.password}', '{self.gender}', '{self.email}', '{self.phone_number}', {self.organization}', '{self.resumes_owned}')"
 
 
 class Admin(db.Model):
@@ -29,7 +29,7 @@ class Admin(db.Model):
     gender = db.Column(db.String(10), unique=False, nullable=False)
 
     def __repr__(self):
-        return f"Admin('{self.username}', '{self.password}', '{self.gender}'"
+        return f"Admin('{self.username}', '{self.password}', '{self.gender}')"
 
 
 class Resume(db.Model):
@@ -43,9 +43,9 @@ class Resume(db.Model):
     is_hired = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     image = db.Column(db.String(50), unique=False, nullable=False)
     applicant_id = db.Column(db.Integer, db.ForeignKey(
-        'applicant.id'), unique=False, nullable=False)
+        'applicant.id'), unique=True, nullable=False)
     job_id = db.Column(db.Integer, db.ForeignKey(
-        'jobboard.id'), unique=False, nullable=False)
+        'jobboard.id'), unique=True, nullable=False)
 
     def __repr__(self):
         return f"Resume('{self.applicant_details}', '{self.date_edited}', '{self.is_bookmarked}', '{self.is_hired}', '{self.applicant_id}', '{self.job_id}')"
@@ -65,7 +65,7 @@ class JobBoard(db.Model):
         'Resume', backref='associated_job_board', lazy=True)
 
     def __repr__(self):
-        return f"JobBoard('{self.name}', '{self.description}', '{self.department}', '{self.salary}', '{self.job_type}', '{self.resumes_submitted_list}'"
+        return f"JobBoard('{self.name}', '{self.description}', '{self.department}', '{self.salary}', '{self.job_type}', '{self.resumes_submitted_list}')"
 
 
 class Insights(db.Model):
@@ -75,4 +75,4 @@ class Insights(db.Model):
     hired_count = db.Column(db.Integer, unique=False, nullable=False)
 
     def __repr__(self):
-        return f"Insights('{self.resume_count}', '{self.bookmark_count}', '{self.hired_count}'"
+        return f"Insights('{self.resume_count}', '{self.bookmark_count}', '{self.hired_count}')"
