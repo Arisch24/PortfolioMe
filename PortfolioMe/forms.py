@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField, FileField, TelField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField, TelField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Regexp, ValidationError
 from PortfolioMe.models import Applicant
 
@@ -65,5 +66,13 @@ class EditProfileForm(FlaskForm):
 
 
 class ResumeSubmissionForm(FlaskForm):
-    resume = FileField('Resume', validators=[DataRequired()])
+    resume = FileField('Resume', validators=[FileRequired(), FileAllowed(['jpg', 'png', 'jpeg'])])
+    output = TextAreaField('Output', validators=None)
     submit = SubmitField('Send resume')
+
+
+'''Admin Forms'''
+class AdminLoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login')
