@@ -112,9 +112,13 @@ def upload_resume():
 
 
 '''
-Admin Section
+=============================================================
+                        Admin Section
+=============================================================
 '''
 class DatabaseView(ModelView):
+    '''This view is for admin to view all the tables in the database'''
+
     def is_accessible(self):
         if session.get("admin"):
                 return True
@@ -132,6 +136,8 @@ class DatabaseView(ModelView):
                 return redirect(url_for("login"))
 
 class HomeAdminView(AdminIndexView):
+    '''This view is for anyone accessing the admin page'''
+
     @expose('/')
     def index(self):
         if not session.get("admin"):
@@ -143,10 +149,16 @@ class HomeAdminView(AdminIndexView):
         # handle user login
         form = AdminLoginForm()
         if form.validate_on_submit():
-            return super(HomeAdminView, self).index()
+            admin = models.Admin.query.filter_by(username=form.username.data).first()
+            if admin and bcrypt.check_password_hash(admin.password, form.password.data):
+                session["admin"] = form.username.data
+                return super(HomeAdminView, self).index()
+            else:
+                flash(f"Check your username and password", "failed")
         return self.render("admin/login.html", form=form)
 
 class ManageAdminView(BaseView):
+    '''This is the manage admin view'''
 
     @expose("/", methods=["GET", "POST"])
     def manage_admin(self):
@@ -157,11 +169,24 @@ class ManageAdminView(BaseView):
                 return True
         return False
 
+class LogoutAdminView(BaseView):
+    '''This is the logout view'''
+
+    @expose("/", methods=["GET", "POST"])
+    def logout(self):
+        session.pop("admin")
+        return redirect("/admin")
+
+    def is_accessible(self):
+        if session.get("admin"):
+                return True
+        return False
 
 # Admin Views
-admin = Admin(app, name="PortfolioMe", index_view=HomeAdminView(), template_mode="bootstrap4")
+admin = Admin(app, name="PortfolioMe", index_view=HomeAdminView(), base_template="admin/base.html")
 admin.add_view(DatabaseView(Applicant, db.session))
 admin.add_view(DatabaseView(Resume, db.session))
 admin.add_view(DatabaseView(JobBoard, db.session))
 admin.add_view(DatabaseView(Insights, db.session))
 admin.add_view(ManageAdminView(name="Manage Admin", endpoint="manage_admin"))
+admin.add_view(LogoutAdminView(name="Logout", endpoint="logout"))
