@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %} {% endblock %}</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/admin/base.css') }}"
+        />
+        {% block css %}{% endblock %}
+    </head>
+    <body>
+        <!-- Alert message -->
+        {% with messages = get_flashed_messages(with_categories=true)%} {% if
+        messages %} {% for status, message in messages %}
+        <div class="alert {{ status }}">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %}
+        <header>
+            <div class=""></div>
+        </header>
+        {% block content %} {% endblock %}
+        <footer></footer>
+    </body>
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.slim.js"
+        integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
+        crossorigin="anonymous"
+    ></script>
+    <script
+        src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+        integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+        crossorigin="anonymous"
+    ></script>
+    <script></script>
+    {% block javascript %} {% endblock %}
+</html>
