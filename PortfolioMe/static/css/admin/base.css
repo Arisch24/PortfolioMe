@@ -1,0 +1,85 @@
+body {
+    display: flex !important;
+}
+
+.error-msg {
+    color: red;
+}
+
+header {
+    background-color: hsl(var(--blue-shade)) !important;
+    color: #fff !important;
+    display: grid !important;
+    grid-template-rows: 1fr 2fr 1fr !important;
+    place-items: start center !important;
+    width: 300px !important;
+    height: 100vh !important;
+    padding-block: 1rem !important;
+    transition: all 250ms ease !important;
+    position: sticky !important;
+    top: 0 !important;
+    left: 0 !important;
+    flex-grow: 1 !important;
+    flex-shrink: 0 !important;
+}
+
+header.short {
+    width: 100px !important;
+}
+
+header.short .sidebar-toggle {
+    position: absolute !important;
+    top: 1.5em !important;
+    left: 50% !important;
+    transform: translate(-50%, 0) !important;
+}
+
+header .logo {
+    font-size: 2rem !important;
+    color: hsl(var(--pure-white)) !important;
+}
+
+/*======= Whenever header is small ======== */
+header.short .logo {
+    display: none !important;
+}
+
+header.short .sidebar-menu {
+    display: none !important;
+}
+/* ======= Whenever header is small ========= */
+
+/* Navigation bar */
+nav {
+    height: 100% !important;
+}
+
+nav .sidebar-menu {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-around !important;
+}
+
+nav .short-menu {
+    display: none !important;
+}
+
+.sidebar-menu li a {
+    font-size: 1.25rem;
+    color: hsl(var(--pure-white)) !important;
+}
+
+.sidebar-menu li a:hover {
+    color: hsl(var(--light-blue)) !important;
+}
+
+.account-info {
+    align-self: center !important;
+}
+
+/* Body section */
+.content {
+    padding: 2rem !important;
+    width: 100% !important;
+}
