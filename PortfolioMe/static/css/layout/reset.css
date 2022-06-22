@@ -7,6 +7,7 @@
     --light-accent-blue: 238 95% 66%;
     --accent-blue: 250 80% 60%;
     --sky-blue: 202 74% 88%;
+    --blue-shade: 230 90% 8%;
     --pure-white: 0 0% 100%;
     --pure-black: 0 0% 0%;
 }
@@ -24,6 +25,10 @@ body {
     line-height: 1.5;
     min-height: 100vh;
     font-family: 'Red Hat Display', sans-serif;
+}
+
+ul {
+    list-style: none;
 }
 
 input[type='text'] {
@@ -44,12 +49,24 @@ input[type='submit'] {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
+}
+
+/* Screen-reader only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
 
 /* Alerts */
 .alert {
-    padding: 0.5rem;
+    padding: 0.75rem;
     font-size: 1.1rem;
     position: fixed;
     top: -10rem;
@@ -58,6 +75,7 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 0.5rem;
     animation: slide 5000ms linear forwards normal;
 }
 
