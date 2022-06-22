@@ -151,8 +151,8 @@ class HomeAdminView(AdminIndexView):
         if form.validate_on_submit():
             admin = models.Admin.query.filter_by(username=form.username.data).first()
             if admin and bcrypt.check_password_hash(admin.password, form.password.data):
-                session["admin"] = form.username.data
-                return super(HomeAdminView, self).index()
+                session["admin"] = admin
+                return redirect("/admin")
             else:
                 flash(f"Check your username and password", "failed")
         return self.render("admin/login.html", form=form)
