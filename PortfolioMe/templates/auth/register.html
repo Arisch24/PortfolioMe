@@ -79,7 +79,10 @@ endblock %} {% block css %}
         </div>
         <div>{{ form.submit }}</div>
         <div>
-            Already have an account?<a href="{{ url_for('login') }}">Login.</a>
+            <p>
+                Already have an account?
+                <a href="{{ url_for('login') }}">Login.</a>
+            </p>
         </div>
     </form>
 </main>
