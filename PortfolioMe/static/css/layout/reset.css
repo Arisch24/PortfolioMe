@@ -10,6 +10,8 @@
     --blue-shade: 230 90% 8%;
     --pure-white: 0 0% 100%;
     --pure-black: 0 0% 0%;
+    --red: 13 69% 63%;
+    --yellow: 46 100% 50%;
 }
 
 /* Necessary adjustments */
@@ -42,6 +44,7 @@ select {
     font-family: inherit;
 }
 
+/* Dollar sign means the attribute/class has to end with 'btn' e.g: smtg-btn, smtg btn */
 button[class$='btn'],
 a[class$='btn'],
 input[type='submit'] {
