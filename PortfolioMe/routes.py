@@ -10,7 +10,11 @@ from flask_admin.contrib.sqla import ModelView
 from flask_admin import AdminIndexView, Admin, expose, BaseView, helpers
 from flask_login import login_user, current_user, logout_user, login_required
 
-# Client routes
+'''
+=============================================================
+                        Applicant Section
+=============================================================
+'''
 @app.route("/")
 @app.route("/index")
 @app.route("/home")
@@ -125,7 +129,7 @@ class DatabaseView(ModelView):
         return False
 
     def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for("login", next=request.url))
+        return redirect(url_for(".admin_login", next=request.url))
 
     def _handle_view(self, name, **kwargs):
         if not self.is_accessible():
