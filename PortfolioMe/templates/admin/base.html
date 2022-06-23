@@ -60,12 +60,18 @@
                 </ul>
             </nav>
             <div class="account-info">
-                {% if session["admin"] %}{{ session["admin"].username }}, {{
-                session["admin"].gender }} {% endif %}
+                {% if session["admin"] %}
+                <p>Username: {{ session["admin"].username }},</p>
+                <p>Gender: {{ session["admin"].gender }}</p>
+                <p class="online">Status: Online</p>
+                {% else %}
+                <p>Not Logged In!</p>
+                <p class="offline">Status: Offline</p>
+                {% endif %}
             </div>
         </header>
         <!-- Content Wrapper. Contains page content color white-->
-        <div class="content">
+        <div class="content-wrapper">
             {# store the jinja2 context for form_rules rendering logic #} {% set
             render_ctx = h.resolve_ctx() %} {% block body %} {% endblock body %}
         </div>
