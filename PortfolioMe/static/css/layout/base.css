@@ -126,6 +126,7 @@ header {
     color: hsl(var(--accent-blue) / 0.8);
 }
 
+/* If user is not logged in then this is shown */
 .authentication-box {
     display: flex;
     justify-content: center;
