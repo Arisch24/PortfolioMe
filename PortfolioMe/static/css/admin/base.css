@@ -10,7 +10,7 @@ header {
     background-color: hsl(var(--blue-shade)) !important;
     color: #fff !important;
     display: grid !important;
-    grid-template-rows: 1fr 2fr 1fr !important;
+    grid-template-rows: 1fr 3fr 1fr !important;
     place-items: start center !important;
     width: 300px !important;
     height: 100vh !important;
@@ -23,6 +23,12 @@ header {
     flex-shrink: 0 !important;
 }
 
+header .logo {
+    font-size: 2rem !important;
+    color: hsl(var(--pure-white)) !important;
+}
+
+/*======= Whenever header is small ======== */
 header.short {
     width: 100px !important;
 }
@@ -34,17 +40,15 @@ header.short .sidebar-toggle {
     transform: translate(-50%, 0) !important;
 }
 
-header .logo {
-    font-size: 2rem !important;
-    color: hsl(var(--pure-white)) !important;
-}
-
-/*======= Whenever header is small ======== */
 header.short .logo {
     display: none !important;
 }
 
 header.short .sidebar-menu {
+    display: none !important;
+}
+
+header.short .account-info {
     display: none !important;
 }
 /* ======= Whenever header is small ========= */
@@ -61,13 +65,10 @@ nav .sidebar-menu {
     justify-content: space-around !important;
 }
 
-nav .short-menu {
-    display: none !important;
-}
-
 .sidebar-menu li a {
     font-size: 1.25rem;
     color: hsl(var(--pure-white)) !important;
+    transition: color 250ms ease;
 }
 
 .sidebar-menu li a:hover {
@@ -76,10 +77,37 @@ nav .short-menu {
 
 .account-info {
     align-self: center !important;
+    background-color: hsl(var(--accent-blue));
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    position: relative;
+}
+
+.account-info p {
+    margin: 0 !important;
+}
+
+.online::after,
+.offline::after {
+    content: '';
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+}
+
+.online::after {
+    background-color: lightgreen;
+}
+
+.offline::after {
+    background-color: red;
 }
 
 /* Body section */
-.content {
+.content-wrapper {
     padding: 2rem !important;
     width: 100% !important;
 }
