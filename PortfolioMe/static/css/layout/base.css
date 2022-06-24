@@ -173,6 +173,10 @@ label[for='themeBtn'] {
     display: flex;
 }
 
+#profile path {
+    fill: hsl(var(--dark-blue));
+}
+
 .profile-box a {
     display: inline-block;
     width: 100%;
