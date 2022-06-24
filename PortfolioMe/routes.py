@@ -15,6 +15,8 @@ from flask_login import login_user, current_user, logout_user, login_required
                         Applicant Section
 =============================================================
 '''
+
+
 @app.route("/")
 @app.route("/index")
 @app.route("/home")
@@ -28,8 +30,10 @@ def register():
         return redirect(url_for("home"))
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8") # decode - convert bytes to string
-        applicant = Applicant(username=form.username.data, password=hashed_password, gender=form.gender.data, email=form.email.data, phone_number=form.phone_number.data, organization=form.organization.data)
+        hashed_password = bcrypt.generate_password_hash(
+            form.password.data).decode("utf-8")  # decode - convert bytes to string
+        applicant = Applicant(username=form.username.data, password=hashed_password, gender=form.gender.data,
+                              email=form.email.data, phone_number=form.phone_number.data, organization=form.organization.data)
         db.session.add(applicant)
         db.session.commit()
         flash(f"Your account has been created!", "success")
@@ -53,6 +57,11 @@ def login():
             flash(f"Login Unsuccessful! Check your email and password", "failed")
 
     return render_template("auth/login.html", form=form)
+
+
+@app.route("/forgot_password")
+def forgot_password():
+    return render_template("client/forgot_password.html")
 
 
 @app.route("/logout")
@@ -86,7 +95,7 @@ def edit_profile():
 @app.route("/job_board")
 @login_required
 def job_board():
-        return render_template("client/job_board.html")
+    return render_template("client/job_board.html")
 
 
 # Function to save the resume image
@@ -97,7 +106,7 @@ def save_resume(form_resume):
     resume_path = os.path.join(app.root_path, 'static/resumes', resume_name)
 
     # Resizing image
-    output_size = (1080, 1920) # size of image
+    output_size = (1080, 1920)  # size of image
     image = Image.open(form_resume)
     image.thumbnail(output_size)
     image.save(resume_path)
@@ -120,12 +129,14 @@ def upload_resume():
                         Admin Section
 =============================================================
 '''
+
+
 class DatabaseView(ModelView):
     '''This view is for admin to view all the tables in the database'''
 
     def is_accessible(self):
         if session.get("admin"):
-                return True
+            return True
         return False
 
     def inaccessible_callback(self, name, **kwargs):
@@ -138,6 +149,7 @@ class DatabaseView(ModelView):
             else:
                 flash("You are not allowed to access this page", "failed")
                 return redirect(url_for("login"))
+
 
 class HomeAdminView(AdminIndexView):
     '''This view is for anyone accessing the admin page'''
@@ -153,13 +165,15 @@ class HomeAdminView(AdminIndexView):
         # handle user login
         form = AdminLoginForm()
         if form.validate_on_submit():
-            admin = models.Admin.query.filter_by(username=form.username.data).first()
+            admin = models.Admin.query.filter_by(
+                username=form.username.data).first()
             if admin and bcrypt.check_password_hash(admin.password, form.password.data):
                 session["admin"] = admin
                 return redirect("/admin")
             else:
                 flash(f"Check your username and password", "failed")
         return self.render("admin/login.html", form=form)
+
 
 class ManageAdminView(BaseView):
     '''This is the manage admin view'''
@@ -170,8 +184,9 @@ class ManageAdminView(BaseView):
 
     def is_accessible(self):
         if session.get("admin"):
-                return True
+            return True
         return False
+
 
 class LogoutAdminView(BaseView):
     '''This is the logout view'''
@@ -183,11 +198,13 @@ class LogoutAdminView(BaseView):
 
     def is_accessible(self):
         if session.get("admin"):
-                return True
+            return True
         return False
 
+
 # Admin Views
-admin = Admin(app, name="PortfolioMe", index_view=HomeAdminView(), base_template="admin/base.html")
+admin = Admin(app, name="PortfolioMe", index_view=HomeAdminView(),
+              base_template="admin/base.html")
 admin.add_view(DatabaseView(Applicant, db.session))
 admin.add_view(DatabaseView(Resume, db.session))
 admin.add_view(DatabaseView(JobBoard, db.session))
