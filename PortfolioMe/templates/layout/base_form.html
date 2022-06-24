@@ -28,6 +28,14 @@
         crossorigin="anonymous"
     ></script>
     <script>
+        $(document).ready(() => {
+            let mode = localStorage.getItem('mode');
+            if (mode == 'dark') {
+                $(':root').addClass('dark');
+            } else if (mode == 'light') {
+                $(':root').removeClass('dark');
+            }
+        });
         $('#close').on('click', (e) => {
             location = '../home';
         });
