@@ -3,7 +3,8 @@ body {
 }
 
 .register-container {
-    background-color: #fff;
+    background-color: hsl(var(--light-blue));
+    color: hsl(var(--pure-black));
     padding: 4rem;
     border-radius: 0.5rem;
     display: flex;
