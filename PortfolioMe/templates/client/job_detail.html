@@ -1,0 +1,18 @@
+{% extends "layout/base.html" %}{% block title %}PortfolioMe : {{ job.name }}{%
+endblock %} {% block css %}<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/client/job_board.css') }}"
+/>
+{% endblock %} {% block content %}
+<main class="job-detail-container">
+    <div class="job-header">
+        <h1>{{ job.name }}</h1>
+    </div>
+    <div class="job-details">
+        <div>{{ job.description }}</div>
+        <a href="{{ url_for('upload_resume', job_id=job.id) }}"
+            >Apply for this job</a
+        >
+    </div>
+</main>
+{% endblock %}
