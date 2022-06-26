@@ -12,6 +12,11 @@
             {% block title %}{{ admin_view.name }} - {{ admin_view.admin.name
             }}{% endblock title%}
         </title>
+        <link
+            rel="shortcut icon"
+            href="{{ url_for('static', filename='images/favicon.ico') }}"
+            type="image/x-icon"
+        />
         {% block head_css %}
         <link
             href="{{ admin_static.url(filename='bootstrap/bootstrap4/css/bootstrap.min.css', v='4.2.1') }}"
