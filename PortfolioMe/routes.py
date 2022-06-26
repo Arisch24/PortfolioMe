@@ -92,12 +92,6 @@ def edit_profile():
     return render_template("client/edit_profile.html", form=form)
 
 
-@app.route("/job_board")
-@login_required
-def job_board():
-    return render_template("client/job_board.html")
-
-
 # Function to save the resume image
 def save_resume(form_resume):
     random_hex = secrets.token_hex(8)
@@ -114,14 +108,10 @@ def save_resume(form_resume):
     return resume_name
 
 
-@app.route("/upload_resume", methods=["GET", "POST"])
+@app.route("/resume_list")
 @login_required
-def upload_resume():
-    form = ResumeSubmissionForm()
-    if form.validate_on_submit():
-        flash(f"Success", "success")
-
-    return render_template("client/upload_resume.html", form=form)
+def resume_list():
+    return render_template("client/resume_list.html")
 
 
 '''
