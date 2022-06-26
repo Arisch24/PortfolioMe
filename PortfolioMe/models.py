@@ -2,9 +2,11 @@ from datetime import datetime
 from PortfolioMe import db, login_manager
 from flask_login import UserMixin
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return Applicant.query.get(int(user_id))
+
 
 class Applicant(db.Model, UserMixin):
     __tablename__ = 'applicant'
@@ -16,7 +18,8 @@ class Applicant(db.Model, UserMixin):
     email = db.Column(db.String(50), unique=True, nullable=False)
     phone_number = db.Column(db.String(20), unique=False, nullable=False)
     organization = db.Column(db.String(50), unique=False, nullable=False)
-    resumes_owned = db.relationship('Resume', backref='associated_applicant', uselist=False)
+    resumes_owned = db.relationship(
+        'Resume', backref='associated_applicant', uselist=False)
 
     def __repr__(self):
         return f"Applicant('{self.username}', '{self.password}', '{self.gender}', '{self.email}', '{self.phone_number}', {self.organization}', '{self.resumes_owned}')"
@@ -39,8 +42,10 @@ class Resume(db.Model):
     applicant_details = db.Column(db.Text, unique=False, nullable=False)
     date_edited = db.Column(db.DateTime, unique=False, nullable=False,
                             default=datetime.utcnow)
-    is_bookmarked = db.Column(db.Boolean, unique=False, nullable=False, default=False)
-    is_hired = db.Column(db.Boolean, unique=False, nullable=False, default=False)
+    is_bookmarked = db.Column(db.Boolean, unique=False,
+                              nullable=False, default=False)
+    is_hired = db.Column(db.Boolean, unique=False,
+                         nullable=False, default=False)
     image = db.Column(db.String(50), unique=False, nullable=False)
     applicant_id = db.Column(db.Integer, db.ForeignKey(
         'applicant.id'), unique=True, nullable=False)
