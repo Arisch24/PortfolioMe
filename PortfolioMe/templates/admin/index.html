@@ -1,8 +1,28 @@
 {% extends "admin/master.html"%} {% block title %} PortfolioMe - Admin Home {%
-endblock %} {% block css %}
+endblock %} {% block head_css %} {{ super() }}
 <link
     rel="stylesheet"
     href="{{ url_for('static', filename='css/admin/index.css') }}"
 />
-{% endblock %} {% block content %} {% endblock %} {% block javascript %} {%
-endblock %}
+{% endblock %} {% block body %}
+<main class="index-container">
+    <div class="index-header">
+        <h1>Admin Dashboard</h1>
+        <hr class="my-4" />
+    </div>
+    <section class="index-content">
+        <div class="applicants-card">
+            <h3>Applicants</h3>
+            <h5>56456</h5>
+        </div>
+        <div class="resume-card">
+            <h3>Resumes</h3>
+            <h5>970978</h5>
+        </div>
+        <div class="job-board-card">
+            <h3>Job Boards</h3>
+            <h5>243234</h5>
+        </div>
+    </section>
+</main>
+{% endblock %} {% block javascript %} {% endblock %}
