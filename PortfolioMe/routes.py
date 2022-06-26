@@ -92,6 +92,28 @@ def edit_profile():
     return render_template("client/edit_profile.html", form=form)
 
 
+@app.route("/job_board")
+@login_required
+def job_board():
+    jobs = JobBoard.query.all()
+    return render_template("client/job_board.html", jobs=jobs)
+
+
+@app.route("/job_board/<int:job_id>")
+@login_required
+def job_detail(job_id):
+    job = JobBoard.query.get_or_404(job_id)
+    return render_template("client/job_detail.html", job=job)
+
+
+@app.route("/job_board/<int:job_id>/upload_resume")
+@login_required
+def upload_resume(job_id):
+    job = JobBoard.query.get_or_404(job_id)
+    form = ResumeSubmissionForm()
+    return render_template("client/upload_resume.html", form=form)
+
+
 # Function to save the resume image
 def save_resume(form_resume):
     random_hex = secrets.token_hex(8)
