@@ -1,5 +1,5 @@
 .job-board-container {
-    background-color: hsl(var(--sky-blue));
+    background-color: hsl(var(--light-blue));
     padding-inline: 5rem;
     padding-block: 2rem;
 }
@@ -7,12 +7,18 @@
 .job-board-header {
     display: flex;
     align-items: center;
+    column-gap: 1rem;
     margin-bottom: 2rem;
 }
 
 .job-board-header h1 {
     display: inline-block;
     font-size: 3rem;
+    color: hsl(var(--accent-blue));
+}
+
+.job-board-header svg path {
+    color: hsl(var(--accent-blue));
 }
 
 .jobs-available {
@@ -25,15 +31,17 @@
 
 .jobs-available div {
     position: relative;
-    background-color: hsl(var(--pure-white));
+    background-color: hsl(var(--sky-blue));
+    color: hsl(var(--blue-shade));
     padding: 1rem;
     width: 20vw;
     height: 25vh;
     overflow: hidden;
+    transition: box-shadow 250ms ease;
 }
 
 .jobs-available div:hover {
-    box-shadow: 3px 3px 10px 2px hsla(0, 0%, 0%, 0.5);
+    box-shadow: 12px 12px 0px 0px hsl(var(--pure-black) / 0.8);
 }
 
 .jobs-available div::before {
@@ -42,7 +50,11 @@
     height: 100%;
     position: absolute;
     inset: 0;
-    background: -webkit-linear-gradient(top, transparent 80%, #fff);
+    background: -webkit-linear-gradient(
+        top,
+        transparent 80%,
+        hsl(var(--pure-white))
+    );
     pointer-events: none;
 }
 
