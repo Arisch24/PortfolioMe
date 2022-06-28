@@ -1,0 +1,36 @@
+{% extends "layout/base_form.html" %}{% block title %}PortfolioMe : Reset
+Password Request{% endblock %} {% block css %}<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/auth/reset_token.css') }}"
+/>
+{% endblock %} {% block form %}
+<main class="reset-token-container">
+    <div class="reset-token-header">
+        <h1>Reset Password</h1>
+    </div>
+    <form method="POST" class="form-container" novalidate>
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.password.label }} {% if form.password.errors %} {{
+            form.password(placeholder='New password') }}
+            <p class="error-msg">
+                {% for error in form.password.errors %} {{ error }} {% endfor %}
+            </p>
+            <!-- prettier-ignore -->
+            {% else %} {{ form.password(placeholder='New password') }} {% endif %}
+        </div>
+        <div>
+            {{ form.confirm_password.label }} {% if form.confirm_password.errors
+            %} {{ form.confirm_password(placeholder='Same as new password') }}
+            <p class="error-msg">
+                {% for error in form.confirm_password.errors %} {{ error }} {%
+                endfor %}
+            </p>
+            {% else %} {{ form.confirm_password(placeholder='Same as new
+            password') }} {% endif %}
+        </div>
+        <div>{{ form.submit }}</div>
+    </form>
+</main>
+
+{% endblock %} {% block javascript %} {% endblock %}
