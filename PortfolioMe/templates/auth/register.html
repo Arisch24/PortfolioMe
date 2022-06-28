@@ -30,22 +30,35 @@ endblock %} {% block css %}
         </div>
         <div>
             {{ form.password.label }} {% if form.password.errors %} {{
-            form.password(placeholder='johndoe@1234') }}
+            form.password(placeholder='johndoe@1234') }}<img
+                src="{{ url_for('static', filename='images/Eye_slash_Icon_UIA.svg') }}"
+                class="toggle-password"
+            />
             <p class="error-msg">
                 {% for error in form.password.errors %} {{ error }} {% endfor %}
             </p>
-            {% else %} {{ form.password(placeholder='johndoe@1234') }} {% endif
-            %}
+            {% else %} {{ form.password(placeholder='johndoe@1234') }}
+            <img
+                src="{{ url_for('static', filename='images/Eye_slash_Icon_UIA.svg') }}"
+                class="toggle-password"
+            />{% endif %}
         </div>
         <div>
             {{ form.confirm_password.label }} {% if form.confirm_password.errors
-            %} {{ form.confirm_password(placeholder='Same as password') }}
+            %} {{ form.confirm_password(placeholder='Same as password') }}<img
+                src="{{ url_for('static', filename='images/Eye_slash_Icon_UIA.svg') }}"
+                class="toggle-password"
+            />
             <p class="error-msg">
                 {% for error in form.confirm_password.errors %} {{ error }} {%
                 endfor %}
             </p>
             {% else %} {{ form.confirm_password(placeholder='Same as password')
-            }} {% endif %}
+            }}
+            <img
+                src="{{ url_for('static', filename='images/Eye_slash_Icon_UIA.svg') }}"
+                class="toggle-password"
+            />{% endif %}
         </div>
         <div>
             {{ form.gender.label }}
@@ -86,4 +99,15 @@ endblock %} {% block css %}
         </div>
     </form>
 </main>
+{% endblock %} {% block javascript %}
+<script
+    type="text/javascript"
+    src="{{ url_for('static', filename='js/extras.js') }}"
+></script>
+<script>
+    showHidePassword(
+        "{{ url_for('static', filename='images/Eye_slash_Icon_UIA.svg') }}",
+        "{{ url_for('static', filename='images/Eye_Icon_UIA.svg') }}"
+    );
+</script>
 {% endblock %}
