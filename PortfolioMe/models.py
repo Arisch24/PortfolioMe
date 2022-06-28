@@ -1,5 +1,6 @@
 from datetime import datetime
-from PortfolioMe import db, login_manager
+from itsdangerous import URLSafeTimedSerializer as Serializer
+from PortfolioMe import db, login_manager, app
 from flask_login import UserMixin
 
 
@@ -20,6 +21,19 @@ class Applicant(db.Model, UserMixin):
     organization = db.Column(db.String(50), unique=False, nullable=False)
     resumes_owned = db.relationship(
         'Resume', backref='associated_applicant', uselist=False)
+
+    def get_reset_token(self):
+        s = Serializer(app.config["SECRET_KEY"])
+        return s.dumps({"applicant_id": self.id})
+
+    @staticmethod
+    def verify_reset_token(token, expires_sec=1800):
+        s = Serializer(app.config["SECRET_KEY"])
+        try:
+            applicant_id = s.loads(token, expires_sec)['applicant_id']
+        except:
+            return None
+        return Applicant.query.get(applicant_id)
 
     def __repr__(self):
         return f"Applicant('{self.username}', '{self.password}', '{self.gender}', '{self.email}', '{self.phone_number}', {self.organization}', '{self.resumes_owned}')"
