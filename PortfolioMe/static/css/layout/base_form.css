@@ -52,3 +52,11 @@ input[type='submit'] {
 a:hover {
     text-decoration: underline;
 }
+
+/* For toggle password functionality in forms */
+.toggle-password {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
