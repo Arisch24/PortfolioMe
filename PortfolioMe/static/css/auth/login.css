@@ -37,6 +37,16 @@ body {
     border: 2px solid hsl(var(--pink));
 }
 
+.form-container div:nth-child(3),
+.form-container div:nth-child(2) {
+    position: relative;
+}
+
+.toggle-password {
+    top: 35%;
+    right: 1rem;
+}
+
 .form-container input[type='submit'] {
     background-color: hsl(var(--pink));
 }
@@ -93,6 +103,11 @@ body {
     .login-container {
         min-width: 60%;
     }
+
+    .toggle-password {
+        top: 2.25rem;
+    }
+
     .form-help {
         flex-direction: column;
         align-items: center;

@@ -24,12 +24,19 @@ endblock %} {% block css %}<link
         </div>
         <div>
             {{ form.password.label }} {% if form.password.errors %} {{
-            form.password(placeholder='Ex: abc123@#$') }}
+            form.password(placeholder='Ex: abc123@#$') }}<img
+                src="{{ url_for('static', filename='images/Eye_slash_Icon_UIA.svg') }}"
+                class="toggle-password"
+            />
             <p class="error-msg">
                 {% for error in form.password.errors %} {{ error }} {% endfor %}
             </p>
             <!-- prettier-ignore -->
-            {% else %} {{ form.password(placeholder='Ex: abc123@#$') }} {% endif %}
+            {% else %} {{ form.password(placeholder='Ex: abc123@#$') }}
+            <img
+                src="{{ url_for('static', filename='images/Eye_slash_Icon_UIA.svg') }}"
+                class="toggle-password"
+            />{% endif %}
             <div class="form-help">
                 <div>{{ form.remember }} {{ form.remember.label }}</div>
                 <div>
@@ -42,4 +49,15 @@ endblock %} {% block css %}<link
         <div>{{ form.submit }}</div>
     </form>
 </main>
+{% endblock %} {% block javascript %}
+<script
+    type="text/javascript"
+    src="{{ url_for('static', filename='js/extras.js') }}"
+></script>
+<script>
+    showHidePassword(
+        "{{ url_for('static', filename='images/Eye_slash_Icon_UIA.svg') }}",
+        "{{ url_for('static', filename='images/Eye_Icon_UIA.svg') }}"
+    );
+</script>
 {% endblock %}
