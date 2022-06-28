@@ -42,15 +42,6 @@ body {
     position: relative;
 }
 
-.toggle-password {
-    position: absolute;
-    top: 60%;
-    right: 22%;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-}
-
 .form-container input[type='submit'] {
     background-color: hsl(var(--light-accent-blue));
     color: #fff;
