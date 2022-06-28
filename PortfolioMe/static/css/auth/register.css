@@ -42,6 +42,11 @@ body {
     position: relative;
 }
 
+.toggle-password {
+    top: 60%;
+    right: 22%;
+}
+
 .form-container input[type='submit'] {
     background-color: hsl(var(--light-accent-blue));
     color: #fff;
