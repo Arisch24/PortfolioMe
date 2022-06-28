@@ -62,6 +62,7 @@ def login():
 
 
 def send_reset_email(applicant):
+    # Function to send email to user for resetting password
     token = applicant.get_reset_token()
     msg = Message("Password Reset Request",
                   sender="noreply@PortfolioMe.com", recipients=[applicant.email])
@@ -155,8 +156,8 @@ def upload_resume(job_id):
     return render_template("client/upload_resume.html", form=form)
 
 
-# Function to save the resume image
 def save_resume(form_resume):
+    # Function to save the resume image
     random_hex = secrets.token_hex(8)
     _, file_extension = os.path.splitext(form_resume.filename)
     resume_name = random_hex + file_extension
