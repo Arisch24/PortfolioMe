@@ -6,6 +6,7 @@ from flask_login import LoginManager
 from flask_session import Session
 from flask_mail import Mail
 
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "383ed93c7f5c33627fb4bf56036c7493"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -15,7 +16,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
-login_manager.login_view = "login"
+login_manager.login_view = "auth.login"
 login_manager.login_message_category = "info"
 session = Session(app)
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
@@ -27,10 +28,10 @@ mail = Mail(app)
 
 from PortfolioMe.client.routes import client  # noqa
 from PortfolioMe.auth.routes import auth  # noqa
-from PortfolioMe.home.routes import home  # noqa
-from PortfolioMe.admin.routes import admin  # noqa
+from PortfolioMe.main.routes import main  # noqa
 
 app.register_blueprint(client)
 app.register_blueprint(auth)
-app.register_blueprint(home)
-app.register_blueprint(admin)
+app.register_blueprint(main)
+
+from PortfolioMe import admin_routes  # noqa
