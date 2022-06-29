@@ -25,4 +25,12 @@ app.config["MAIL_USERNAME"] = os.environ.get("EMAIL_USER")
 app.config["MAIL_PASSWORD"] = os.environ.get("EMAIL_PASSWORD")
 mail = Mail(app)
 
-from PortfolioMe import routes  # noqa
+from PortfolioMe.client.routes import client  # noqa
+from PortfolioMe.auth.routes import auth  # noqa
+from PortfolioMe.home.routes import home  # noqa
+from PortfolioMe.admin.routes import admin  # noqa
+
+app.register_blueprint(client)
+app.register_blueprint(auth)
+app.register_blueprint(home)
+app.register_blueprint(admin)
