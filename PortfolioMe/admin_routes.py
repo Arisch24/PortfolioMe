@@ -1,9 +1,9 @@
 
-from flask import Blueprint, session, redirect, url_for, request, flash, abort
+from flask import Blueprint, session, redirect, url_for, request, flash, abort, current_app
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import AdminIndexView, Admin, expose, BaseView
 from flask_login import current_user
-from PortfolioMe import models, bcrypt, app, db
+from PortfolioMe import models, bcrypt, db, admin
 from PortfolioMe.admin_forms import AdminLoginForm
 
 
@@ -79,8 +79,9 @@ class LogoutAdminView(BaseView):
 
 
 # Admin Views
-admin = Admin(app, name="PortfolioMe", index_view=HomeAdminView(),
-              base_template="admin/base.html")
+admin._set_admin_index_view(index_view=HomeAdminView())
+admin.base_template = "admin/base.html"
+admin.name = name = "PortfolioMe"
 admin.add_view(DatabaseView(models.Applicant, db.session))
 admin.add_view(DatabaseView(models.Resume, db.session))
 admin.add_view(DatabaseView(models.JobBoard, db.session))

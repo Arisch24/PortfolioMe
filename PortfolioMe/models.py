@@ -1,6 +1,7 @@
 from datetime import datetime
 from itsdangerous import URLSafeTimedSerializer as Serializer
-from PortfolioMe import db, login_manager, app
+from flask import current_app
+from PortfolioMe import db, login_manager
 from flask_login import UserMixin
 
 
@@ -23,12 +24,12 @@ class Applicant(db.Model, UserMixin):
         'Resume', backref='associated_applicant', uselist=False)
 
     def get_reset_token(self):
-        s = Serializer(app.config["SECRET_KEY"])
+        s = Serializer(current_app.config["SECRET_KEY"])
         return s.dumps({"applicant_id": self.id})
 
     @staticmethod
     def verify_reset_token(token, expires_sec=1800):
-        s = Serializer(app.config["SECRET_KEY"])
+        s = Serializer(current_app.config["SECRET_KEY"])
         try:
             applicant_id = s.loads(token, expires_sec)['applicant_id']
         except:
