@@ -33,18 +33,20 @@
                     alt="Hamburger Menu"
                     id="hamburger"
                 />
-                <a href="{{ url_for('home') }}">PortfolioMe</a>
+                <a href="{{ url_for('main.home') }}">PortfolioMe</a>
             </div>
             <nav class="navigation-bar">
                 <ul>
                     <li>
-                        <a href="{{ url_for('home') }}">Home</a>
+                        <a href="{{ url_for('main.home') }}">Home</a>
                     </li>
                     <li>
-                        <a href="{{ url_for('job_board') }}">Job Board</a>
+                        <a href="{{ url_for('client.job_board') }}"
+                            >Job Board</a
+                        >
                     </li>
                     <li>
-                        <a href="{{ url_for('resume_list') }}">Resume</a>
+                        <a href="{{ url_for('client.resume_list') }}">Resume</a>
                     </li>
                 </ul>
             </nav>
@@ -74,11 +76,13 @@
 
                     <div class="profile-box">
                         <a
-                            href="{{ url_for('edit_profile') }}"
+                            href="{{ url_for('client.edit_profile') }}"
                             class="edit-profile-btn"
                             >Edit Profile</a
                         >
-                        <a href="{{ url_for('logout') }}" class="logout-btn"
+                        <a
+                            href="{{ url_for('auth.logout') }}"
+                            class="logout-btn"
                             >Logout</a
                         >
                     </div>
@@ -86,7 +90,9 @@
             </div>
             {% else %}
             <div class="authentication-box">
-                <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+                <a href="{{ url_for('auth.login') }}" class="login-btn"
+                    >Login</a
+                >
             </div>
             {% endif %}
         </header>

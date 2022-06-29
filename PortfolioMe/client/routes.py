@@ -19,7 +19,7 @@ def edit_profile():
         current_user.organization = form.organization.data
         db.session.commit()
         flash(f"Profile updated successfully.", "success")
-        return redirect(url_for("edit_profile"))
+        return redirect(url_for("client.edit_profile"))
     elif request.method == "GET":
         form.username.data = current_user.username
         form.email.data = current_user.email

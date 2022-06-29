@@ -10,7 +10,7 @@ endblock %} {% block css %}<link
     </div>
     <div class="job-details">
         <div>{{ job.description }}</div>
-        <a href="{{ url_for('upload_resume', job_id=job.id) }}"
+        <a href="{{ url_for('client.upload_resume', job_id=job.id) }}"
             >Apply for this job</a
         >
     </div>

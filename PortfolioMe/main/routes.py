@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template
 
-home = Blueprint("home", __name__)
+main = Blueprint("main", __name__)
 
 
-@home.route("/")
-@home.route("/index")
-@home.route("/home")
+@main.route("/")
+@main.route("/index")
+@main.route("/home")
 def home():
     return render_template("client/index.html")
