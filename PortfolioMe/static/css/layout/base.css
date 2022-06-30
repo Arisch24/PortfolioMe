@@ -220,7 +220,8 @@ input[type='tel'] {
     border-radius: 0.25rem;
 }
 
-input[type='submit'] {
+input[type='submit'],
+input[type='button'] {
     cursor: pointer;
     padding-inline: 2rem;
     padding-block: 0.5rem;
