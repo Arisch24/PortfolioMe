@@ -40,15 +40,13 @@ main[class$='container'] {
     cursor: pointer;
 }
 
-.account-card h1,
-.register-header h1,
-.login-header h1 {
+div.account-card h1,
+div[class$='header'] h1 {
     font-size: 3rem;
 }
 
+div[class$='header'] p,
 .account-card p,
-.login-header p,
-.register-header p,
 .form-container label {
     font-size: 1.15rem;
 }
