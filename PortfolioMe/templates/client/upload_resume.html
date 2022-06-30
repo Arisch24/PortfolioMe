@@ -38,6 +38,20 @@ endblock %} {% block css %}
 </main>
 {% endblock %} {% block javascript %}
 <script>
+    $(document).ready(function (e) {
+        $('#submit').prop('disabled', true);
+    });
+
+    // Disable save resume button
+    $('#output, #resume').on('change', function (e) {
+        if ($('#output').val().trim() && $('#resume')[0].files.length > 0) {
+            $('#submit').prop('disabled', false);
+        } else {
+            $('#submit').prop('disabled', true);
+        }
+    });
+
+    // When button is clicked request is sent to server to process the image
     $('.convert-btn').on('click', (e) => {
         let form = new FormData();
         let file = $('#resume')[0].files;
@@ -54,11 +68,11 @@ endblock %} {% block css %}
                 processData: false,
                 success: function (data) {
                     if (data != 0) {
-                        $('#filename').val(data.resume_name);
                         $('#output').val(data.parsed_text);
-                    } else {
-                        alert('File not chosen.');
                     }
+                },
+                error: function (err) {
+                    console.log(err.statusText);
                 },
             });
         } else {

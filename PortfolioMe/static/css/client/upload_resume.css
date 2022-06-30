@@ -5,7 +5,7 @@ body {
 .upload-resume-container {
     padding-block: 2rem;
     padding-inline: 4rem;
-    background-color: hsl(var(--sky-blue));
+    background-color: hsl(var(--light-blue));
 }
 
 .upload-resume-header > h1 {
@@ -37,10 +37,16 @@ body {
     cursor: pointer;
 }
 
+.convert-btn {
+    background-color: hsl(var(--light-accent-blue));
+}
+
 #output {
+    padding: 1rem;
     min-width: 30vw;
-    min-height: 20vh;
+    min-height: 50vh;
     resize: vertical;
+    border: 1px solid hsl(var(--pure-black));
 }
 
 #submit {
