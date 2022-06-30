@@ -194,12 +194,12 @@
         crossorigin="anonymous"
     ></script>
     <script type="text/javascript">
-        $(document).ready(() => {
-            let mode = localStorage.getItem('mode');
-            if (mode == 'dark') {
+        let mode = localStorage.getItem('mode');
+        if (mode == 'dark') {
+            $(document).ready(() => {
                 $('.theme-btn').click();
-            }
-        });
+            });
+        }
 
         function toggleDarkLightMode() {
             // toggle the change
@@ -224,7 +224,9 @@
                 $('.profile-box').toggleClass('active');
             } else if (e.target.matches('.theme-btn')) {
                 toggleDarkLightMode();
-            } else if (
+            }
+            // only works when user clicks on other place in the DOM
+            else if (
                 $('.navigation-bar').hasClass('active') ||
                 $('body').hasClass('stop-scrolling') ||
                 $('.profile-box').hasClass('active')
