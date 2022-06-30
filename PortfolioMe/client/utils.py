@@ -4,6 +4,7 @@ from flask import current_app, url_for
 from PIL import Image
 import cv2
 import pytesseract
+import numpy as np
 
 
 def save_resume(form_resume):
@@ -17,6 +18,7 @@ def save_resume(form_resume):
     # Resizing image
     output_size = (1080, 1920)  # size of image
     image = Image.open(form_resume)
+    image = image.convert("RGB")
     image.thumbnail(output_size)
     image.save(resume_path)
 
@@ -24,8 +26,10 @@ def save_resume(form_resume):
 
 
 def parse_resume(resume_image):
-    path = r"c:\Users\arisc\OneDrive\Documents\VS Code\FYP\PortfolioMe\static\resumes"
-    img = cv2.imread(path + f"\{resume_image}")
+    # convert string data to numpy array
+    npimg = np.fromstring(resume_image, np.uint8)
+    # convert numpy array to image
+    img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
 
     # Adding custom options
     custom_config = r'--oem 3 --psm 6'

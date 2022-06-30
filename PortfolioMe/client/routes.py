@@ -52,7 +52,8 @@ def upload_resume(job_id):
     job = JobBoard.query.get_or_404(job_id)
     form = ResumeSubmissionForm()
     if form.validate_on_submit():
-        resume = Resume(applicant_details=form.output.data, image=form.filename.data,
+        resume_name = save_resume(form.resume.data)
+        resume = Resume(applicant_details=form.output.data, image=resume_name,
                         applicant_id=current_user.id, job_id=job.id)
         db.session.add(resume)
         db.session.commit()
@@ -61,13 +62,13 @@ def upload_resume(job_id):
     return render_template("client/upload_resume.html", form=form)
 
 
+# API endpoint for AJAX request
 @client.route("/parse_image", methods=["GET", "POST"])
 def parse_image():
     if request.method == "POST":
-        resume = request.files["file"]
-        resume_name = save_resume(resume)
-        parsed_text = parse_resume(resume_name)
-        return jsonify({"status": "success", "resume_name": resume_name, "parsed_text": parsed_text})
+        resume = request.files["file"].read()
+        parsed_text = parse_resume(resume)
+        return jsonify({"status": "success", "parsed_text": parsed_text})
 
 
 @client.route("/resume_list")
