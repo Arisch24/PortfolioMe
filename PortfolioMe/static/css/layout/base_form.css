@@ -24,6 +24,14 @@ input[type='submit'] {
     font-weight: 500;
 }
 
+main[class$='container'] {
+    padding: 4rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
 #close {
     position: absolute;
     top: 0.5rem;
