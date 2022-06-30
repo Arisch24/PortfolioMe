@@ -35,9 +35,11 @@ def create_app(config_class=Config):
     from PortfolioMe.client.routes import client  # noqa
     from PortfolioMe.auth.routes import auth  # noqa
     from PortfolioMe.main.routes import main  # noqa
+    from PortfolioMe.errors.handlers import errors  # noqa
 
     app.register_blueprint(client)
     app.register_blueprint(auth)
     app.register_blueprint(main)
+    app.register_blueprint(errors)
 
     return app
