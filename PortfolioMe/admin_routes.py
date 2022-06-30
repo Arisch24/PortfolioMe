@@ -24,7 +24,7 @@ class DatabaseView(ModelView):
                 abort(403)
             else:
                 flash("You are not allowed to access this page", "failed")
-                return redirect(url_for("login"))
+                return redirect(url_for("auth.login"))
 
 
 class HomeAdminView(AdminIndexView):
