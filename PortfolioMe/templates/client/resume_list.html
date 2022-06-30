@@ -1,0 +1,23 @@
+{% extends "layout/base.html" %} {% block title %}PortfolioMe: Resume List{%
+endblock %} {% block css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/client/resume_list.css') }}"
+/>{% endblock %} {% block content %}
+<main class="resume-list-container">
+    <div class="resume-list-header">
+        <h1>Submitted Resumes</h1>
+        <p>List of the resumes that you have submitted.</p>
+    </div>
+    {% for resume in resumes %}
+    <div>
+        <p>{{ resume.applicant_details }}</p>
+        <p>{{ resume.date_edited }}</p>
+        <p>{{ resume.applicant_id }}</p>
+        <p>{{ resume.job_id }}</p>
+        <img src="{{ url_for('static', filename='resumes/' + resume.image) }}" /
+        width="100" height="100">
+    </div>
+    {% endfor %}
+</main>
+{% endblock %}

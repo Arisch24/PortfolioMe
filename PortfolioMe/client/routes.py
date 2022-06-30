@@ -74,4 +74,5 @@ def parse_image():
 @client.route("/resume_list")
 @login_required
 def resume_list():
-    return render_template("client/resume_list.html")
+    resumes = Resume.query.filter_by(applicant_id=current_user.id).all()
+    return render_template("client/resume_list.html", resumes=resumes)
