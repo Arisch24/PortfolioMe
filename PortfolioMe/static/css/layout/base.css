@@ -273,6 +273,10 @@ footer .about-us {
     color: hsl(var(--blue-shade));
 }
 
+footer a:hover {
+    text-decoration: underline;
+}
+
 footer .icons,
 footer .copyright {
     display: flex;
