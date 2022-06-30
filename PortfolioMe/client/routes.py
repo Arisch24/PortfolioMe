@@ -1,8 +1,11 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+import os
+from sre_constants import SUCCESS
+from flask import Blueprint, jsonify, render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_required
 from PortfolioMe import db
 from PortfolioMe.client.forms import EditProfileForm, ResumeSubmissionForm
-from PortfolioMe.models import JobBoard
+from PortfolioMe.models import JobBoard, Resume
+from PortfolioMe.client.utils import save_resume, parse_resume
 
 client = Blueprint("client", __name__)
 
@@ -43,12 +46,28 @@ def job_detail(job_id):
     return render_template("client/job_detail.html", job=job)
 
 
-@client.route("/job_board/<int:job_id>/upload_resume")
+@client.route("/job_board/<int:job_id>/upload_resume", methods=["GET", "POST"])
 @login_required
 def upload_resume(job_id):
     job = JobBoard.query.get_or_404(job_id)
     form = ResumeSubmissionForm()
+    if form.validate_on_submit():
+        resume = Resume(applicant_details=form.output.data, image=form.filename.data,
+                        applicant_id=current_user.id, job_id=job.id)
+        db.session.add(resume)
+        db.session.commit()
+        flash("Your resume has been saved.", "success")
+        return redirect(url_for("client.job_board"))
     return render_template("client/upload_resume.html", form=form)
+
+
+@client.route("/parse_image", methods=["GET", "POST"])
+def parse_image():
+    if request.method == "POST":
+        resume = request.files["file"]
+        resume_name = save_resume(resume)
+        parsed_text = parse_resume(resume_name)
+        return jsonify({"status": "success", "resume_name": resume_name, "parsed_text": parsed_text})
 
 
 @client.route("/resume_list")

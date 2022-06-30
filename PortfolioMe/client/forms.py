@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, TelField, RadioField,
-                     SubmitField, TextAreaField)
+                     SubmitField, TextAreaField, HiddenField)
 from wtforms.validators import DataRequired, Length, Email, Regexp, ValidationError
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from flask_login import current_user
@@ -39,5 +39,6 @@ class EditProfileForm(FlaskForm):
 class ResumeSubmissionForm(FlaskForm):
     resume = FileField('Resume', validators=[
                        FileRequired(), FileAllowed(['jpg', 'png', 'jpeg'])])
+    filename = HiddenField('Filename', validators=None)
     output = TextAreaField('Output', validators=None)
     submit = SubmitField('Send resume')

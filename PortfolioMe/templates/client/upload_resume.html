@@ -29,11 +29,43 @@ endblock %} {% block css %}
             {% endif %}
         </div>
         <div>{{ form.submit }}</div>
+        <div>
+            {{ form.filename }}
+            <input type="button" class="convert-btn" value="Parse Resume" />
+        </div>
         <div>{{ form.output }}</div>
     </form>
 </main>
 {% endblock %} {% block javascript %}
 <script>
+    $('.convert-btn').on('click', (e) => {
+        let form = new FormData();
+        let file = $('#resume')[0].files;
+
+        if (file.length > 0) {
+            console.log(file);
+            form.append('file', file[0]);
+
+            $.ajax({
+                url: '/parse_image',
+                type: 'POST',
+                data: form,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data != 0) {
+                        $('#filename').val(data.resume_name);
+                        $('#output').val(data.parsed_text);
+                    } else {
+                        alert('File not chosen.');
+                    }
+                },
+            });
+        } else {
+            alert('Please select a file');
+        }
+    });
+
     $('#temp').on('click', () => {
         $('#resume').click();
     });

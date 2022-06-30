@@ -1,7 +1,9 @@
 import secrets
 import os
-from flask import current_app
+from flask import current_app, url_for
 from PIL import Image
+import cv2
+import pytesseract
 
 
 def save_resume(form_resume):
@@ -19,3 +21,15 @@ def save_resume(form_resume):
     image.save(resume_path)
 
     return resume_name
+
+
+def parse_resume(resume_image):
+    path = r"c:\Users\arisc\OneDrive\Documents\VS Code\FYP\PortfolioMe\static\resumes"
+    img = cv2.imread(path + f"\{resume_image}")
+
+    # Adding custom options
+    custom_config = r'--oem 3 --psm 6'
+    pytesseract.pytesseract.tesseract_cmd = 'C:\\Users\\arisc\\AppData\\Local\\Programs\\Tesseract-OCR\\tesseract.exe'
+
+    text = pytesseract.image_to_string(img, lang='eng')
+    return text
