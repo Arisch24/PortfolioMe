@@ -1,0 +1,36 @@
+body {
+    background-color: hsl(var(--light-accent-blue));
+}
+
+.reset-token-container {
+    background-color: hsl(var(--light-blue));
+    color: hsl(var(--pure-black));
+    min-width: 40%;
+    max-width: 60%;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.form-container input:not(input[type='submit']) {
+    width: 100%;
+    border: 2px solid hsl(var(--pink));
+}
+
+.form-container div:nth-child(2),
+.form-container div:nth-child(3) {
+    position: relative;
+}
+
+.form-container input[type='submit'] {
+    background-color: hsl(var(--accent-blue));
+    color: hsl(var(--pure-white));
+}
+
+.toggle-password {
+    top: 50%;
+    right: 0.5rem;
+}
