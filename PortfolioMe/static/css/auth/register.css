@@ -37,6 +37,10 @@ body {
     position: relative;
 }
 
+.form-container div:last-child a {
+    color: hsl(var(--pink));
+}
+
 .toggle-password {
     top: 60%;
     right: 22%;
