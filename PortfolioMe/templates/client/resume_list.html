@@ -9,7 +9,7 @@ endblock %} {% block css %}
         <h1>Submitted Resumes</h1>
         <p>List of the resumes that you have submitted.</p>
     </div>
-    {% for resume in resumes %}
+    {% if resume is not none %} {% for resume in resumes %}
     <div>
         <p>{{ resume.applicant_details }}</p>
         <p>{{ resume.date_edited }}</p>
@@ -18,6 +18,11 @@ endblock %} {% block css %}
         <img src="{{ url_for('static', filename='resumes/' + resume.image) }}" /
         width="100" height="100">
     </div>
-    {% endfor %}
+    {% endfor %} {% else %}
+    <div>
+        You have not submitted any resumes. To submit your resume find a job to
+        apply <a href="{{ url_for('client.job_board') }}">here.</a>
+    </div>
+    {% endif %}
 </main>
 {% endblock %}
