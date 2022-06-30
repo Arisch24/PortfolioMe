@@ -47,6 +47,14 @@ ul {
     padding-inline-start: 0;
 }
 
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 input[type='text'] {
     display: block;
 }
@@ -104,6 +112,10 @@ input[type='submit'] {
 .alert.failed {
     background-color: hsl(0, 95%, 86%);
     color: hsl(0, 100%, 50%, 0.85);
+}
+
+.alert.warning {
+    background-color: hsl(var(--yellow));
 }
 
 @keyframes slide {
