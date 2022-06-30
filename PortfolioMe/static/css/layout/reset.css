@@ -65,10 +65,6 @@ input[type='submit'] {
     transition: 200ms ease-in-out;
 }
 
-a {
-    text-decoration: none !important;
-}
-
 /* Screen-reader only */
 .sr-only {
     position: absolute;
