@@ -31,8 +31,9 @@ section.account-info {
     background-clip: padding-box;
     padding: 1rem;
     border: 1px solid transparent;
-    z-index: 15;
+    z-index: 0;
     box-shadow: 0px 15px 20px 0px hsl(var(--pure-black) / 0.5);
+    color: hsl(var(--dark-blue));
 }
 
 .account-card::before {
@@ -44,7 +45,7 @@ section.account-info {
     );
     position: absolute;
     inset: 0;
-    z-index: 0;
+    z-index: -1;
     border-radius: inherit;
 }
 
