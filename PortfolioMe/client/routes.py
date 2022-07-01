@@ -33,14 +33,12 @@ def edit_profile():
 
 
 @client.route("/job_board")
-@login_required
 def job_board():
     jobs = JobBoard.query.all()
     return render_template("client/job_board.html", jobs=jobs)
 
 
 @client.route("/job_board/<int:job_id>")
-@login_required
 def job_detail(job_id):
     job = JobBoard.query.get_or_404(job_id)
     return render_template("client/job_detail.html", job=job)

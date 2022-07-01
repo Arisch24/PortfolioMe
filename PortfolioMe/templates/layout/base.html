@@ -37,6 +37,7 @@
             </div>
             <nav class="navigation-bar">
                 <ul>
+                    {% if current_user.is_authenticated %}
                     <li>
                         <a href="{{ url_for('main.home') }}">Home</a>
                     </li>
@@ -48,6 +49,16 @@
                     <li>
                         <a href="{{ url_for('client.resume_list') }}">Resume</a>
                     </li>
+                    {% else %}
+                    <li>
+                        <a href="{{ url_for('main.home') }}">Home</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('client.job_board') }}"
+                            >Job Board</a
+                        >
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
             <div class="toggle-dark-light-mode">
