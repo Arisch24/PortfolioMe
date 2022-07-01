@@ -21,7 +21,7 @@ class Applicant(db.Model, UserMixin):
     phone_number = db.Column(db.String(20), unique=False, nullable=False)
     organization = db.Column(db.String(50), unique=False, nullable=False)
     resumes_owned = db.relationship(
-        'Resume', backref='associated_applicant', uselist=False)
+        'Resume', backref='associated_applicant', uselist=True)
 
     def get_reset_token(self):
         s = Serializer(current_app.config["SECRET_KEY"])
@@ -37,7 +37,7 @@ class Applicant(db.Model, UserMixin):
         return Applicant.query.get(applicant_id)
 
     def __repr__(self):
-        return f"Applicant('{self.username}', '{self.password}', '{self.gender}', '{self.email}', '{self.phone_number}', {self.organization}', '{self.resumes_owned}')"
+        return f"Applicant('{self.username}', '{self.gender}', '{self.email}', '{self.phone_number}', {self.organization}', '{self.resumes_owned}')"
 
 
 class Admin(db.Model):
@@ -47,7 +47,7 @@ class Admin(db.Model):
     gender = db.Column(db.String(10), unique=False, nullable=False)
 
     def __repr__(self):
-        return f"Admin('{self.username}', '{self.password}', '{self.gender}')"
+        return f"Admin('{self.username}', '{self.gender}')"
 
 
 class Resume(db.Model):
