@@ -53,6 +53,10 @@ header.short .account-info {
 }
 /* ======= Whenever header is small ========= */
 
+a:hover {
+    text-decoration: none;
+}
+
 /* Navigation bar */
 nav {
     height: 100% !important;
