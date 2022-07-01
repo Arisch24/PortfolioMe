@@ -1,14 +1,141 @@
 
+from ast import Mod
 from flask import Blueprint, session, redirect, url_for, request, flash, abort, current_app
 from flask_admin.contrib.sqla import ModelView
-from flask_admin import AdminIndexView, Admin, expose, BaseView
+from flask_admin import AdminIndexView, Admin, expose, BaseView, form
 from flask_login import current_user
 from PortfolioMe import models, bcrypt, db, admin
 from PortfolioMe.admin_forms import AdminLoginForm
+from wtforms import StringField
 
 
-class DatabaseView(ModelView):
+class ApplicantView(ModelView):
     '''This view is for admin to view all the tables in the database'''
+
+    # Custom filters
+    can_view_details = True
+    can_export = True
+    can_set_page_size = True
+
+    create_template = "custom/create.html"
+    edit_template = "custom/edit.html"
+    details_template = "custom/details.html"
+    list_template = "custom/list.html"
+
+    def scaffold_form(self):
+        form_class = super(ApplicantView, self).scaffold_form()
+        form_class.extra = StringField('Extra')
+        return form_class
+
+    def is_accessible(self):
+        if session.get("admin"):
+            return True
+        return False
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for(".admin_login", next=request.url))
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            if current_user.is_authenticated:
+                abort(403)
+            else:
+                flash("You are not allowed to access this page", "failed")
+                return redirect(url_for("auth.login"))
+
+
+class ResumeView(ModelView):
+    '''This view is for admin to view all the tables in the database'''
+
+    # Custom filters
+    can_view_details = True
+    can_export = True
+    can_set_page_size = True
+
+    create_template = "custom/create.html"
+    edit_template = "custom/edit.html"
+    details_template = "custom/details.html"
+    list_template = "custom/list.html"
+
+    def scaffold_form(self):
+        form_class = super(ResumeView, self).scaffold_form()
+        form_class.extra = StringField('Extra')
+        return form_class
+
+    def is_accessible(self):
+        if session.get("admin"):
+            return True
+        return False
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for(".admin_login", next=request.url))
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            if current_user.is_authenticated:
+                abort(403)
+            else:
+                flash("You are not allowed to access this page", "failed")
+                return redirect(url_for("auth.login"))
+
+
+class JobBoardView(ModelView):
+    '''This view is same as the view above but allows file uploading'''
+
+    form_extra_fields = {
+        'path': form.ImageUploadField('Image',
+                                      thumbnail_size=(1920, 1080, True))
+    }
+
+    # Custom filters
+    can_view_details = True
+    can_export = True
+    can_set_page_size = True
+
+    create_template = "custom/create.html"
+    edit_template = "custom/edit.html"
+    details_template = "custom/details.html"
+    list_template = "custom/list.html"
+
+    def scaffold_form(self):
+        form_class = super(JobBoardView, self).scaffold_form()
+        form_class.extra = StringField('Extra')
+        return form_class
+
+    def is_accessible(self):
+        if session.get("admin"):
+            return True
+        return False
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for(".admin_login", next=request.url))
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            if current_user.is_authenticated:
+                abort(403)
+            else:
+                flash("You are not allowed to access this page", "failed")
+                return redirect(url_for("auth.login"))
+
+
+class InsightsView(ModelView):
+    '''This view is for admin to view all the tables in the database'''
+
+    # Custom filters
+    can_view_details = True
+    can_export = True
+    can_set_page_size = True
+
+    create_template = "custom/create.html"
+    edit_template = "custom/edit.html"
+    details_template = "custom/details.html"
+    list_template = "custom/list.html"
+
+    def scaffold_form(self):
+        form_class = super(InsightsView, self).scaffold_form()
+        form_class.extra = StringField('Extra')
+        return form_class
 
     def is_accessible(self):
         if session.get("admin"):
@@ -82,9 +209,9 @@ class LogoutAdminView(BaseView):
 admin._set_admin_index_view(index_view=HomeAdminView())
 admin.base_template = "admin/base.html"
 admin.name = name = "PortfolioMe"
-admin.add_view(DatabaseView(models.Applicant, db.session))
-admin.add_view(DatabaseView(models.Resume, db.session))
-admin.add_view(DatabaseView(models.JobBoard, db.session))
-admin.add_view(DatabaseView(models.Insights, db.session))
+admin.add_view(ApplicantView(models.Applicant, db.session))
+admin.add_view(ResumeView(models.Resume, db.session))
+admin.add_view(JobBoardView(models.JobBoard, db.session))
+admin.add_view(InsightsView(models.Insights, db.session))
 admin.add_view(ManageAdminView(name="Manage Admin", endpoint="manage_admin"))
 admin.add_view(LogoutAdminView(name="Logout", endpoint="logout"))
