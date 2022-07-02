@@ -28,4 +28,28 @@ body %} {% block navlinks %}
 </ul>
 {% endblock %} {% block edit_form %} {{ lib.render_form(form, return_url,
 extra(), form_opts) }} {% endblock %} {% endblock %} {% block tail %} {{ super()
-}} {{ lib.form_js() }} {% endblock %}
+}} {{ lib.form_js() }}
+<script>
+    // if the url is jobboard then do this
+    if (window.location.pathname.split('/').includes('jobboard')) {
+        // Make job_image input readonly so admin only uploads to file input
+        $('#job_image').prop('readonly', true);
+
+        $('#image').on('change', function (e) {
+            let filename = e.target.files[0].name;
+            $('#job_image').val(filename);
+        });
+    }
+
+    // if the url is resume then do this
+    if (window.location.pathname.split('/').includes('resume')) {
+        // Make image input readonly so admin only uploads to file input
+        $('#image').prop('readonly', true);
+
+        $('#temp').on('change', function (e) {
+            let filename = e.target.files[0].name;
+            $('#image').val(filename);
+        });
+    }
+</script>
+{% endblock %}
