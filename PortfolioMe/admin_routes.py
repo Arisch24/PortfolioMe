@@ -6,6 +6,7 @@ from flask_admin import AdminIndexView, Admin, expose, BaseView, form
 from flask_login import current_user
 from PortfolioMe import models, bcrypt, db, admin
 from PortfolioMe.admin_forms import AdminLoginForm
+from wtforms import PasswordField
 from wtforms.validators import DataRequired
 
 resume_path = os.path.join(os.path.dirname(__file__), 'static\\resumes')
@@ -22,16 +23,26 @@ def filename_generation(obj, file_data):
 class ApplicantView(ModelView):
     '''This view is for admin to view all the tables in the database'''
 
-    form_edit_rules = ('username', 'gender', 'email',
-                       'phone_number', 'organization')
+    form_excluded_columns = ("password")
 
-    form_create_rules = ('username', 'gender', 'email', 'password',
-                         'phone_number', 'organization')
+    form_extra_fields = {
+        "password2": PasswordField("Password")
+    }
+
+    form_columns = (
+        "username",
+        "password2",
+        "gender",
+        "email",
+        "phone_number",
+        "organization",
+        "resumes_owned"
+    )
 
     def on_model_change(self, form, model, is_created):
-        if is_created:
+        if form.password2.data != '':
             model.password = bcrypt.generate_password_hash(
-                model.password).decode("utf-8")
+                form.password2.data).decode("utf-8")
 
     # Custom filters
     can_view_details = True
