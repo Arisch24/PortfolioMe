@@ -211,17 +211,51 @@ class HomeAdminView(AdminIndexView):
         return self.render("admin/login.html", form=form)
 
 
-class ManageAdminView(BaseView):
+class ManageAdminView(ModelView):
     '''This is the manage admin view'''
 
-    @expose("/", methods=["GET", "POST"])
-    def manage_admin(self):
-        return self.render("admin/manage_admin.html")
+    form_excluded_columns = ("password")
+
+    form_extra_fields = {
+        "new_password": PasswordField("New Password")
+    }
+
+    form_columns = (
+        "username",
+        "new_password",
+        "gender",
+    )
+
+    def on_model_change(self, form, model, is_created):
+        if form.new_password.data != '':
+            model.password = bcrypt.generate_password_hash(
+                form.new_password.data).decode("utf-8")
+
+    # Custom filters
+    can_view_details = True
+    can_export = True
+    can_set_page_size = True
+
+    create_template = "custom/create.html"
+    edit_template = "custom/edit.html"
+    details_template = "custom/details.html"
+    list_template = "custom/list.html"
 
     def is_accessible(self):
-        if session.get("admin"):
+        if session.get("admin") and session.get("admin").id == 1:
             return True
         return False
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for(".admin_login", next=request.url))
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            if current_user.is_authenticated:
+                abort(403)
+            else:
+                flash("You are not allowed to access this page", "failed")
+                return redirect(url_for("auth.login"))
 
 
 class LogoutAdminView(BaseView):
@@ -241,11 +275,13 @@ class LogoutAdminView(BaseView):
 # Admin Views
 admin._set_admin_index_view(index_view=HomeAdminView())
 admin.base_template = "admin/base.html"
-admin.name = name = "PortfolioMe"
+admin.name = "PortfolioMe"
 admin.template_mode = "bootstrap4"
 admin.add_view(ApplicantView(models.Applicant, db.session))
 admin.add_view(ResumeView(models.Resume, db.session))
 admin.add_view(JobBoardView(models.JobBoard, db.session))
 admin.add_view(InsightsView(models.Insights, db.session))
-admin.add_view(ManageAdminView(name="Manage Admin", endpoint="manage_admin"))
+admin.add_view(ManageAdminView(models.Admin, db.session,
+               name="Manage Admin", endpoint="manage_admin"))
+# admin.add_view(ManageAdminView(name="Manage Admin", endpoint="manage_admin"))
 admin.add_view(LogoutAdminView(name="Logout", endpoint="logout"))
