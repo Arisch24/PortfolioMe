@@ -19,7 +19,17 @@
         />
         {% block head_css %}
         <link
+            href="{{ admin_static.url(filename='bootstrap/bootstrap4/swatch/{swatch}/bootstrap.min.css'.format(swatch=config.get('FLASK_ADMIN_SWATCH', 'default')), v='4.2.1') }}"
+            rel="stylesheet"
+        />
+        {% if config.get('FLASK_ADMIN_SWATCH', 'default') == 'default' %}
+        <link
             href="{{ admin_static.url(filename='bootstrap/bootstrap4/css/bootstrap.min.css', v='4.2.1') }}"
+            rel="stylesheet"
+        />
+        {% endif %}
+        <link
+            href="{{ admin_static.url(filename='admin/css/bootstrap4/admin.css', v='1.1.1') }}"
             rel="stylesheet"
         />
         <link
@@ -34,7 +44,10 @@
             rel="stylesheet"
             href="{{ url_for('static', filename='css/admin/base.css') }}"
         />
-        {% endblock head_css %} {% block head %} {% endblock head%}
+        {% if admin_view.extra_css %} {% for css_url in admin_view.extra_css %}
+        <link href="{{ css_url }}" rel="stylesheet" />
+        {% endfor %} {% endif %} {% endblock head_css %} {% block head %} {%
+        endblock head%}
     </head>
     <body>
         <!-- Alert message -->
@@ -122,6 +135,9 @@
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous"
         ></script>
+        {% if admin_view.extra_js %} {% for js_url in admin_view.extra_js %}
+        <script src="{{ js_url }}" type="text/javascript"></script>
+        {% endfor %} {% endif %}
         <script>
             $('.sidebar-toggle').on('click', () => {
                 $('.header').toggleClass('short');
