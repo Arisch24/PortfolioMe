@@ -105,6 +105,7 @@ endblock %} {% block css %}
     src="{{ url_for('static', filename='js/extras.js') }}"
 ></script>
 <script>
+    $('#username').focus();
     showHidePassword(
         "{{ url_for('static', filename='images/Eye_slash_Icon_UIA.svg') }}",
         "{{ url_for('static', filename='images/Eye_Icon_UIA.svg') }}"
