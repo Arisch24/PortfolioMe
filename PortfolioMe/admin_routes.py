@@ -23,15 +23,14 @@ def filename_generation(obj, file_data):
 class ApplicantView(ModelView):
     '''This view is for admin to view all the tables in the database'''
 
-    form_excluded_columns = ("password")
-
     form_extra_fields = {
-        "password2": PasswordField("Password")
+        "new_password": PasswordField("New password")
     }
 
     form_columns = (
         "username",
-        "password2",
+        "password",
+        "new_password",
         "gender",
         "email",
         "phone_number",
@@ -40,9 +39,9 @@ class ApplicantView(ModelView):
     )
 
     def on_model_change(self, form, model, is_created):
-        if form.password2.data != '':
+        if form.new_password.data != '':
             model.password = bcrypt.generate_password_hash(
-                form.password2.data).decode("utf-8")
+                form.new_password.data).decode("utf-8")
 
     # Custom filters
     can_view_details = True

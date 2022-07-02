@@ -62,5 +62,10 @@ extra(), form_opts) }} {% endblock %} {% endblock %} {% block tail %} {{ super()
             $('#image').val(filename);
         });
     }
+
+    // if the url is applicant then do this
+    if (window.location.pathname.split('/').includes('applicant')) {
+        $('#password').prop('readonly', true);
+    }
 </script>
 {% endblock %}
