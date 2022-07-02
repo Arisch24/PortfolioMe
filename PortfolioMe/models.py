@@ -37,7 +37,7 @@ class Applicant(db.Model, UserMixin):
         return Applicant.query.get(applicant_id)
 
     def __repr__(self):
-        return f"Applicant('{self.username}', '{self.gender}', '{self.email}', '{self.phone_number}', {self.organization}', '{self.resumes_owned}')"
+        return f"Applicant('{self.username}', '{self.gender}', '{self.email}', '{self.phone_number}', {self.organization}')"
 
 
 class Admin(db.Model):
@@ -85,7 +85,7 @@ class JobBoard(db.Model):
         'Resume', backref='associated_job_board', lazy=True)
 
     def __repr__(self):
-        return f"JobBoard('{self.name}', '{self.description}', '{self.department}', '{self.salary}', '{self.job_type}', '{self.resumes_submitted_list}')"
+        return f"JobBoard('{self.name}', '{self.description}', '{self.department}', '{self.salary}', '{self.job_type}')"
 
 
 class Insights(db.Model):
