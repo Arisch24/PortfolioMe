@@ -23,13 +23,14 @@ def filename_generation(obj, file_data):
 class ApplicantView(ModelView):
     '''This view is for admin to view all the tables in the database'''
 
+    form_excluded_columns = ("password")
+
     form_extra_fields = {
-        "new_password": PasswordField("New password")
+        "new_password": PasswordField("New Password")
     }
 
     form_columns = (
         "username",
-        "password",
         "new_password",
         "gender",
         "email",
