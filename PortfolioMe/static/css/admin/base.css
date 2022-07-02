@@ -57,6 +57,17 @@ a:hover {
     text-decoration: none;
 }
 
+label {
+    margin-top: 1rem;
+}
+
+input[type='text'],
+input[type='tel'],
+input[type='password'],
+input[type='email'] {
+    padding: 0.5rem;
+}
+
 /* Navigation bar */
 nav {
     height: 100% !important;
