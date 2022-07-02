@@ -57,8 +57,12 @@ a:hover {
     text-decoration: none;
 }
 
-label {
+div.form-group:first-child {
     margin-top: 1rem;
+}
+
+span::before {
+    font-size: 1.25rem;
 }
 
 input[type='text'],
