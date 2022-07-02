@@ -53,10 +53,6 @@ a {
     text-decoration: none;
 }
 
-input[type='text'] {
-    display: block;
-}
-
 button,
 input,
 textarea,
