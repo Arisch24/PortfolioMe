@@ -4,7 +4,8 @@ import os
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY")
     SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
-    FLASK_ADMIN_SWATCH = "sandstone"
+    FLASK_ADMIN_SWATCH = "litera"
+    FLASK_ADMIN_FLUID_LAYOUT = True
     SESSION_PERMANENT = False
     SESSION_TYPE = "filesystem"
     MAIL_SERVER = "smtp.gmail.com"
