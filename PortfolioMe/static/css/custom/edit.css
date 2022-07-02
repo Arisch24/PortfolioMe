@@ -1,0 +1,10 @@
+select {
+    max-width: 1200px;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='text'] {
+    width: 100%;
+}

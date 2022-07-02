@@ -1,7 +1,11 @@
 {% extends 'admin/master.html' %} {% import 'admin/lib.html' as lib with context
 %} {% from 'admin/lib.html' import extra with context %} {# backward compatible
-#} {% block head %} {{ super() }} {{ lib.form_css() }} {% endblock %} {% block
-body %} {% block navlinks %}
+#} {% block head %} {{ super() }} {{ lib.form_css() }}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/custom/edit.css') }}"
+/>
+{% endblock %} {% block body %} {% block navlinks %}
 <h1>Edit Existing Data</h1>
 <ul class="nav nav-tabs">
     <li>

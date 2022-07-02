@@ -1,5 +1,10 @@
 {% extends 'admin/model/edit.html' %} {% block head %} {{ super() }} {{
-lib.form_css() }} {% endblock %} {% block body %} {% block navlinks %}
+lib.form_css() }}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/custom/create.css') }}"
+/>
+{% endblock %} {% block body %} {% block navlinks %}
 <h1>Create New Data</h1>
 <ul class="nav nav-tabs d-flex justify-content-around">
     <li>
