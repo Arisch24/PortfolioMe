@@ -39,6 +39,9 @@ class ApplicantView(ModelView):
         "resumes_owned"
     )
 
+    column_searchable_list = ["username",
+                              "email", "phone_number", "organization"]
+
     def on_model_change(self, form, model, is_created):
         if form.new_password.data != '':
             model.password = bcrypt.generate_password_hash(
@@ -80,6 +83,8 @@ class ResumeView(ModelView):
                                       base_path=resume_path,
                                       allowed_extensions=['png', 'jpg', 'jpeg'], allow_overwrite=True)
     }
+
+    column_searchable_list = ["applicant_details", "date_edited"]
 
     def on_model_change(self, form, model, is_created):
         model.image = model.temp
@@ -123,6 +128,9 @@ class JobBoardView(ModelView):
                                       base_path=job_board_path,
                                       namegen=filename_generation, allowed_extensions=['png', 'jpg', 'jpeg'], allow_overwrite=True),
     }
+
+    column_searchable_list = ["name", "description",
+                              "department", "salary", "job_type"]
 
     def on_model_change(self, form, model, is_created):
         model.job_image = model.image
@@ -225,6 +233,8 @@ class ManageAdminView(ModelView):
         "new_password",
         "gender",
     )
+
+    column_searchable_list = ["username", "gender"]
 
     def on_model_change(self, form, model, is_created):
         if form.new_password.data != '':
