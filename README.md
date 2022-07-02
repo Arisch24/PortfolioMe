@@ -55,6 +55,10 @@
 |   |   |   |   |-- resume_list.css
 |   |   |   |   `-- upload_resume.css
 |   |   |   |-- custom
+|   |   |   |   |-- create.css
+|   |   |   |   |-- details.css
+|   |   |   |   |-- edit.css
+|   |   |   |   `-- list.css
 |   |   |   |-- errors
 |   |   |   |   `-- errors.css
 |   |   |   |-- layout
@@ -116,9 +120,10 @@
 |-- README.md
 |-- requirements.txt
 |-- run.py
-`-- test.txt
+`-- tree.txt
 
-24 directories, 81 files
+24 directories, 85 files
+
 
 ```
 
