@@ -231,6 +231,7 @@ class LogoutAdminView(BaseView):
 admin._set_admin_index_view(index_view=HomeAdminView())
 admin.base_template = "admin/base.html"
 admin.name = name = "PortfolioMe"
+admin.template_mode = "bootstrap4"
 admin.add_view(ApplicantView(models.Applicant, db.session))
 admin.add_view(ResumeView(models.Resume, db.session))
 admin.add_view(JobBoardView(models.JobBoard, db.session))
