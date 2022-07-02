@@ -1,12 +1,25 @@
-
-from ast import Mod
-from flask import Blueprint, session, redirect, url_for, request, flash, abort, current_app
+import os
+import secrets
+from cv2 import PARAM_ALGORITHM
+from flask import session, redirect, url_for, request, flash, abort, current_app
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import AdminIndexView, Admin, expose, BaseView, form
+from flask_admin.form import rules
 from flask_login import current_user
 from PortfolioMe import models, bcrypt, db, admin
 from PortfolioMe.admin_forms import AdminLoginForm
 from wtforms import StringField
+from wtforms.validators import DataRequired
+
+resume_path = os.path.join(os.path.dirname(__file__), 'static\\resumes')
+job_board_path = os.path.join(os.path.dirname(__file__), 'static\\jobs')
+
+
+def filename_generation(obj, file_data):
+    random_hex = secrets.token_hex(8)
+    _, file_extension = os.path.splitext(file_data.filename)
+    new_filename = random_hex + file_extension
+    return new_filename
 
 
 class ApplicantView(ModelView):
@@ -21,11 +34,6 @@ class ApplicantView(ModelView):
     edit_template = "custom/edit.html"
     details_template = "custom/details.html"
     list_template = "custom/list.html"
-
-    def scaffold_form(self):
-        form_class = super(ApplicantView, self).scaffold_form()
-        form_class.extra = StringField('Extra')
-        return form_class
 
     def is_accessible(self):
         if session.get("admin"):
@@ -45,7 +53,20 @@ class ApplicantView(ModelView):
 
 
 class ResumeView(ModelView):
-    '''This view is for admin to view all the tables in the database'''
+    '''This view is same as other views but allows file uploading'''
+
+    form_extra_fields = {
+        'temp': form.ImageUploadField(label='Resume Image',
+                                      validators=[DataRequired()],
+                                      base_path=resume_path,
+                                      allowed_extensions=['png', 'jpg', 'jpeg'], allow_overwrite=True)
+    }
+
+    def on_model_change(self, form, model, is_created):
+        model.image = model.temp
+
+    def on_model_delete(self, model):
+        os.remove(resume_path + f"\{model.image}")
 
     # Custom filters
     can_view_details = True
@@ -56,11 +77,6 @@ class ResumeView(ModelView):
     edit_template = "custom/edit.html"
     details_template = "custom/details.html"
     list_template = "custom/list.html"
-
-    def scaffold_form(self):
-        form_class = super(ResumeView, self).scaffold_form()
-        form_class.extra = StringField('Extra')
-        return form_class
 
     def is_accessible(self):
         if session.get("admin"):
@@ -80,12 +96,20 @@ class ResumeView(ModelView):
 
 
 class JobBoardView(ModelView):
-    '''This view is same as the view above but allows file uploading'''
+    '''This view is same as other views but allows file uploading'''
 
     form_extra_fields = {
-        'path': form.ImageUploadField('Image',
-                                      thumbnail_size=(1920, 1080, True))
+        'image': form.FileUploadField(label='Upload Image Here',
+                                      validators=[DataRequired()],
+                                      base_path=job_board_path,
+                                      namegen=filename_generation, allowed_extensions=['png', 'jpg', 'jpeg'], allow_overwrite=True),
     }
+
+    def on_model_change(self, form, model, is_created):
+        model.job_image = model.image
+
+    def on_model_delete(self, model):
+        os.remove(job_board_path + f"\{model.job_image}")
 
     # Custom filters
     can_view_details = True
@@ -96,11 +120,6 @@ class JobBoardView(ModelView):
     edit_template = "custom/edit.html"
     details_template = "custom/details.html"
     list_template = "custom/list.html"
-
-    def scaffold_form(self):
-        form_class = super(JobBoardView, self).scaffold_form()
-        form_class.extra = StringField('Extra')
-        return form_class
 
     def is_accessible(self):
         if session.get("admin"):
@@ -131,11 +150,6 @@ class InsightsView(ModelView):
     edit_template = "custom/edit.html"
     details_template = "custom/details.html"
     list_template = "custom/list.html"
-
-    def scaffold_form(self):
-        form_class = super(InsightsView, self).scaffold_form()
-        form_class.extra = StringField('Extra')
-        return form_class
 
     def is_accessible(self):
         if session.get("admin"):
