@@ -7,5 +7,6 @@
 # Ignore flask session folder
 /flask_session
 
-# Resumes folder
+# Images folder
 /PortfolioMe/static/resumes
+/PortfolioMe/static/jobs
