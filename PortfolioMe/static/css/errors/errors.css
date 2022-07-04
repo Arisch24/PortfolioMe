@@ -1,0 +1,15 @@
+main {
+    padding: 2rem;
+}
+
+main h1 {
+    font-size: 5rem;
+}
+
+main p {
+    font-size: 2.5rem;
+}
+
+main span {
+    font-size: 1.5rem;
+}

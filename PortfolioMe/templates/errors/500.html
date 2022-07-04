@@ -1,10 +1,16 @@
-{% extends "layout/base.html" %} {% block title %}PortfolioMe : 500 {% endblock
-%} {% block content %}
+{% extends "layout/base_errors.html" %} {% block title %}PortfolioMe : 404 {%
+endblock %} {% block css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/errors/errors.css') }}"
+/>
+{% endblock %} {% block errors %}
 <main>
-    <h1>Something went wrong (500)</h1>
+    <h1>Something went wrong</h1>
     <p>
         We are experiencing some trouble on our end. Please try again in the
         near future.
     </p>
+    <span>Error code: 500</span>
 </main>
 {% endblock %}

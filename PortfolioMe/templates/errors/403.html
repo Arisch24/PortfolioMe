@@ -1,7 +1,13 @@
-{% extends "layout/base.html" %} {% block title %}PortfolioMe : 403 {% endblock
-%} {% block content %}
+{% extends "layout/base_errors.html" %} {% block title %}PortfolioMe : 404 {%
+endblock %} {% block css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/errors/errors.css') }}"
+/>
+{% endblock %} {% block errors %}
 <main>
     <h1>You don't have permission to do that (403)</h1>
     <p>Please check your account and try again.</p>
+    <span>Error code: 403</span>
 </main>
 {% endblock %}

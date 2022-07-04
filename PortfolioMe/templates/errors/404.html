@@ -1,7 +1,13 @@
-{% extends "layout/base.html" %} {% block title %}PortfolioMe : 404 {% endblock
-%} {% block content %}
+{% extends "layout/base_errors.html" %} {% block title %}PortfolioMe : 404 {%
+endblock %} {% block css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/errors/errors.css') }}"
+/>
+{% endblock %} {% block errors %}
 <main>
     <h1>Oops Page Not Found (404)</h1>
-    <p>That page does not exist. Please try a different location.</p>
+    <p>We can't seem to find the page you're looking for.</p>
+    <span>Error code: 404</span>
 </main>
 {% endblock %}
