@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Reset Password Link Email</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/custom/email_body.css') }}"
+        />
+        <style>
+            section {
+                background-color: #fff;
+                padding: 1.5rem;
+                border: 1px solid #999;
+                width: 500px;
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        <section>
+            <h2>Dear {{ username }},</h2>
+            <p>
+                To reset your password, visit the following link by clicking
+                <a
+                    href="{{ url_for('auth.reset_token', token=token, _external=True) }}"
+                >
+                    here</a
+                >.
+            </p>
+            <p>
+                If you did not make this request then simply ignore this email
+                and no changes will be made.
+            </p>
+        </section>
+    </body>
+</html>
