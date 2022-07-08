@@ -1,2 +1,82 @@
 main.job-detail-container {
+    padding: 4rem;
+    background-color: hsl(var(--light-blue));
+}
+
+.card {
+    background-color: hsl(var(--pure-white));
+    color: hsl(var(--pure-black));
+    width: 50vw;
+    margin: 0 auto;
+    border: 1px solid hsl(var(--dark-blue));
+    padding: 2rem;
+}
+
+.card div:nth-child(2) {
+    margin-block: 1rem;
+}
+
+.card div:nth-child(2) > img {
+    display: block;
+    margin-inline: auto;
+}
+
+.job-header h1 {
+    justify-self: center;
+    color: hsl(var(--dark-blue));
+    font-size: 3rem;
+}
+
+.job-image {
+    width: 40vw;
+}
+
+.job-details {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.job-details div:not(:last-child) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.job-details div > span {
+    font-size: 1.25rem;
+    color: hsl(var(--light-accent-blue));
+}
+
+.job-details div > hr {
+    margin-block: 1rem;
+    width: 10vw;
+}
+
+.job-details div:last-child {
+    align-self: stretch;
+    display: flex;
+    justify-content: space-between;
+}
+
+.job-details a[class$='btn'] {
+    padding: 0.5rem;
+}
+
+.apply-btn {
+    background-color: hsl(var(--light-accent-blue));
+    color: hsl(var(--pure-white));
+}
+
+.apply-btn:hover {
+    background-color: hsl(var(--light-accent-blue) / 0.85);
+}
+
+.cancel-btn {
+    background-color: hsl(var(--red));
+    color: hsl(var(--pure-white));
+}
+
+.cancel-btn:hover {
+    background-color: hsl(var(--red) / 0.85);
 }
