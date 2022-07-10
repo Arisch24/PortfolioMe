@@ -1,10 +1,11 @@
 import os
 import secrets
-from flask import session, redirect, url_for, request, flash, abort, current_app
+from flask import render_template, session, redirect, url_for, request, flash, abort, current_app
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import AdminIndexView, Admin, expose, BaseView, form
 from flask_login import current_user
 from PortfolioMe import models, bcrypt, db, admin
+from PortfolioMe.models import Resume
 from PortfolioMe.admin_forms import AdminLoginForm
 from wtforms import PasswordField
 from wtforms.validators import DataRequired
@@ -74,33 +75,27 @@ class ApplicantView(ModelView):
                 return redirect(url_for("auth.login"))
 
 
-class ResumeView(ModelView):
+class ResumeView(BaseView):
     '''This view is same as other views but allows file uploading'''
 
-    form_extra_fields = {
-        'temp': form.ImageUploadField(label='Resume Image',
-                                      validators=[DataRequired()],
-                                      base_path=resume_path,
-                                      allowed_extensions=['png', 'jpg', 'jpeg'], allow_overwrite=True)
-    }
+    @expose("/", methods=["GET", "POST"])
+    def resumes(self):
+        resumes = Resume.query.all()
+        return self.render("custom/resume/home_resume.html", resumes=resumes)
 
-    column_searchable_list = ["applicant_details", "date_edited"]
+    @expose("/new", methods=["GET", "POST"])
+    def new_resume(self):
+        return self.render("custom/resume/new_resume.html")
 
-    def on_model_change(self, form, model, is_created):
-        model.image = model.temp
+    @expose("/edit/<int:id>", methods=["GET", "POST"])
+    def edit_resume(self, id):
+        resume = Resume.query.filter_by(id=id).first()
+        return self.render("custom/resume/edit_resume.html", resume=resume)
 
-    def on_model_delete(self, model):
-        os.remove(resume_path + f"\{model.image}")
-
-    # Custom filters
-    can_view_details = True
-    can_export = True
-    can_set_page_size = True
-
-    create_template = "custom/create.html"
-    edit_template = "custom/edit.html"
-    details_template = "custom/details.html"
-    list_template = "custom/list.html"
+    @expose("/details/<int:id>", methods=["GET", "POST"])
+    def details_resume(self, id):
+        resume = Resume.query.filter_by(id=id).first()
+        return self.render("custom/resume/details_resume.html", resume=resume)
 
     def is_accessible(self):
         if session.get("admin"):
@@ -204,7 +199,7 @@ class HomeAdminView(AdminIndexView):
             return redirect(url_for('.admin_login'))
         return super(HomeAdminView, self).index()
 
-    @expose('/login', methods=('GET', 'POST'))
+    @expose('/login', methods=['GET', 'POST'])
     def admin_login(self):
         # handle user login
         form = AdminLoginForm()
@@ -288,10 +283,9 @@ admin.base_template = "admin/base.html"
 admin.name = "PortfolioMe"
 admin.template_mode = "bootstrap4"
 admin.add_view(ApplicantView(models.Applicant, db.session))
-admin.add_view(ResumeView(models.Resume, db.session))
+admin.add_view(ResumeView(name="Resumes", endpoint="resumes"))
 admin.add_view(JobBoardView(models.JobBoard, db.session))
 admin.add_view(InsightsView(models.Insights, db.session))
 admin.add_view(ManageAdminView(models.Admin, db.session,
                name="Manage Admin", endpoint="manage_admin"))
-# admin.add_view(ManageAdminView(name="Manage Admin", endpoint="manage_admin"))
 admin.add_view(LogoutAdminView(name="Logout", endpoint="logout"))

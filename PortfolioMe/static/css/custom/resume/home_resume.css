@@ -1,0 +1,134 @@
+.content-wrapper {
+    background-color: hsl(var(--navy-blue));
+    color: hsl(var(--pure-white));
+}
+
+.home-resume-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.home-resume-header div {
+    width: 25%;
+    display: flex;
+    align-items: center;
+}
+
+#searchBar {
+    border: none;
+    border-radius: 0.25rem 0 0 0.25rem;
+    padding: 0.5rem;
+    height: 3rem;
+    width: 100%;
+}
+
+#searchBtn {
+    border: none;
+    border-radius: 0 0.25rem 0.25rem 0;
+    padding: 0.5rem;
+    height: 3rem;
+}
+
+/* Grid layout */
+.home-resume-content {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr max-content;
+    grid-template-areas:
+        'Filter Sorting'
+        'Filter Content';
+    row-gap: 1rem;
+    column-gap: 1.5rem;
+}
+
+.home-resume-content hr {
+    border-color: hsl(var(--pure-white));
+}
+
+aside.filter-bar {
+    grid-area: 'Filter';
+    grid-row: 1 / -1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sorting-bar {
+    grid-area: 'Sorting';
+    align-self: flex-start;
+    display: flex;
+    justify-content: space-around;
+}
+
+.sorting-bar button {
+    border: none;
+    background-color: hsl(var(--light-accent-blue));
+    color: hsl(var(--pure-white));
+    border-radius: 0.5rem;
+}
+
+.resume-content {
+    max-height: 700px;
+    grid-area: 'Content';
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+    overflow-y: scroll;
+}
+
+.resume-content .resume-card {
+    width: 75%;
+    margin: 0 auto;
+    padding-block: 1rem;
+    padding-inline: 1rem;
+    background-color: hsl(var(--pure-white));
+    color: hsl(var(--pure-black));
+    border-radius: 0.25rem;
+}
+
+.resume-content .resume-card a {
+    color: hsl(var(--navy-blue));
+}
+
+.resume-content .resume-card a:hover {
+    text-decoration: underline;
+}
+
+.resume-content .action-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-bar > div button {
+    border: none;
+    background-color: transparent;
+}
+
+/* Bookmark button styles */
+.bookmark path {
+    fill: hsl(var(--pure-black));
+    transition: fill 300ms ease-in-out;
+}
+
+.bookmark:hover {
+    color: hsl(var(--pink));
+}
+
+.bookmark:hover path {
+    fill: hsl(var(--pink));
+}
+
+/* Hire button styles */
+.hire path {
+    fill: hsl(var(--pure-black));
+    transition: fill 300ms ease-in-out;
+}
+
+.hire:hover {
+    color: hsl(var(--green));
+}
+
+.hire:hover path {
+    fill: hsl(var(--green));
+}
