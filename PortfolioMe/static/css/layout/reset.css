@@ -13,6 +13,7 @@
     --pure-black: 0 0% 0%;
     --red: 13 69% 63%;
     --yellow: 46 100% 50%;
+    --green: 129 88% 73%;
 }
 
 :root.dark {
@@ -28,6 +29,7 @@
     --pure-black: 0 0% 100%;
     --red: 13 69% 63%;
     --yellow: 46 100% 50%;
+    --green: 129 88% 73%;
 }
 
 /* Necessary adjustments */
