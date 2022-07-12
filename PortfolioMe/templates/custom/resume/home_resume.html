@@ -52,8 +52,8 @@ endblock %} {% block head_css %} {{ super() }}
                 <p>{{ resume.applicant_details }}</p>
                 <div class="action-bar">
                     <span>
-                        <a href="{{ url_for('resumes.details_resume', id=resume.id) }}">Details</a>
-                        <a href="{{ url_for('resumes.edit_resume', id=resume.id) }}">Edit</a>
+                        <a href="{{ url_for('resumes.details_resume', resume_id=resume.id) }}">Details</a>
+                        <a href="{{ url_for('resumes.edit_resume', resume_id=resume.id) }}">Edit</a>
                     </span>
                     <div>
                         <button class="bookmark"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
