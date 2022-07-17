@@ -57,7 +57,6 @@ endblock %} {% block css %}
         let file = $('#resume')[0].files;
 
         if (file.length > 0) {
-            console.log(file);
             form.append('file', file[0]);
 
             $.ajax({
