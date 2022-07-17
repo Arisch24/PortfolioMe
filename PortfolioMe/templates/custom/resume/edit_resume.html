@@ -1,0 +1,59 @@
+{% extends "admin/master.html" %} {% block title %}PortfolioMe : Edit Resume {%
+endblock %} {% block head_css %} {{ super() }}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/custom/resume/edit_resume.css') }}"
+/>{% endblock %} {% block body %}
+<main class="edit-resume-container">
+    <div class="edit-resume-header">
+        <h1>Edit Resume</h1>
+    </div>
+    <div class="edit-resume-content">
+        <section class="resume-preview">
+            <img
+                src="{{ url_for('static', filename='resumes/' + resume.image) }}"
+            />
+        </section>
+        <form method="POST" class="form-container" novalidate>
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.applicant_details.label }} {% if
+                form.applicant_details.errors %} {{ form.applicant_details }}
+                <p class="error-msg">
+                    {% for error in form.applicant_details.errors %} {{ error }}
+                    {% endfor %}
+                </p>
+                {% else %} {{ form.applicant_details }} {% endif %}
+            </div>
+            <div>
+                {{ form.is_bookmarked.label }} {% if form.is_bookmarked.errors
+                %} {{ form.is_bookmarked }}
+                <p class="error-msg">
+                    {% for error in form.is_bookmarked.errors %} {{ error }} {%
+                    endfor %}
+                </p>
+                {% else %} {{ form.is_bookmarked }} {% endif %}
+            </div>
+            <div>
+                {{ form.is_hired.label }} {% if form.is_hired.errors %} {{
+                form.is_hired }}
+                <p class="error-msg">
+                    {% for error in form.is_hired.errors %} {{ error }} {%
+                    endfor %}
+                </p>
+                {% else %} {{ form.is_hired }} {% endif %}
+            </div>
+            <div>{{ form.submit }}</div>
+        </form>
+    </div>
+</main>
+{% endblock %} {% block javascript %}
+<script>
+    let hello = $('input');
+    console.log(hello);
+    $(document).keyup((e) => {
+        console.log(e.key);
+    });
+    $('input');
+</script>
+{% endblock %}

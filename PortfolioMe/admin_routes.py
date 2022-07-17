@@ -1,12 +1,13 @@
 import os
 import secrets
+from datetime import datetime
 from flask import render_template, session, redirect, url_for, request, flash, abort, current_app
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import AdminIndexView, Admin, expose, BaseView, form
 from flask_login import current_user
 from PortfolioMe import models, bcrypt, db, admin
 from PortfolioMe.models import Resume
-from PortfolioMe.admin_forms import AdminLoginForm
+from PortfolioMe.admin_forms import AdminEditResumeForm, AdminLoginForm
 from wtforms import PasswordField
 from wtforms.validators import DataRequired
 
@@ -83,18 +84,28 @@ class ResumeView(BaseView):
         resumes = Resume.query.all()
         return self.render("custom/resume/home_resume.html", resumes=resumes)
 
-    @expose("/new", methods=["GET", "POST"])
-    def new_resume(self):
-        return self.render("custom/resume/new_resume.html")
+    @expose("/edit/<int:resume_id>", methods=["GET", "POST"])
+    def edit_resume(self, resume_id):
+        resume = Resume.query.get_or_404(resume_id)
+        form = AdminEditResumeForm()
+        if form.validate_on_submit():
+            # save the edited resume
+            resume.applicant_details = form.applicant_details.data
+            resume.is_bookmarked = form.is_bookmarked.data
+            resume.is_hired = form.is_hired.data
+            resume.date_edited = datetime.utcnow()
+            db.session.commit()
+            flash("Resume has been edited successfully", "success")
+            return redirect(url_for("resumes.resumes"))
+        elif request.method == "GET":
+            form.applicant_details.data = resume.applicant_details
+            form.is_bookmarked.data = resume.is_bookmarked
+            form.is_hired.data = resume.is_hired
+        return self.render("custom/resume/edit_resume.html", resume=resume, form=form)
 
-    @expose("/edit/<int:id>", methods=["GET", "POST"])
-    def edit_resume(self, id):
-        resume = Resume.query.filter_by(id=id).first()
-        return self.render("custom/resume/edit_resume.html", resume=resume)
-
-    @expose("/details/<int:id>", methods=["GET", "POST"])
-    def details_resume(self, id):
-        resume = Resume.query.filter_by(id=id).first()
+    @expose("/details/<int:resume_id>", methods=["GET", "POST"])
+    def details_resume(self, resume_id):
+        resume = Resume.query.get_or_404(resume_id)
         return self.render("custom/resume/details_resume.html", resume=resume)
 
     def is_accessible(self):

@@ -1,0 +1,19 @@
+.content-wrapper {
+    background-color: hsl(var(--navy-blue));
+    color: hsl(var(--pure-white));
+}
+
+.edit-resume-content {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container div {
+    width: 100%;
+}
