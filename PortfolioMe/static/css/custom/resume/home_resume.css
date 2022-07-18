@@ -86,6 +86,12 @@ aside.filter-bar {
     border-radius: 0.25rem;
 }
 
+.resume-content .resume-card p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .resume-content .resume-card a {
     color: hsl(var(--navy-blue));
 }
@@ -100,35 +106,50 @@ aside.filter-bar {
     justify-content: space-between;
 }
 
+.action-bar span a {
+    padding: 0.5rem;
+    background-color: hsl(var(--light-blue));
+}
+
 .action-bar > div button {
     border: none;
     background-color: transparent;
 }
 
 /* Bookmark button styles */
-.bookmark path {
-    fill: hsl(var(--pure-black));
-    transition: fill 300ms ease-in-out;
+.bookmark {
+    color: hsl(var(--pink));
+    transition: color 300ms ease-in-out;
 }
 
 .bookmark:hover {
-    color: hsl(var(--pink));
+    color: hsl(var(--pure-black));
 }
 
-.bookmark:hover path {
+.bookmark path {
     fill: hsl(var(--pink));
-}
-
-/* Hire button styles */
-.hire path {
-    fill: hsl(var(--pure-black));
     transition: fill 300ms ease-in-out;
 }
 
-.hire:hover {
+.bookmark:hover path {
+    fill: hsl(var(--pure-black));
+}
+
+/* Hire button styles */
+.hire {
     color: hsl(var(--green));
+    transition: color 300ms ease-in-out;
+}
+
+.hire:hover {
+    color: hsl(var(--pure-black));
+}
+
+.hire path {
+    fill: hsl(var(--green));
+    transition: fill 300ms ease-in-out;
 }
 
 .hire:hover path {
-    fill: hsl(var(--green));
+    fill: hsl(var(--pure-black));
 }
