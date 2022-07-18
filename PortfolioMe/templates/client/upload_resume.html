@@ -29,8 +29,13 @@ endblock %} {% block css %}
             {% endif %}
         </div>
         <div>{{ form.submit }}</div>
+        <div class="spinner">
+            Loading
+            <div class="spinner-sector spinner-sector-red"></div>
+            <div class="spinner-sector spinner-sector-blue"></div>
+            <div class="spinner-sector spinner-sector-green"></div>
+        </div>
         <div>
-            {{ form.filename }}
             <input type="button" class="convert-btn" value="Parse Resume" />
         </div>
         <div>{{ form.output }}</div>
@@ -65,13 +70,19 @@ endblock %} {% block css %}
                 data: form,
                 contentType: false,
                 processData: false,
+                beforeSend: function () {
+                    $('.spinner').addClass('active');
+                },
                 success: function (data) {
                     if (data != 0) {
                         $('#output').val(data.parsed_text);
                     }
                 },
                 error: function (err) {
-                    console.log(err.statusText);
+                    alert('There seems to be a problem.');
+                },
+                complete: function () {
+                    $('.spinner').removeClass('active');
                 },
             });
         } else {
