@@ -1,11 +1,10 @@
 import os
-from sre_constants import SUCCESS
 from flask import Blueprint, jsonify, render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_required
 from PortfolioMe import db
 from PortfolioMe.client.forms import EditProfileForm, ResumeSubmissionForm
 from PortfolioMe.models import JobBoard, Resume
-from PortfolioMe.client.utils import save_resume, parse_resume
+from PortfolioMe.client.utils import save_resume, parse_resume, convert_pdf
 
 client = Blueprint("client", __name__)
 
@@ -64,8 +63,14 @@ def upload_resume(job_id):
 @client.route("/parse_image", methods=["GET", "POST"])
 def parse_image():
     if request.method == "POST":
-        resume = request.files["file"].read()
-        parsed_text = parse_resume(resume)
+        _, file_extension = os.path.splitext(request.files["file"].filename)
+        if file_extension == ".pdf":
+            file = request.files["file"].read()
+            resume = convert_pdf(file)
+            parsed_text = parse_resume(resume, False)
+        else:
+            resume = request.files["file"].read()
+            parsed_text = parse_resume(resume, True)
         return jsonify({"status": "success", "parsed_text": parsed_text})
 
 

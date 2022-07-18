@@ -38,7 +38,7 @@ class EditProfileForm(FlaskForm):
 
 class ResumeSubmissionForm(FlaskForm):
     resume = FileField('Resume', validators=[
-                       FileRequired(), FileAllowed(['jpg', 'png', 'jpeg'])])
+                       FileRequired(), FileAllowed(['jpg', 'png', 'jpeg', 'pdf'])])
     filename = HiddenField('Filename', validators=None)
     output = TextAreaField('Output', validators=None)
     submit = SubmitField('Send resume')
