@@ -81,7 +81,9 @@ class ResumeView(BaseView):
 
     @expose("/", methods=["GET", "POST"])
     def resumes(self):
-        resumes = Resume.query.all()
+        page = request.args.get('page', 1, type=int)
+        resumes = Resume.query.order_by(
+            Resume.id.asc()).paginate(page=page, per_page=5)
         return self.render("custom/resume/home_resume.html", resumes=resumes)
 
     @expose("/edit/<int:resume_id>", methods=["GET", "POST"])

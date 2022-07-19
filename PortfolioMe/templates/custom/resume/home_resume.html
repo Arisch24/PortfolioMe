@@ -46,14 +46,14 @@ endblock %} {% block head_css %} {{ super() }}
             <button>Date Edited</button>
         </div>
         <section class="resume-content">
-            {% for resume in resumes %}
+            {% for resume in resumes.items %}
             <div class="resume-card">
                 <h4>Name: {{ resume.applicant_id }}</h4>
                 <p>{{ resume.applicant_details }}</p>
                 <div class="action-bar">
                     <span>
-                        <a href="{{ url_for('resumes.details_resume', resume_id=resume.id) }}">Details</a>
-                        <a href="{{ url_for('resumes.edit_resume', resume_id=resume.id) }}">Edit</a>
+                        <a target="_blank" href="{{ url_for('resumes.details_resume', resume_id=resume.id) }}">Details</a>
+                        <a target="_blank" href="{{ url_for('resumes.edit_resume', resume_id=resume.id) }}">Edit</a>
                     </span>
                     <div>
                         <button class="bookmark"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,6 +73,19 @@ endblock %} {% block head_css %} {{ super() }}
                 </div>
             </div>
             {% endfor %}
+            <div class="pagination">
+            {% for page_num in resumes.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                {% if page_num %}
+                    {% if resumes.page == page_num %}
+                    <a class="btn btn-secondary mx-2" href="{{ url_for('resumes.resumes', page=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                    <a class="btn btn-outline-secondary mx-2" href="{{ url_for('resumes.resumes', page=page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
+                </div>
         </section>
     </div>
 </main>
