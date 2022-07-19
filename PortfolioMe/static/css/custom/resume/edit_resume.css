@@ -17,3 +17,8 @@
 .form-container div {
     width: 100%;
 }
+
+.resume-preview img {
+    width: 35vw;
+    aspect-ratio: 1 / 1;
+}
