@@ -7,7 +7,7 @@ from flask_admin import AdminIndexView, Admin, expose, BaseView, form
 from flask_login import current_user
 from PortfolioMe import models, bcrypt, db, admin
 from PortfolioMe.models import Resume
-from PortfolioMe.admin_forms import AdminEditResumeForm, AdminLoginForm
+from PortfolioMe.admin_forms import AdminEditResumeForm, AdminLoginForm, AdminSearchForm
 from wtforms import PasswordField
 from wtforms.validators import DataRequired
 
@@ -84,7 +84,11 @@ class ResumeView(BaseView):
         page = request.args.get('page', 1, type=int)
         resumes = Resume.query.order_by(
             Resume.id.asc()).paginate(page=page, per_page=5)
-        return self.render("custom/resume/home_resume.html", resumes=resumes)
+        form = AdminSearchForm()
+        if form.validate_on_submit():
+            resumes = Resume.query.filter_by(applicant_details=form.search.data).order_by(
+                Resume.id.asc()).paginate(page=page, per_page=5)
+        return self.render("custom/resume/home_resume.html", resumes=resumes, form=form)
 
     @expose("/edit/<int:resume_id>", methods=["GET", "POST"])
     def edit_resume(self, resume_id):

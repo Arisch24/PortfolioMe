@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, TextAreaField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, TextAreaField, SubmitField, SearchField
 from wtforms.validators import DataRequired
 
 
@@ -15,3 +15,8 @@ class AdminEditResumeForm(FlaskForm):
     applicant_details = TextAreaField(
         'Applicant Details', validators=None)
     submit = SubmitField('Save Changes')
+
+
+class AdminSearchForm(FlaskForm):
+    search = SearchField('', validators=None, id='searchBar')
+    submit = SubmitField('Search', id='search')

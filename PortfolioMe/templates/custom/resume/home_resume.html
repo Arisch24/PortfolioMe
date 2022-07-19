@@ -8,7 +8,11 @@ endblock %} {% block head_css %} {{ super() }}
     <div class="home-resume-header">
         <h1>Resumes</h1>
         <div>
-            <input type="search" id="searchBar" placeholder="Search resumes..." />
+            <form method="POST" novalidate>
+                {{ form.hidden_tag() }}
+                {{ form.search(placeholder='Search resumes...') }}
+                {{ form.submit }}
+            </form>
             <button id="searchBtn">
                 <svg
                 width="24"
@@ -89,4 +93,10 @@ endblock %} {% block head_css %} {{ super() }}
         </section>
     </div>
 </main>
-{% endblock %} {% block javascript %}{% endblock %}
+{% endblock %} {% block javascript %}
+    <script>
+        $('#searchBtn').on('click', e => {
+            $('#search').click();
+        });
+    </script>
+{% endblock %}

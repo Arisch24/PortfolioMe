@@ -30,6 +30,11 @@
     height: 3rem;
 }
 
+#search {
+    opacity: 0;
+    display: none;
+}
+
 /* Grid layout */
 .home-resume-content {
     display: grid;
