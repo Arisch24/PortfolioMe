@@ -18,6 +18,7 @@ header {
     background-color: hsl(var(--light-blue));
     display: grid;
     grid-template-columns: 1fr 4fr 1fr 1fr;
+    border-bottom: 1px solid black;
 }
 
 /* logo styles */
@@ -99,10 +100,14 @@ label[for='themeBtn'] {
     display: none;
 }
 
+:root {
+    --width: 4rem;
+}
+
 .theme-btn::before,
 .theme-btn:checked::before {
     content: '';
-    width: 6rem;
+    width: var(--width);
     aspect-ratio: 2 / 1;
     border-radius: 1.5rem;
     position: absolute;
@@ -120,7 +125,7 @@ label[for='themeBtn'] {
 .theme-btn::after,
 .theme-btn:checked::after {
     content: '';
-    width: 2.5rem;
+    width: calc(var(--width) / 2);
     aspect-ratio: 1 / 1;
     border-radius: 2rem;
     border: 1px solid grey;
@@ -129,8 +134,8 @@ label[for='themeBtn'] {
 
 .theme-btn::after {
     background-color: hsl(var(--pure-white));
-    top: -1.25rem;
-    transform: translateX(-3rem);
+    top: calc(var(--width) / 4 * -1);
+    transform: translateX(calc(var(--width) / 2 * -1));
     transition: transform 250ms ease;
 }
 
@@ -140,7 +145,7 @@ label[for='themeBtn'] {
 }
 
 .theme-btn:checked::after {
-    transform: translateX(0.5rem);
+    transform: translateX(0);
 }
 
 /* Account styles */
