@@ -86,7 +86,14 @@ endblock %} {% block css %}<link
                         {% endif %} {% endfor %}
                     </select>
                 </div>
-                <input type="submit" value="Filter" class="filter-btn" />
+                <div class="submit-buttons">
+                    <input type="submit" value="Filter" class="filter-btn" />
+                    <input
+                        type="button"
+                        value="Clear filters"
+                        class="clear-filters-btn"
+                    />
+                </div class="submit-buttons">
             </form>
             <form class="search-form" method="GET" novalidate>
                 {% if request.args.get('search') %}
@@ -164,7 +171,7 @@ endblock %} {% block css %}<link
     $('.salary input').each(changeNumber);
 
     function changeNumber(index, el) {
-        $(el).on('input', function (e) {
+        $(el).on('change', function (e) {
             $(el).next().text($(el).val());
         });
     }
@@ -174,6 +181,16 @@ endblock %} {% block css %}<link
             alert('Minimum salary cannot be more than maximum salary!');
             e.preventDefault();
         }
+    });
+
+    // Clear filtering
+    $('.clear-filters-btn').on('click', (e) => {
+        $('#jobType option').first().prop('selected', true);
+        $('#minJobSalary').val(0);
+        $('#minJobSalary').next().text(0);
+        $('#maxJobSalary').val(20000);
+        $('#maxJobSalary').next().text(20000);
+        $('#department option').first().prop('selected', true);
     });
 
     // Searching

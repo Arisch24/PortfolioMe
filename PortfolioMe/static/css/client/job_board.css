@@ -96,8 +96,18 @@
     user-select: none;
 }
 
-.filter-form input[type='submit'] {
+.filter-form > .submit-buttons {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+}
+
+.filter-form .filter-btn {
     background-color: hsl(var(--light-accent-blue));
+}
+
+.filter-form .clear-filters-btn {
+    background-color: hsl(var(--red));
 }
 
 /* Searching */
