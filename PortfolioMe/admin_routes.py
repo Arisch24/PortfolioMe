@@ -141,7 +141,7 @@ class JobBoardView(ModelView):
     }
 
     column_searchable_list = ["name", "description",
-                              "department", "salary", "job_type"]
+                              "department", "job_type"]
 
     def on_model_change(self, form, model, is_created):
         model.job_image = model.image

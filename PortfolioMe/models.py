@@ -112,7 +112,8 @@ class JobBoard(db.Model):
     highlights = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(255), nullable=False)
     department = db.Column(db.String(50), nullable=False)
-    salary = db.Column(db.Float, nullable=False)
+    min_salary = db.Column(db.Float, nullable=False)
+    max_salary = db.Column(db.Float, nullable=False)
     position_level = db.Column(db.String(20), nullable=False)
     years_of_experience = db.Column(db.String(10), nullable=False)
     job_type = db.Column(db.String(10), nullable=False)
@@ -122,7 +123,7 @@ class JobBoard(db.Model):
         'Resume', backref='associated_job_board', lazy=True)
 
     def __repr__(self):
-        return f"JobBoard('{self.name}', '{self.description}', '{self.department}', '{self.salary}', '{self.job_type}')"
+        return f"JobBoard('{self.name}', '{self.description}', '{self.department}', '{self.job_type}')"
 
 
 class Insights(db.Model):
