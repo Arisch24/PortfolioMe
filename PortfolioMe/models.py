@@ -1,6 +1,8 @@
 from datetime import datetime
+from enum import unique
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask import current_app
+from pyparsing import nullDebugAction
 from PortfolioMe import db, login_manager
 from flask_login import UserMixin
 
@@ -15,6 +17,8 @@ class Applicant(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
+    ic = db.Column(db.String(12), unique=True, nullable=False)
+    mailing_address = db.Column(db.String(100), unique=False, nullable=False)
     password = db.Column(db.String(60), unique=False, nullable=False)
     gender = db.Column(db.String(20), unique=False, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
@@ -69,6 +73,31 @@ class Resume(db.Model):
 
     def __repr__(self):
         return f"Resume('{self.applicant_details}', '{self.date_edited}', '{self.is_bookmarked}', '{self.is_hired}', '{self.applicant_id}', '{self.job_id}')"
+
+
+class Resume_Details(db.Model):
+    __tablename__ = 'resumedetails'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=False, nullable=False)
+    age = db.Column(db.Integer, unique=False, nullable=False)
+    ic = db.Column(db.String(12), unique=False, nullable=False)
+    dob = db.Column(db.String(10), unique=False, nullable=False)
+    mailing_address = db.Column(db.String(100), unique=False, nullable=False)
+    postcode = db.Column(db.String(10), unique=False, nullable=False)
+    town = db.Column(db.String(30), unique=False, nullable=False)
+    state = db.Column(db.String(20), unique=False, nullable=False)
+    gender = db.Column(db.String(20), unique=False, nullable=False)
+    phone_number = db.Column(db.String(20), unique=False, nullable=False)
+    marital_status = db.Column(db.String(20), unique=False, nullable=False)
+    skills = db.Column(db.Text, unique=False, nullable=False)
+    soft_skills = db.Column(db.Text, unique=False, nullable=False)
+    work_experience = db.Column(db.Text, unique=False, nullable=False)
+    applicant_id = db.Column(db.Integer, db.ForeignKey(
+        'applicant.id'), unique=False, nullable=False)
+
+    def __repr__(self):
+        return f"Resume_Details('{self.name}', '{self.age}', '{self.ic}', '{self.gender}', '{self.phone_number}', '{self.marital_status}', '{self.applicant_id}')"
 
 
 class JobBoard(db.Model):
