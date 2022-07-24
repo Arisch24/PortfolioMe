@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint, jsonify, render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_required
-from PortfolioMe import db
+from PortfolioMe import db, constants
 from PortfolioMe.client.forms import EditProfileForm, ResumeSubmissionForm
 from PortfolioMe.models import JobBoard, Resume
 from PortfolioMe.client.utils import save_resume, parse_resume, convert_pdf
@@ -31,10 +31,33 @@ def edit_profile():
     return render_template("client/edit_profile.html", form=form)
 
 
-@client.route("/job_board")
+@client.route("/job_board", methods=["GET", "POST"])
 def job_board():
-    jobs = JobBoard.query.all()
-    return render_template("client/job_board.html", jobs=jobs)
+    JOBS_PER_PAGE = 12
+    page = request.args.get('page', default=1, type=int)
+    jobs = JobBoard.query.order_by(
+        JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+
+    # Searching
+    search_query = request.args.get('search')
+    if search_query is not None:
+        jobs = JobBoard.query.filter(JobBoard.name.like(f"%{search_query}%")).order_by(
+            JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+
+    # Filtering
+    jobtype_filter = constants.job_types
+    department_filter = constants.department_types
+    type = request.args.get('type')
+    salary = request.args.get('salary')
+    department = request.args.get('dept')
+    if type and salary and department != "All":
+        jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), JobBoard.salary < salary, JobBoard.department.like(f"%{department}%")).order_by(
+            JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+    elif type and salary and department == "All":
+        jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), JobBoard.salary < salary).order_by(
+            JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+
+    return render_template("client/job_board.html", jobs=jobs, jobtype_filter=jobtype_filter, department_filter=department_filter)
 
 
 @client.route("/job_board/<int:job_id>")

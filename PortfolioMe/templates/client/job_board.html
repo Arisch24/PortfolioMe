@@ -6,30 +6,117 @@ endblock %} {% block css %}<link
 {% endblock %} {% block content %}
 <main class="job-board-container">
     <div class="job-board-header">
-        <svg
-            width="50"
-            height="50"
-            viewBox="0 0 50 50"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <path
-                d="M35.4167 47.3958H14.5834C5.39585 47.3958 2.60419 44.6042 2.60419 35.4167V14.5833C2.60419 5.39582 5.39585 2.60416 14.5834 2.60416H17.7084C21.3542 2.60416 22.5 3.79166 23.9584 5.72916L27.0834 9.89582C27.7709 10.8125 27.875 10.9375 29.1667 10.9375H35.4167C44.6042 10.9375 47.3959 13.7292 47.3959 22.9167V35.4167C47.3959 44.6042 44.6042 47.3958 35.4167 47.3958ZM14.5834 5.72916C7.12502 5.72916 5.72919 7.14582 5.72919 14.5833V35.4167C5.72919 42.8542 7.12502 44.2708 14.5834 44.2708H35.4167C42.875 44.2708 44.2709 42.8542 44.2709 35.4167V22.9167C44.2709 15.4792 42.875 14.0625 35.4167 14.0625H29.1667C26.5 14.0625 25.625 13.1458 24.5834 11.7708L21.4584 7.60416C20.375 6.16666 20.0417 5.72916 17.7084 5.72916H14.5834Z"
-                fill="currentColor"
-            />
-            <path
-                d="M41.6667 14.8542C40.8125 14.8542 40.1042 14.1458 40.1042 13.2917V10.4167C40.1042 7.12499 38.7084 5.72916 35.4167 5.72916H16.6667C15.8125 5.72916 15.1042 5.02082 15.1042 4.16666C15.1042 3.31249 15.8125 2.60416 16.6667 2.60416H35.4167C40.4584 2.60416 43.2292 5.37499 43.2292 10.4167V13.2917C43.2292 14.1458 42.5209 14.8542 41.6667 14.8542Z"
-                fill="currentColor"
-            />
-        </svg>
-
-        <h1>Job Board</h1>
+        <div class="header">
+            <svg
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M35.4167 47.3958H14.5834C5.39585 47.3958 2.60419 44.6042 2.60419 35.4167V14.5833C2.60419 5.39582 5.39585 2.60416 14.5834 2.60416H17.7084C21.3542 2.60416 22.5 3.79166 23.9584 5.72916L27.0834 9.89582C27.7709 10.8125 27.875 10.9375 29.1667 10.9375H35.4167C44.6042 10.9375 47.3959 13.7292 47.3959 22.9167V35.4167C47.3959 44.6042 44.6042 47.3958 35.4167 47.3958ZM14.5834 5.72916C7.12502 5.72916 5.72919 7.14582 5.72919 14.5833V35.4167C5.72919 42.8542 7.12502 44.2708 14.5834 44.2708H35.4167C42.875 44.2708 44.2709 42.8542 44.2709 35.4167V22.9167C44.2709 15.4792 42.875 14.0625 35.4167 14.0625H29.1667C26.5 14.0625 25.625 13.1458 24.5834 11.7708L21.4584 7.60416C20.375 6.16666 20.0417 5.72916 17.7084 5.72916H14.5834Z"
+                    fill="currentColor"
+                />
+                <path
+                    d="M41.6667 14.8542C40.8125 14.8542 40.1042 14.1458 40.1042 13.2917V10.4167C40.1042 7.12499 38.7084 5.72916 35.4167 5.72916H16.6667C15.8125 5.72916 15.1042 5.02082 15.1042 4.16666C15.1042 3.31249 15.8125 2.60416 16.6667 2.60416H35.4167C40.4584 2.60416 43.2292 5.37499 43.2292 10.4167V13.2917C43.2292 14.1458 42.5209 14.8542 41.6667 14.8542Z"
+                    fill="currentColor"
+                />
+            </svg>
+            <h1>Job Board</h1>
+        </div>
+        <div class="action-container">
+            <form class="filter-form" method="GET" novalidate>
+                <div class="type">
+                    <label for="jobType">Job Type:</label>
+                    <select name="type" id="jobType">
+                        {% for job_type in jobtype_filter %} {% if
+                        request.args.get('type') == job_type %}
+                        <option value="{{ job_type }}" selected>
+                            {{ job_type | capitalize}}
+                        </option>
+                        {% else %}
+                        <option value="{{ job_type }}">
+                            {{ job_type | capitalize}}
+                        </option>
+                        {% endif %} {% endfor %}
+                    </select>
+                </div>
+                <div class="salary">
+                    <label for="jobSalary">Salary:</label>
+                    <input
+                        type="range"
+                        name="salary"
+                        id="jobSalary"
+                        min="1500"
+                        max="20000"
+                        step="500"
+                        value="{{ request.args.get('salary') or 20000 }}"
+                    />
+                    <p>{{ request.args.get('salary') or 20000 }}</p>
+                </div>
+                <div class="department-container">
+                    <label for="department">Department:</label>
+                    <select name="dept" id="department">
+                        {% for dept in department_filter %} {% if
+                        request.args.get('dept') == dept %}
+                        <option value="{{ dept }}" selected>
+                            {{ dept | capitalize + " Department"}}
+                        </option>
+                        {% else %}
+                        <option value="{{ dept }}">
+                            {{ dept | capitalize + " Department" }}
+                        </option>
+                        {% endif %} {% endfor %}
+                    </select>
+                </div>
+                <input type="submit" value="Filter" />
+            </form>
+            <form class="search-form" method="GET" novalidate>
+                {% if request.args.get('search') %}
+                <input
+                    type="search"
+                    name="search"
+                    id="searchBar"
+                    value="{{ request.args.get('search') }}"
+                    placeholder="Search jobs..."
+                />
+                {% else %}
+                <input
+                    type="search"
+                    name="search"
+                    id="searchBar"
+                    placeholder="Search jobs..."
+                />
+                {% endif %}
+                <button id="searchBtn">
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M11.5 21.75C5.85 21.75 1.25 17.15 1.25 11.5C1.25 5.85 5.85 1.25 11.5 1.25C17.15 1.25 21.75 5.85 21.75 11.5C21.75 17.15 17.15 21.75 11.5 21.75ZM11.5 2.75C6.67 2.75 2.75 6.68 2.75 11.5C2.75 16.32 6.67 20.25 11.5 20.25C16.33 20.25 20.25 16.32 20.25 11.5C20.25 6.68 16.33 2.75 11.5 2.75Z"
+                            fill="#292D32"
+                        />
+                        <path
+                            d="M22 22.75C21.81 22.75 21.62 22.68 21.47 22.53L19.47 20.53C19.18 20.24 19.18 19.76 19.47 19.47C19.76 19.18 20.24 19.18 20.53 19.47L22.53 21.47C22.82 21.76 22.82 22.24 22.53 22.53C22.38 22.68 22.19 22.75 22 22.75Z"
+                            fill="#292D32"
+                        />
+                    </svg>
+                </button>
+            </form>
+        </div>
     </div>
     <div class="jobs-available">
-        {% for job in jobs %}
+        {% for job in jobs.items %}
         <div>
             <h2>{{ job.name }}</h2>
             <span>{{ job.job_type }}</span>
+            <br />
+            <i>Salary: RM {{ job.salary }} </i>
             <p>{{ job.description }}</p>
             <a href="{{ url_for('client.job_detail', job_id=job.id) }}"
                 >Details</a
@@ -37,5 +124,40 @@ endblock %} {% block css %}<link
         </div>
         {% endfor %}
     </div>
+    <div class="pagination">
+        {% for page_num in jobs.iter_pages(left_edge=1, right_edge=1,
+        left_current=2, right_current=2) %} {% if page_num %} {% if jobs.page ==
+        page_num %}
+        <a
+            class="current-page-btn"
+            href="{{ url_for('client.job_board', page=page_num) }}"
+            >{{ page_num }}</a
+        >
+        {% else %}
+        <a
+            class="page-btn"
+            href="{{ url_for('client.job_board', page=page_num) }}"
+            >{{ page_num }}</a
+        >
+        {% endif %} {% else %} ... {% endif %} {% endfor %}
+    </div>
 </main>
+{% endblock %} {% block javascript %}
+<script>
+    // Filtering
+    $('#jobSalary').on('input', function (e) {
+        $(this).next().text($(this).val());
+    });
+
+    // Searching
+    $('#searchBtn').on('click', (e) => {
+        $('.search-form').submit();
+    });
+
+    $('#searchBar').on('keydown', (e) => {
+        setTimeout(function () {
+            $('.search-form').submit();
+        }, 2000);
+    });
+</script>
 {% endblock %}
