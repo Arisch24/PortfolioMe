@@ -299,10 +299,11 @@ admin._set_admin_index_view(index_view=HomeAdminView())
 admin.base_template = "admin/base.html"
 admin.name = "PortfolioMe"
 admin.template_mode = "bootstrap4"
-admin.add_view(ApplicantView(models.Applicant, db.session))
+admin.add_view(ApplicantView(models.Applicant,
+               db.session, name="Registered Users"))
 admin.add_view(ResumeView(name="Resumes", endpoint="resumes"))
-admin.add_view(JobBoardView(models.JobBoard, db.session))
-admin.add_view(InsightsView(models.Insights, db.session))
+admin.add_view(JobBoardView(models.JobBoard, db.session, name="Edit Jobs"))
+admin.add_view(InsightsView(models.Insights, db.session, name="View Insights"))
 admin.add_view(ManageAdminView(models.Admin, db.session,
                name="Manage Admin", endpoint="manage_admin"))
 admin.add_view(LogoutAdminView(name="Logout", endpoint="logout"))
