@@ -16,8 +16,8 @@ def register():
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode("utf-8")  # decode - convert bytes to string
-        applicant = Applicant(username=form.username.data, password=hashed_password, gender=form.gender.data,
-                              email=form.email.data, phone_number=form.phone_number.data, organization=form.organization.data)
+        applicant = Applicant(username=form.username.data, ic=form.ic.data, mailing_address=form.mailing_address.data, password=hashed_password, gender=form.gender.data,
+                              email=form.email.data, phone_number=form.phone_number.data)
         db.session.add(applicant)
         db.session.commit()
         flash(f"Your account has been created!", "success")

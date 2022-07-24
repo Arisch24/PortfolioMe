@@ -32,17 +32,17 @@ body {
     border: 2px solid hsl(var(--light-accent-blue));
 }
 
-.form-container div:nth-child(4),
-.form-container div:nth-child(5) {
+.form-container div:nth-child(8),
+.form-container div:nth-child(9) {
     position: relative;
 }
 
 .form-container div:last-child a {
-    color: hsl(var(--pink));
+    color: hsl(var(--accent-blue));
 }
 
 .toggle-password {
-    top: 60%;
+    top: 2.75rem;
     right: 22%;
 }
 
@@ -56,9 +56,13 @@ body {
     background-color: hsl(var(--light-accent-blue) / 0.85);
 }
 
-.form-container div:nth-child(8) {
+.form-container div:nth-child(10) {
     grid-column: span 2;
     width: 50%;
+}
+
+.form-container > div:last-child {
+    grid-column: span 2;
 }
 
 .form-container > div:last-child,

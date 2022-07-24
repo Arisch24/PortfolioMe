@@ -37,12 +37,11 @@ class ApplicantView(ModelView):
         "gender",
         "email",
         "phone_number",
-        "organization",
         "resumes_owned"
     )
 
     column_searchable_list = ["username",
-                              "email", "phone_number", "organization"]
+                              "email", "phone_number"]
 
     def on_model_change(self, form, model, is_created):
         if form.new_password.data != '':

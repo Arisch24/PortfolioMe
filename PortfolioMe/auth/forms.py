@@ -1,4 +1,6 @@
+from tokenize import String
 from flask_wtf import FlaskForm
+from pyparsing import Regex
 from wtforms import StringField, PasswordField, TelField, RadioField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Regexp, ValidationError
 from PortfolioMe.models import Applicant
@@ -8,6 +10,10 @@ class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[
         DataRequired(), Length(min=3, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
+    ic = StringField('IC/My Kad', validators=[DataRequired(), Regexp(
+        r"[0-9]{6}-[0-9]{2}-[0-9]{4}", message="Follows Malaysian IC format e.g XXXXXX-XX-XXXX")])
+    mailing_address = StringField(
+        'Mailing Address', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired(), Length(
         min=8, message="Minimum length is %(min)d characters.")])
     confirm_password = PasswordField('Confirm Password', validators=[
@@ -17,8 +23,6 @@ class RegistrationForm(FlaskForm):
     # Radio field
     radio = ["Male", "Female", "Prefer not to say"]
     gender = RadioField('Gender', validators=[DataRequired()], choices=radio)
-    #
-    organization = StringField('Organization', validators=[DataRequired()])
     submit = SubmitField('Register')
 
     def validate_username(self, username):
@@ -32,6 +36,12 @@ class RegistrationForm(FlaskForm):
         if applicant:
             raise ValidationError(
                 'This email is taken. Please choose a different one.')
+
+    def validate_ic(self, ic):
+        applicant = Applicant.query.filter_by(ic=ic.data).first()
+        if applicant:
+            raise ValidationError(
+                'This ic is already registered. Either login or use a different ic.')
 
 
 class LoginForm(FlaskForm):

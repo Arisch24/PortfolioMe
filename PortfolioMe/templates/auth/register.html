@@ -29,6 +29,46 @@ endblock %} {% block css %}
             endif %}
         </div>
         <div>
+            {{ form.ic.label }} {% if form.ic.errors %} {{
+            form.ic(placeholder='XXXXXX-XX-XXXX') }}
+            <p class="error-msg">
+                {% for error in form.ic.errors %} {{ error }} {% endfor %}
+            </p>
+            {% else %} {{ form.ic(placeholder='XXXXXX-XX-XXXX') }} {% endif %}
+        </div>
+        <div>
+            <!-- prettier-ignore -->
+            {{ form.mailing_address.label }} {% if form.mailing_address.errors
+            %} {{ form.mailing_address(placeholder='24, Lorong Jambul 1, Bukit Jambul') }}
+            <p class="error-msg">
+                {% for error in form.mailing_address.errors %} {{ error }} {%
+                endfor %}
+            </p>
+            <!-- prettier-ignore -->
+            {% else %} {{ form.mailing_address(placeholder='24, Lorong Jambul 1, Bukit Jambul') }} {% endif %}
+        </div>
+        <div>
+            {{ form.gender.label }}
+            <span>
+                {% if form.gender.errors %} {{ form.gender }}
+                <p class="error-msg">
+                    {% for error in form.gender.errors %} {{ error }} {% endfor
+                    %}
+                </p>
+                {% else %} {{ form.gender }} {% endif %}
+            </span>
+        </div>
+        <div>
+            {{ form.phone_number.label }} {% if form.phone_number.errors %} {{
+            form.phone_number(placeholder='XXX-XXXXXXX') }}
+            <p class="error-msg">
+                {% for error in form.phone_number.errors %} {{ error }} {%
+                endfor %}
+            </p>
+            {% else %} {{ form.phone_number(placeholder='XXX-XXXXXXX') }} {%
+            endif %}
+        </div>
+        <div>
             {{ form.password.label }} {% if form.password.errors %} {{
             form.password(placeholder='johndoe@1234') }}<img
                 src="{{ url_for('static', filename='images/Eye_slash_Icon_UIA.svg') }}"
@@ -59,36 +99,6 @@ endblock %} {% block css %}
                 src="{{ url_for('static', filename='images/Eye_slash_Icon_UIA.svg') }}"
                 class="toggle-password"
             />{% endif %}
-        </div>
-        <div>
-            {{ form.gender.label }}
-            <span>
-                {% if form.gender.errors %} {{ form.gender }}
-                <p class="error-msg">
-                    {% for error in form.gender.errors %} {{ error }} {% endfor
-                    %}
-                </p>
-                {% else %} {{ form.gender }} {% endif %}
-            </span>
-        </div>
-        <div>
-            {{ form.phone_number.label }} {% if form.phone_number.errors %} {{
-            form.phone_number(placeholder='XXX-XXXXXXX') }}
-            <p class="error-msg">
-                {% for error in form.phone_number.errors %} {{ error }} {%
-                endfor %}
-            </p>
-            {% else %} {{ form.phone_number(placeholder='XXX-XXXXXXX') }} {%
-            endif %}
-        </div>
-        <div>
-            {{ form.organization.label }} {% if form.organization.errors %} {{
-            form.organization(placeholder='Google') }}
-            <p class="error-msg">
-                {% for error in form.organization.errors %} {{ error }} {%
-                endfor %}
-            </p>
-            {% else %} {{ form.organization(placeholder='Google') }} {% endif %}
         </div>
         <div>{{ form.submit }}</div>
         <div>

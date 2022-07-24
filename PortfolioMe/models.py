@@ -1,8 +1,6 @@
 from datetime import datetime
-from enum import unique
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask import current_app
-from pyparsing import nullDebugAction
 from PortfolioMe import db, login_manager
 from flask_login import UserMixin
 
@@ -23,7 +21,6 @@ class Applicant(db.Model, UserMixin):
     gender = db.Column(db.String(20), unique=False, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     phone_number = db.Column(db.String(20), unique=False, nullable=False)
-    organization = db.Column(db.String(50), unique=False, nullable=False)
     resumes_owned = db.relationship(
         'Resume', backref='associated_applicant', uselist=True)
 
@@ -41,7 +38,7 @@ class Applicant(db.Model, UserMixin):
         return Applicant.query.get(applicant_id)
 
     def __repr__(self):
-        return f"Applicant('{self.username}', '{self.gender}', '{self.email}', '{self.phone_number}', {self.organization}')"
+        return f"Applicant('{self.username}', '{self.gender}', '{self.email}', '{self.phone_number}')"
 
 
 class Admin(db.Model):
@@ -65,6 +62,8 @@ class Resume(db.Model):
                               nullable=False, default=False)
     is_hired = db.Column(db.Boolean, unique=False,
                          nullable=False, default=False)
+    status = db.Column(db.String(20), unique=False,
+                       nullable=False, default="Pending")
     image = db.Column(db.String(50), unique=False, nullable=False)
     applicant_id = db.Column(db.Integer, db.ForeignKey(
         'applicant.id'), unique=True, nullable=False)
@@ -95,6 +94,8 @@ class Resume_Details(db.Model):
     work_experience = db.Column(db.Text, unique=False, nullable=False)
     applicant_id = db.Column(db.Integer, db.ForeignKey(
         'applicant.id'), unique=False, nullable=False)
+    resume_id = db.Column(db.Integer, db.ForeignKey(
+        'resume.id'), unique=False, nullable=False)
 
     def __repr__(self):
         return f"Resume_Details('{self.name}', '{self.age}', '{self.ic}', '{self.gender}', '{self.phone_number}', '{self.marital_status}', '{self.applicant_id}')"
@@ -105,10 +106,14 @@ class JobBoard(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
+    highlights = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(255), nullable=False)
     department = db.Column(db.String(50), nullable=False)
     salary = db.Column(db.Float, nullable=False)
+    position_level = db.Column(db.String(20), nullable=False)
+    years_of_experience = db.Column(db.String(10), nullable=False)
     job_type = db.Column(db.String(10), nullable=False)
+    specializations = db.Column(db.String(50), nullable=False)
     job_image = db.Column(db.String(50), nullable=False)
     resumes_submitted_list = db.relationship(
         'Resume', backref='associated_job_board', lazy=True)
