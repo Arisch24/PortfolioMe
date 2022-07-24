@@ -6,15 +6,7 @@ endblock %} {% block css %}<link
 {% endblock %} {% block content %}
 <main class="edit-profile-container">
     <section class="account-info">
-        <h1>Account Information</h1>
-        <div class="account-card">
-            <h2>Username: {{ current_user.username }}</h2>
-            <p>Gender: {{ current_user.gender }}</p>
-            <p>Email: {{ current_user.email }}</p>
-            <p>Phone Number: {{ current_user.phone_number }}</p>
-            <p>Organization: {{ current_user.organization }}</p>
-            <p>Resumes: {{ current_user.associated_applicant }}</p>
-        </div>
+        <h1>Edit Account Information</h1>
         <form method="POST" class="form-container" novalidate>
             {{ form.hidden_tag() }}
             <div>
@@ -48,6 +40,17 @@ endblock %} {% block css %}<link
                 {% else %} {{ form.email(placeholder='New email')}} {% endif %}
             </div>
             <div>
+                {{ form.mailing_address.label }} {% if
+                form.mailing_address.errors %} {{
+                form.mailing_address(placeholder='New mailing address') }}
+                <p class="error-msg">
+                    {% for error in form.mailing_address.errors %} {{ error }}
+                    {% endfor %}
+                </p>
+                {% else %} {{ form.mailing_address(placeholder='New mailing
+                address')}} {% endif %}
+            </div>
+            <div>
                 {{ form.phone_number.label }} {% if form.phone_number.errors %}
                 {{ form.phone_number(placeholder='New phone number') }}
                 <p class="error-msg">
@@ -56,17 +59,6 @@ endblock %} {% block css %}<link
                 </p>
                 <!-- prettier-ignore -->
                 {% else %} {{ form.phone_number(placeholder='New phone number')}} {% endif %}
-            </div>
-            <div>
-                {{ form.organization.label }} {% if form.organization.errors %}
-                {{ form.organization(placeholder='New organization') }}
-                <p class="error-msg">
-                    {% for error in form.organization.errors %} {{ error }} {%
-                    endfor %}
-                </p>
-                <!-- prettier-ignore -->
-                {% else %} {{ form.organization(placeholder='New organization')}}
-                    {% endif %}
             </div>
             <div>{{ form.submit }}</div>
         </form>

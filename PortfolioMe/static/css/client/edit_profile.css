@@ -22,37 +22,6 @@ section.account-info {
     margin-bottom: 1rem;
 }
 
-.account-card {
-    position: relative;
-    margin-inline: auto;
-    border-radius: 0.5rem;
-    background-color: hsl(var(--pure-white));
-    width: 50%;
-    background-clip: padding-box;
-    padding: 1rem;
-    border: 1px solid transparent;
-    z-index: 0;
-    box-shadow: 0px 15px 20px 0px hsl(var(--pure-black) / 0.5);
-    color: hsl(var(--dark-blue));
-}
-
-.account-card::before {
-    content: '';
-    margin: -5px;
-    background: linear-gradient(
-        hsl(var(--sky-blue)),
-        hsl(var(--light-accent-blue))
-    );
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: inherit;
-}
-
-.account-card h2 {
-    font-size: 1.75rem;
-}
-
 .form-container {
     margin-top: 1rem;
     display: flex;

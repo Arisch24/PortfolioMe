@@ -16,18 +16,18 @@ def edit_profile():
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.email = form.email.data
+        current_user.mailing_address = form.mailing_address.data
         current_user.phone_number = form.phone_number.data
         current_user.gender = form.gender.data
-        current_user.organization = form.organization.data
         db.session.commit()
         flash(f"Profile updated successfully.", "success")
         return redirect(url_for("client.edit_profile"))
     elif request.method == "GET":
         form.username.data = current_user.username
         form.email.data = current_user.email
+        form.mailing_address.data = current_user.mailing_address
         form.phone_number.data = current_user.phone_number
         form.gender.data = current_user.gender
-        form.organization.data = current_user.organization
     return render_template("client/edit_profile.html", form=form)
 
 
