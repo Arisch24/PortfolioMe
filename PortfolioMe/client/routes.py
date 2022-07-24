@@ -48,13 +48,21 @@ def job_board():
     jobtype_filter = constants.job_types
     department_filter = constants.department_types
     type = request.args.get('type')
-    salary = request.args.get('salary')
+    min_salary = request.args.get('min_salary')
+    max_salary = request.args.get('max_salary')
     department = request.args.get('dept')
-    if type and salary and department != "All":
-        jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), JobBoard.salary < salary, JobBoard.department.like(f"%{department}%")).order_by(
+
+    if type != "All" and min_salary and max_salary and department != "All":
+        jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%")).order_by(
             JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
-    elif type and salary and department == "All":
-        jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), JobBoard.salary < salary).order_by(
+    elif type == "All" and min_salary and max_salary and department == "All":
+        jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary)).order_by(
+            JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+    elif type == "All" and min_salary and max_salary and department:
+        jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%")).order_by(
+            JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+    elif type and min_salary and max_salary and department == "All":
+        jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary)).order_by(
             JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
 
     return render_template("client/job_board.html", jobs=jobs, jobtype_filter=jobtype_filter, department_filter=department_filter)

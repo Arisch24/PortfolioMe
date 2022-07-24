@@ -43,17 +43,33 @@ endblock %} {% block css %}<link
                     </select>
                 </div>
                 <div class="salary">
-                    <label for="jobSalary">Salary:</label>
-                    <input
-                        type="range"
-                        name="salary"
-                        id="jobSalary"
-                        min="1500"
-                        max="20000"
-                        step="500"
-                        value="{{ request.args.get('salary') or 20000 }}"
-                    />
-                    <p>{{ request.args.get('salary') or 20000 }}</p>
+                    <section>
+                        <label for="minJobSalary">Min Salary:</label>
+                        <input
+                            type="range"
+                            name="min_salary"
+                            id="minJobSalary"
+                            min="0"
+                            max="20000"
+                            step="500"
+                            value="{{ request.args.get('min_salary') or 0 }}"
+                        />
+                        <p>{{ request.args.get('min_salary') or 0 }}</p>
+                    </section>
+
+                    <section>
+                        <label for="maxJobSalary">Max Salary: </label>
+                        <input
+                            type="range"
+                            name="max_salary"
+                            id="maxJobSalary"
+                            min="1500"
+                            max="20000"
+                            step="500"
+                            value="{{ request.args.get('max_salary') or 20000 }}"
+                        />
+                        <p>{{ request.args.get('max_salary') or 20000 }}</p>
+                    </section>
                 </div>
                 <div class="department-container">
                     <label for="department">Department:</label>
@@ -70,7 +86,7 @@ endblock %} {% block css %}<link
                         {% endif %} {% endfor %}
                     </select>
                 </div>
-                <input type="submit" value="Filter" />
+                <input type="submit" value="Filter" class="filter-btn" />
             </form>
             <form class="search-form" method="GET" novalidate>
                 {% if request.args.get('search') %}
@@ -116,7 +132,7 @@ endblock %} {% block css %}<link
             <h2>{{ job.name }}</h2>
             <span>{{ job.job_type }}</span>
             <br />
-            <i>Salary: RM {{ job.salary }} </i>
+            <i>Salary: RM {{ job.min_salary }} - RM{{ job.max_salary }}</i>
             <p>{{ job.description }}</p>
             <a href="{{ url_for('client.job_detail', job_id=job.id) }}"
                 >Details</a
@@ -145,12 +161,24 @@ endblock %} {% block css %}<link
 {% endblock %} {% block javascript %}
 <script>
     // Filtering
-    $('#jobSalary').on('input', function (e) {
-        $(this).next().text($(this).val());
+    $('.salary input').each(changeNumber);
+
+    function changeNumber(index, el) {
+        $(el).on('input', function (e) {
+            $(el).next().text($(el).val());
+        });
+    }
+
+    $('.filter-form').on('submit', (e) => {
+        if (parseInt(e.target[1].value) > parseInt(e.target[2].value)) {
+            alert('Minimum salary cannot be more than maximum salary!');
+            e.preventDefault();
+        }
     });
 
     // Searching
     $('#searchBtn').on('click', (e) => {
+        alert('jdiejdp');
         $('.search-form').submit();
     });
 
