@@ -1,6 +1,7 @@
 from datetime import datetime
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask import current_app
+from numpy import unicode_
 from PortfolioMe import db, login_manager
 from flask_login import UserMixin
 
@@ -23,6 +24,8 @@ class Applicant(db.Model, UserMixin):
     phone_number = db.Column(db.String(20), unique=False, nullable=False)
     resumes_owned = db.relationship(
         'Resume', backref='associated_applicant', uselist=True)
+    status = db.Column(db.String(20), unique=False,
+                       nullable=False, default='Active')
 
     def get_reset_token(self):
         s = Serializer(current_app.config["SECRET_KEY"])
