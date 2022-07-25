@@ -134,8 +134,10 @@ class JobBoardView(ModelView):
     '''This view is same as other views but allows file uploading'''
 
     form_extra_fields = {
+        'old_image': form.Select2TagsField(label='Old image name',
+                                           validators=None),
         'image': form.FileUploadField(label='Upload Image Here',
-                                      validators=[DataRequired()],
+                                      validators=None,
                                       base_path=job_board_path,
                                       namegen=filename_generation, allowed_extensions=['png', 'jpg', 'jpeg'], allow_overwrite=True),
     }
@@ -144,7 +146,9 @@ class JobBoardView(ModelView):
                               "department", "job_type"]
 
     def on_model_change(self, form, model, is_created):
-        model.job_image = model.image
+        if form.image.data is not None:
+            os.remove(job_board_path + f"\{form.old_image.data}")
+            model.job_image = model.image
 
     def on_model_delete(self, model):
         os.remove(job_board_path + f"\{model.job_image}")
