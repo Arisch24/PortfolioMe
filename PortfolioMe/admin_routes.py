@@ -9,7 +9,7 @@ from PortfolioMe import models, bcrypt, db, admin
 from PortfolioMe.models import Resume
 from PortfolioMe.admin_forms import AdminEditResumeForm, AdminLoginForm, AdminSearchForm
 from wtforms import PasswordField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 
 resume_path = os.path.join(os.path.dirname(__file__), 'static\\resumes')
 job_board_path = os.path.join(os.path.dirname(__file__), 'static\\jobs')
@@ -25,14 +25,19 @@ def filename_generation(obj, file_data):
 class ApplicantView(ModelView):
     '''This view is for admin to view all the tables in the database'''
 
+    column_exclude_list = ("password")
+
     form_excluded_columns = ("password")
 
     form_extra_fields = {
-        "new_password": PasswordField("New Password")
+        "new_password": PasswordField("New Password", validators=[Length(
+            min=8, message="Minimum length is %(min)d characters.")])
     }
 
     form_columns = (
         "username",
+        "ic",
+        "mailing_address",
         "new_password",
         "gender",
         "email",
