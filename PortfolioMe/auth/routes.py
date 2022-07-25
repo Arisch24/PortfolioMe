@@ -14,9 +14,11 @@ def register():
         return redirect(url_for("main.home"))
     form = RegistrationForm()
     if form.validate_on_submit():
+        list = form.ic.data.split("-")
+        cleaned_ic = "".join(list)
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode("utf-8")  # decode - convert bytes to string
-        applicant = Applicant(username=form.username.data, ic=form.ic.data, mailing_address=form.mailing_address.data, password=hashed_password, gender=form.gender.data,
+        applicant = Applicant(username=form.username.data, ic=cleaned_ic, mailing_address=form.mailing_address.data, password=hashed_password, gender=form.gender.data,
                               email=form.email.data, phone_number=form.phone_number.data)
         db.session.add(applicant)
         db.session.commit()
