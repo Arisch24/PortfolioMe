@@ -153,9 +153,10 @@ class JobBoardView(ModelView):
                               "department", "job_type"]
 
     def on_model_change(self, form, model, is_created):
-        if form.image.data is not None:
-            os.remove(job_board_path + f"\{form.old_image.data}")
-            model.job_image = model.image
+        if not is_created:
+            if form.image.data is not None:
+                os.remove(job_board_path + f"\{form.old_image.data}")
+                model.job_image = model.image
 
     def on_model_delete(self, model):
         os.remove(job_board_path + f"\{model.job_image}")
