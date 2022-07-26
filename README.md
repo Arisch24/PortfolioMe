@@ -58,11 +58,16 @@
 |   |   |   |   |-- create.css
 |   |   |   |   |-- details.css
 |   |   |   |   |-- edit.css
-|   |   |   |   `-- list.css
+|   |   |   |   |-- list.css
+|   |   |   |   `-- resume
+|   |   |   |       |-- details_resume.css
+|   |   |   |       |-- edit_resume.css
+|   |   |   |       `-- home_resume.css
 |   |   |   |-- errors
 |   |   |   |   `-- errors.css
 |   |   |   |-- layout
 |   |   |   |   |-- base.css
+|   |   |   |   |-- base_errors.css
 |   |   |   |   |-- base_form.css
 |   |   |   |   `-- reset.css
 |   |   |   `-- main
@@ -76,9 +81,12 @@
 |   |   |   |-- folder.svg
 |   |   |   |-- github.svg
 |   |   |   |-- instagram.svg
+|   |   |   |-- medal.svg
 |   |   |   |-- photo.png
 |   |   |   |-- profile-circle.svg
 |   |   |   |-- resume image.png
+|   |   |   |-- save-2.svg
+|   |   |   |-- search-normal.svg
 |   |   |   `-- youtube.svg
 |   |   `-- js
 |   |       `-- extras.js
@@ -106,7 +114,11 @@
 |       |   |-- details.html
 |       |   |-- edit.html
 |       |   |-- email_body.html
-|       |   `-- list.html
+|       |   |-- list.html
+|       |   `-- resume
+|       |       |-- details_resume.html
+|       |       |-- edit_resume.html
+|       |       `-- home_resume.html
 |       |-- errors
 |       |   |-- 403.html
 |       |   |-- 404.html
@@ -122,8 +134,7 @@
 |-- run.py
 `-- tree.txt
 
-24 directories, 85 files
-
+26 directories, 95 files
 
 ```
 
@@ -138,10 +149,14 @@
 
 ### Virtual Environment Activation
 
-```console
-Windows: '$ source .venv/Scripts/activate'
-```
+Windows
 
 ```console
-Mac/Linux: '$ source .venv/bin/activate'
+source .venv/Scripts/activate
+```
+
+Mac/Linux
+
+```console
+source .venv/bin/activate
 ```
