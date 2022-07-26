@@ -113,6 +113,7 @@ endblock %} {% block css %}<link
 </main>
 {% endblock %}{% block javascript %}
 <script>
+    $('#submit').prop('disabled', true);
     $('#temp').on('click', () => {
         $('#resume').click();
     });
@@ -120,17 +121,17 @@ endblock %} {% block css %}<link
     $('#resume').on('change', (e) => {
         if ($('#resume')[0].files.length > 0) {
             $('#submit').prop('disabled', false);
+            let file = e.target.files[0];
+            let filename = URL.createObjectURL(file);
+
+            $('.iframe').css('display', 'block');
+            $('.iframe').prop('src', filename);
+            $('.iframe').css('width', 600);
+            $('.iframe').css('height', 854);
         } else {
+            $('.iframe').css('display', 'none');
             $('#submit').prop('disabled', true);
         }
-
-        let file = e.target.files[0];
-        let filename = URL.createObjectURL(file);
-
-        $('.iframe').css('display', 'block');
-        $('.iframe').prop('src', filename);
-        $('.iframe').css('width', 480);
-        $('.iframe').css('height', 854);
     });
 </script>
 {% endblock %}

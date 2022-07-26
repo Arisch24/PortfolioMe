@@ -63,6 +63,21 @@ main.job-detail-container {
     justify-content: space-between;
 }
 
+.upload iframe {
+    display: none;
+}
+
+#submit:disabled {
+    background-color: rgba(59, 59, 59, 0.3);
+    color: rgb(84, 84, 84), rgb(170, 170, 170);
+    border-color: rgba(118, 118, 118, 0.3);
+}
+
+#submit {
+    background-color: hsl(var(--light-accent-blue));
+    color: hsl(var(--pure-white));
+}
+
 .apply-btn {
     background-color: hsl(var(--light-accent-blue));
     color: hsl(var(--pure-white));
