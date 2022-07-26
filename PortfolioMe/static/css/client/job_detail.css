@@ -50,17 +50,17 @@ main.job-detail-container {
 
 .job-details div > hr {
     margin-block: 1rem;
-    width: 10vw;
-}
-
-.job-details div:last-child {
-    align-self: stretch;
-    display: flex;
-    justify-content: space-between;
+    width: 75%;
 }
 
 .job-details a[class$='btn'] {
     padding: 0.5rem;
+}
+
+.form-container div:last-child {
+    align-self: stretch;
+    display: flex;
+    justify-content: space-between;
 }
 
 .apply-btn {

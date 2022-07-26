@@ -23,6 +23,12 @@ endblock %} {% block css %}<link
             </div>
 
             <div>
+                <span>Highlights</span>
+                <hr />
+                <p>{{ job.highlights }}</p>
+            </div>
+
+            <div>
                 <span>Which department?</span>
                 <hr />
                 <p>Department: <b>{{ job.department }}</b></p>
@@ -31,7 +37,21 @@ endblock %} {% block css %}<link
             <div>
                 <span>What is the salary?</span>
                 <hr />
-                <p>Salary: <b>RM{{ job.salary }}</b></p>
+                <p>
+                    Salary: <b>RM{{ job.min_salary }} - {{ job.max_salary }}</b>
+                </p>
+            </div>
+
+            <div>
+                <span>Wanted position:</span>
+                <hr />
+                <p>{{ job.position_level }}</p>
+            </div>
+
+            <div>
+                <span>Years of Experience</span>
+                <hr />
+                <p>Description: {{ job.years_of_experience }}</p>
             </div>
 
             <div>
@@ -41,24 +61,76 @@ endblock %} {% block css %}<link
             </div>
 
             <div>
-                {% if current_user.is_authenticated %}
-                <a
-                    class="apply-btn"
-                    href="{{ url_for('client.upload_resume', job_id=job.id) }}"
-                    >Apply for this job</a
-                >
-                {% else %}
-                <a
-                    class="apply-btn"
-                    href="{{ url_for('auth.login', next='/job_board/' + job.id|string() ) }}"
-                    >Login to register</a
-                >
-                {% endif %}
-                <a href="{{ url_for('client.job_board') }}" class="cancel-btn"
-                    >Back</a
-                >
+                <span>The job specializations</span>
+                <hr />
+                <p>{{ job.specializations }}</p>
             </div>
+
+            {% if current_user.is_authenticated %}
+            <form
+                method="POST"
+                class="form-container"
+                novalidate
+                enctype="multipart/form-data"
+            >
+                {{ form.hidden_tag() }}
+                <div class="upload">
+                    <iframe src="" class="iframe"></iframe>
+                    {{ form.resume }} {% if form.resume.errors %}
+                    <p class="error-msg">
+                        {% for error in form.resume.errors %} {{ error }} {%
+                        endfor %}
+                    </p>
+                    {% endif %}
+                </div>
+                <div>
+                    <a
+                        href="{{ url_for('client.job_board') }}"
+                        class="cancel-btn"
+                        >Back</a
+                    >
+                    <div>{{ form.submit }}</div>
+                </div>
+            </form>
+            {% else %}
+            <div class="form-container">
+                <div>
+                    <a
+                        class="apply-btn"
+                        href="{{ url_for('auth.login', next='/job_board/' + job.id|string() ) }}"
+                        >Login to apply for job</a
+                    >
+                    <a
+                        href="{{ url_for('client.job_board') }}"
+                        class="cancel-btn"
+                        >Back</a
+                    >
+                </div>
+            </div>
+            {% endif %}
         </div>
     </section>
 </main>
+{% endblock %}{% block javascript %}
+<script>
+    $('#temp').on('click', () => {
+        $('#resume').click();
+    });
+
+    $('#resume').on('change', (e) => {
+        if ($('#resume')[0].files.length > 0) {
+            $('#submit').prop('disabled', false);
+        } else {
+            $('#submit').prop('disabled', true);
+        }
+
+        let file = e.target.files[0];
+        let filename = URL.createObjectURL(file);
+
+        $('.iframe').css('display', 'block');
+        $('.iframe').prop('src', filename);
+        $('.iframe').css('width', 480);
+        $('.iframe').css('height', 854);
+    });
+</script>
 {% endblock %}

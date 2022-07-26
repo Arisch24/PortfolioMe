@@ -71,7 +71,8 @@ def job_board():
 @client.route("/job_board/<int:job_id>")
 def job_detail(job_id):
     job = JobBoard.query.get_or_404(job_id)
-    return render_template("client/job_detail.html", job=job)
+    form = ResumeSubmissionForm()
+    return render_template("client/job_detail.html", job=job, form=form)
 
 
 @client.route("/job_board/<int:job_id>/upload_resume", methods=["GET", "POST"])
