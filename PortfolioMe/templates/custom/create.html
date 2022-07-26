@@ -24,7 +24,6 @@ extra(), form_opts) }} {% endblock %} {% endblock %} {% block tail %} {{ super()
 <script>
     // if the url is jobboard then do this
     if (window.location.pathname.split('/').includes('jobboard')) {
-        console.log('jobboard');
         // Make job_image input readonly so admin only uploads to file input
         $('#job_image').prop('readonly', true);
         $('#job_image').prop(
@@ -41,8 +40,6 @@ extra(), form_opts) }} {% endblock %} {% endblock %} {% block tail %} {{ super()
     // if the url is resume then do this
     if (window.location.pathname.split('/').includes('resume')) {
         // Make image input readonly so admin only uploads to file input
-        console.log('resume');
-
         $('#image').prop('readonly', true);
         $('#image').prop(
             'placeholder',
