@@ -138,6 +138,8 @@ class ResumeView(BaseView):
 class JobBoardView(ModelView):
     '''This view is same as other views but allows file uploading'''
 
+    column_exclude_list = ("highlights", "description")
+
     form_extra_fields = {
         'old_image': form.Select2TagsField(label='Old image name',
                                            validators=None),
