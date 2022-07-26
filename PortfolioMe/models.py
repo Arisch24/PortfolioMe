@@ -92,6 +92,7 @@ class Resume_Details(db.Model):
     gender = db.Column(db.String(20), unique=False, nullable=False)
     phone_number = db.Column(db.String(20), unique=False, nullable=False)
     marital_status = db.Column(db.String(20), unique=False, nullable=False)
+    linkedin_url = db.Column(db.Text, unique=False, nullable=False)
     skills = db.Column(db.Text, unique=False, nullable=False)
     soft_skills = db.Column(db.Text, unique=False, nullable=False)
     work_experience = db.Column(db.Text, unique=False, nullable=False)
