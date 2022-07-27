@@ -9,6 +9,8 @@ class Config:
     FLASK_ADMIN_FLUID_LAYOUT = True
     SESSION_PERMANENT = False
     SESSION_TYPE = "filesystem"
+    REMEMBER_COOKIE_DURATION = 604800
+    REMEMBER_COOKIE_REFRESH_EACH_REQUEST = True
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = 587
     MAIL_USE_TLS = True
