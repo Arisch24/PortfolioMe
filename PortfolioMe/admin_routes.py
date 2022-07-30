@@ -1,11 +1,12 @@
 import os
 import secrets
 from datetime import datetime
-from flask import render_template, session, redirect, url_for, request, flash, abort, current_app
+from flask import session, redirect, url_for, request, flash, abort, Markup, jsonify
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import AdminIndexView, Admin, expose, BaseView, form
 from flask_login import current_user
 from PortfolioMe import models, bcrypt, db, admin
+from PortfolioMe.constants import account_status
 from PortfolioMe.models import Resume
 from PortfolioMe.admin_forms import AdminEditResumeForm, AdminLoginForm, AdminSearchForm
 from wtforms import PasswordField
@@ -26,6 +27,21 @@ class ApplicantView(ModelView):
     '''This view is for admin to view all the tables in the database'''
 
     column_exclude_list = ("password")
+
+    def status_formatter(view, context, model, name):
+        status = []
+        for i in range(len(account_status)):
+            if model.status == account_status[i]:
+                status.append(
+                    f'<option value="{account_status[i]}" selected>{account_status[i]}</option>')
+            else:
+                status.append(
+                    f'<option value="{account_status[i]}">{account_status[i]}</option>')
+        return Markup(f'<label for="status"></label><select class="status-select" id="status" name="{model.id}">{status}</select>')
+
+    column_formatters = {
+        'status': status_formatter
+    }
 
     form_excluded_columns = ("password")
 
@@ -62,6 +78,18 @@ class ApplicantView(ModelView):
     edit_template = "custom/edit.html"
     details_template = "custom/details.html"
     list_template = "custom/list.html"
+
+    # AJAX request
+    @expose("/update_status", methods=["GET", "POST"])
+    def update_status(self):
+        if request.method == "POST":
+            id = request.json['id']
+            status = request.json['status']
+            applicant = models.Applicant.query.filter_by(id=id).first()
+            applicant.status = status
+            db.session.commit()
+            return jsonify({"status": "success", "applicant_status": status})
+        return jsonify({"request": "no function"})
 
     def is_accessible(self):
         if session.get("admin"):
