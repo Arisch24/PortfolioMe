@@ -47,7 +47,10 @@ extra(), form_opts) }} {% endblock %} {% endblock %} {% block tail %} {{ super()
             'placeholder',
             'This is readonly upload your file below.'
         );
-        $('#temp').on('change', function (e) {
+        $('#old_image').prop('disabled', true);
+        $('#old_image').prop('placeholder', 'Disabled field.');
+
+        $('#resume_image').on('change', function (e) {
             let filename = e.target.files[0].name;
             $('#image').val(filename);
         });

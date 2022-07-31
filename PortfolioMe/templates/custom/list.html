@@ -3,8 +3,12 @@
 'admin/model/layout.html' as model_layout with context %} {% import
 'admin/actions.html' as actionlib with context %} {% import
 'admin/model/row_actions.html' as row_actions with context %} {% block head %}
-{{ super() }} {{ lib.form_css() }} {% endblock %} {% block body %} {% block
-model_menu_bar %}
+{{ super() }} {{ lib.form_css() }}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/custom/list.css') }}"
+/>
+{% endblock %} {% block body %} {% block model_menu_bar %}
 <ul class="nav nav-tabs actions-nav">
     <li class="active">
         <a class="btn btn-outline-secondary" href="javascript:void(0)"

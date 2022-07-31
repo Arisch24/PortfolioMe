@@ -1,5 +1,10 @@
 {% extends 'admin/master.html' %} {% import 'admin/lib.html' as lib with context
-%} {% block body %} {% block navlinks %}
+%} {% block head %} {{ super() }}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/custom/details.css') }}"
+/>
+{% endblock %}{% block body %} {% block navlinks %}
 <ul class="nav nav-tabs">
     <li>
         <a class="btn btn-light" href="{{ return_url }}"

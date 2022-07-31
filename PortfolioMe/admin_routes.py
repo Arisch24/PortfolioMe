@@ -1,15 +1,13 @@
 import os
 import secrets
-from datetime import datetime
 from flask import session, redirect, url_for, request, flash, abort, Markup, jsonify
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import AdminIndexView, Admin, expose, BaseView, form
 from flask_login import current_user
 from PortfolioMe import models, bcrypt, db, admin
-from PortfolioMe.constants import account_status
-from PortfolioMe.models import Resume
-from PortfolioMe.admin_forms import AdminEditResumeForm, AdminLoginForm, AdminSearchForm
-from wtforms import PasswordField
+from PortfolioMe.constants import account_status, resume_status
+from PortfolioMe.admin_forms import AdminLoginForm
+from wtforms import PasswordField, SelectField
 from wtforms.validators import DataRequired, Length
 
 resume_path = os.path.join(os.path.dirname(__file__), 'static\\resumes')
@@ -108,43 +106,51 @@ class ApplicantView(ModelView):
                 return redirect(url_for("auth.login"))
 
 
-class ResumeView(BaseView):
+class ResumeView(ModelView):
     '''This view is same as other views but allows file uploading'''
 
-    @expose("/", methods=["GET", "POST"])
-    def resumes(self):
-        page = request.args.get('page', 1, type=int)
-        resumes = Resume.query.order_by(
-            Resume.id.asc()).paginate(page=page, per_page=5)
-        form = AdminSearchForm()
-        if form.validate_on_submit():
-            resumes = Resume.query.filter_by(applicant_details=form.search.data).order_by(
-                Resume.id.asc()).paginate(page=page, per_page=5)
-        return self.render("custom/resume/home_resume.html", resumes=resumes, form=form)
+    def resume_image_formatter(view, context, model, name):
+        return Markup(f'<img class="resume-image" src="{ url_for("static", filename="resumes/" + model.image) }" />')
 
-    @expose("/edit/<int:resume_id>", methods=["GET", "POST"])
-    def edit_resume(self, resume_id):
-        resume = Resume.query.get_or_404(resume_id)
-        form = AdminEditResumeForm()
-        if form.validate_on_submit():
-            # save the edited resume
-            resume.applicant_details = form.applicant_details.data
-            resume.is_bookmarked = form.is_bookmarked.data
-            resume.is_hired = form.is_hired.data
-            resume.date_edited = datetime.utcnow()
-            db.session.commit()
-            flash("Resume has been edited successfully", "success")
-            return redirect(url_for("resumes.resumes"))
-        elif request.method == "GET":
-            form.applicant_details.data = resume.applicant_details
-            form.is_bookmarked.data = resume.is_bookmarked
-            form.is_hired.data = resume.is_hired
-        return self.render("custom/resume/edit_resume.html", resume=resume, form=form)
+    column_formatters = {
+        'image': resume_image_formatter
+    }
 
-    @expose("/details/<int:resume_id>", methods=["GET", "POST"])
-    def details_resume(self, resume_id):
-        resume = Resume.query.get_or_404(resume_id)
-        return self.render("custom/resume/details_resume.html", resume=resume)
+    form_overrides = dict(status=SelectField)
+
+    form_args = dict(
+        status=dict(choices=resume_status)
+    )
+
+    form_extra_fields = {
+        'old_image': form.Select2TagsField(label='Old image name',
+                                           validators=None),
+        'resume_image': form.FileUploadField(label='Upload Resume Image Here',
+                                             validators=None,
+                                             base_path=resume_path,
+                                             namegen=filename_generation, allowed_extensions=['png', 'jpg', 'jpeg'], allow_overwrite=True),
+    }
+
+    column_searchable_list = ["applicant_details", "date_edited", "status"]
+
+    def on_model_change(self, form, model, is_created):
+        if not is_created:
+            if form.image.data is not None:
+                os.remove(resume_path + f"\{form.old_image.data}")
+        model.image = model.resume_image
+
+    def on_model_delete(self, model):
+        os.remove(resume_path + f"\{model.image}")
+
+    # Custom filters
+    can_view_details = True
+    can_export = True
+    can_set_page_size = True
+
+    create_template = "custom/create.html"
+    edit_template = "custom/edit.html"
+    details_template = "custom/details.html"
+    list_template = "custom/list.html"
 
     def is_accessible(self):
         if session.get("admin"):
@@ -340,7 +346,7 @@ admin.name = "PortfolioMe"
 admin.template_mode = "bootstrap4"
 admin.add_view(ApplicantView(models.Applicant,
                db.session, name="Registered Users"))
-admin.add_view(ResumeView(name="Resumes", endpoint="resumes"))
+admin.add_view(ResumeView(models.Resume, db.session, name="Sent Resumes"))
 admin.add_view(JobBoardView(models.JobBoard, db.session, name="Edit Jobs"))
 admin.add_view(InsightsView(models.Insights, db.session, name="View Insights"))
 admin.add_view(ManageAdminView(models.Admin, db.session,
