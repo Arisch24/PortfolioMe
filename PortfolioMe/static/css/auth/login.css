@@ -42,8 +42,17 @@ body {
     right: 1rem;
 }
 
+.form-container div:last-child {
+    display: flex;
+    justify-content: space-between;
+}
+
 .form-container input[type='submit'] {
     background-color: hsl(var(--pink));
+}
+
+.form-container input[type='button'] {
+    background-color: hsl(var(--sky-blue));
 }
 
 .form-help {

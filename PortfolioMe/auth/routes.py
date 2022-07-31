@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, request
+from flask import Blueprint, jsonify, render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
 from PortfolioMe import db, bcrypt, mail
 from PortfolioMe.models import Applicant
-from PortfolioMe.auth.utils import send_reset_email
+from PortfolioMe.auth.utils import send_admin_email, send_reset_email
 from PortfolioMe.auth.forms import RegistrationForm, LoginForm, RequestResetForm, ResetPasswordForm
 
 auth = Blueprint("auth", __name__)
@@ -36,13 +36,26 @@ def login():
     if form.validate_on_submit():
         applicant = Applicant.query.filter_by(email=form.email.data).first()
         if applicant and bcrypt.check_password_hash(applicant.password, form.password.data):
-            login_user(applicant, remember=form.remember.data)
-            next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for("main.home"))
+            if applicant.status == "Active":
+                login_user(applicant, remember=form.remember.data)
+                next_page = request.args.get('next')
+                return redirect(next_page) if next_page else redirect(url_for("main.home"))
+            else:
+                flash("Your account has been blocked due to inactivity", "failed")
+                return render_template("auth/login.html", form=form, button="Request Unblock")
         else:
             flash(f"Login Unsuccessful! Check your email and password", "failed")
 
     return render_template("auth/login.html", form=form)
+
+
+# AJAX API call
+@auth.route("/request_unblock_account/<email>", methods=["GET"])
+def request_unblock_account(email):
+    applicant = Applicant.query.filter_by(email=email).first()
+    send_admin_email(applicant, "Request Account Unblock",
+                     "My account has been blocked. Can you kindly unblock it for me?")
+    return jsonify({"status": "success"})
 
 
 @auth.route("/reset_password", methods=["GET", "POST"])

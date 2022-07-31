@@ -11,3 +11,10 @@ def send_reset_email(applicant):
     msg.html = render_template(
         "custom/email_body.html", token=token, username=applicant.username)
     mail.send(msg)
+
+
+def send_admin_email(applicant, subject, message):
+    msg = Message(subject=subject,
+                  sender=applicant.email, recipients=["PortfolioMe.service@gmail.com"])
+    msg.html = f"{message} My email is {applicant.email}"
+    mail.send(msg)

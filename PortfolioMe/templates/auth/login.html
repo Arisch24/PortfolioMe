@@ -46,7 +46,15 @@ endblock %} {% block css %}<link
                 </div>
             </div>
         </div>
-        <div>{{ form.submit }}</div>
+        <div>
+            {{ form.submit }} {% if button %}
+            <input
+                class="request-unblock-btn"
+                type="button"
+                value="{{ button }}"
+            />
+            {% endif %}
+        </div>
     </form>
 </main>
 {% endblock %} {% block javascript %}
@@ -60,5 +68,25 @@ endblock %} {% block css %}<link
         "{{ url_for('static', filename='images/Eye_slash_Icon_UIA.svg') }}",
         "{{ url_for('static', filename='images/Eye_Icon_UIA.svg') }}"
     );
+
+    $('.request-unblock-btn').on('click', (e) => {
+        e.preventDefault();
+        let email = $('#email').val();
+        $.ajax({
+            // prettier-ignore
+            url: '/request_unblock_account/' + email,
+            type: 'GET',
+            processData: false,
+            success: function (response) {
+                alert(
+                    'Success! We will send an email to you once the admin has unblocked your account'
+                );
+            },
+            error: function (xhr) {
+                //Do Something to handle error
+                alert(xhr.statusText);
+            },
+        });
+    });
 </script>
 {% endblock %}
