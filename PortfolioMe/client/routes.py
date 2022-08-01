@@ -117,20 +117,6 @@ def upload_resume(job_id, resume_details_id):
     return render_template("client/upload_resume.html", form=form)
 
 
-# API endpoint for AJAX request
-@client.route("/parse_image", methods=["GET", "POST"])
-def parse_image():
-    if request.method == "POST":
-        _, file_extension = os.path.splitext(request.files["file"].filename)
-        if file_extension == ".pdf":
-            file = request.files["file"].read()
-            parsed_text = parse_resume(resume, False)
-        else:
-            resume = request.files["file"].read()
-            parsed_text = parse_resume(resume, True)
-        return jsonify({"status": "success", "parsed_text": parsed_text})
-
-
 @client.route("/resume_status")
 @login_required
 def resume_status():
