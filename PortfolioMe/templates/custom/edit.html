@@ -46,9 +46,9 @@ extra(), form_opts) }} {% endblock %} {% endblock %} {% block tail %} {{ super()
         // Make job_image input readonly so admin only uploads to file input
         $('#job_image').prop('readonly', true);
         $('#old_image').prop('readonly', true);
-        $('#old_image').val($('#job_image').val());
 
         $('#image').on('change', function (e) {
+            $('#old_image').val($('#job_image').val());
             let filename = e.target.files[0].name;
             $('#job_image').val(filename);
         });
@@ -58,8 +58,10 @@ extra(), form_opts) }} {% endblock %} {% endblock %} {% block tail %} {{ super()
     if (window.location.pathname.split('/').includes('resume')) {
         // Make image input readonly so admin only uploads to file input
         $('#image').prop('readonly', true);
+        $('#old_image').prop('readonly', true);
 
-        $('#temp').on('change', function (e) {
+        $('#resume_image').on('change', function (e) {
+            $('#old_image').val($('#image').val());
             let filename = e.target.files[0].name;
             $('#image').val(filename);
         });

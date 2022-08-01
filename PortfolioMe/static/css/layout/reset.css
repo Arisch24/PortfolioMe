@@ -107,6 +107,11 @@ input[type='submit'] {
     color: hsl(var(--light-blue));
 }
 
+.alert.error {
+    background-color: hsl(0, 95%, 86%);
+    color: hsl(0, 100%, 50%, 0.85);
+}
+
 .alert.failed {
     background-color: hsl(0, 95%, 86%);
     color: hsl(0, 100%, 50%, 0.85);

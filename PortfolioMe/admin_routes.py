@@ -116,6 +116,8 @@ class ResumeView(ModelView):
         'image': resume_image_formatter
     }
 
+    form_excluded_columns = ("resume_details_ref")
+
     form_overrides = dict(status=SelectField)
 
     form_args = dict(
@@ -134,15 +136,48 @@ class ResumeView(ModelView):
     column_searchable_list = ["applicant_details", "date_edited", "status"]
 
     def on_model_change(self, form, model, is_created):
-        if not is_created:
-            if form.image.data is not None:
-                os.remove(resume_path + f"\{form.old_image.data}")
         model.image = model.resume_image
 
     def on_model_delete(self, model):
         os.remove(resume_path + f"\{model.image}")
 
     # Custom filters
+    can_create = False
+    can_edit = False
+    can_view_details = True
+    can_export = True
+    can_set_page_size = True
+
+    create_template = "custom/create.html"
+    edit_template = "custom/edit.html"
+    details_template = "custom/details.html"
+    list_template = "custom/list.html"
+
+    def is_accessible(self):
+        if session.get("admin"):
+            return True
+        return False
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for(".admin_login", next=request.url))
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            if current_user.is_authenticated:
+                abort(403)
+            else:
+                flash("You are not allowed to access this page", "failed")
+                return redirect(url_for("auth.login"))
+
+
+class ResumeDetailsView(ModelView):
+    '''This view is for resume details'''
+
+    column_exclude_list = ("associated_resume")
+
+    # Custom filters
+    can_create = False
+    can_edit = False
     can_view_details = True
     can_export = True
     can_set_page_size = True
@@ -188,9 +223,11 @@ class JobBoardView(ModelView):
 
     def on_model_change(self, form, model, is_created):
         if not is_created:
-            if form.image.data is not None:
+            if form.old_image.data != "":
                 os.remove(job_board_path + f"\{form.old_image.data}")
-        model.job_image = model.image
+                model.job_image = model.image
+        else:
+            model.job_image = model.image
 
     def on_model_delete(self, model):
         os.remove(job_board_path + f"\{model.job_image}")
@@ -347,6 +384,8 @@ admin.template_mode = "bootstrap4"
 admin.add_view(ApplicantView(models.Applicant,
                db.session, name="Registered Users"))
 admin.add_view(ResumeView(models.Resume, db.session, name="Sent Resumes"))
+admin.add_view(ResumeDetailsView(models.Resume_Details,
+               db.session, name="Resume Details Forms"))
 admin.add_view(JobBoardView(models.JobBoard, db.session, name="Edit Jobs"))
 admin.add_view(InsightsView(models.Insights, db.session, name="View Insights"))
 admin.add_view(ManageAdminView(models.Admin, db.session,
