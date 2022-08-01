@@ -26,6 +26,8 @@ class Applicant(db.Model, UserMixin):
         'Resume', backref='associated_applicant', uselist=True)
     status = db.Column(db.String(20), unique=False,
                        nullable=False, default='Active')
+    last_active = db.Column(db.DateTime, unique=False, nullable=False,
+                            default=datetime.utcnow)
 
     def get_reset_token(self):
         s = Serializer(current_app.config["SECRET_KEY"])
@@ -69,9 +71,11 @@ class Resume(db.Model):
                        nullable=False, default="Pending")
     image = db.Column(db.String(50), unique=False, nullable=False)
     applicant_id = db.Column(db.Integer, db.ForeignKey(
-        'applicant.id'), unique=True, nullable=False)
+        'applicant.id'), nullable=False)
     job_id = db.Column(db.Integer, db.ForeignKey(
-        'jobboard.id'), unique=True, nullable=False)
+        'jobboard.id'), nullable=False)
+    resume_details_ref = db.relationship(
+        'Resume_Details', backref='associated_resume', uselist=False)
 
     def __repr__(self):
         return f"Resume('{self.applicant_details}', '{self.date_edited}', '{self.is_bookmarked}', '{self.is_hired}', '{self.applicant_id}', '{self.job_id}')"
@@ -97,9 +101,9 @@ class Resume_Details(db.Model):
     soft_skills = db.Column(db.Text, unique=False, nullable=False)
     work_experience = db.Column(db.Text, unique=False, nullable=False)
     applicant_id = db.Column(db.Integer, db.ForeignKey(
-        'applicant.id'), unique=False, nullable=False)
+        'applicant.id'), nullable=False)
     resume_id = db.Column(db.Integer, db.ForeignKey(
-        'resume.id'), unique=False, nullable=False)
+        'resume.id'), nullable=False)
 
     def __repr__(self):
         return f"Resume_Details('{self.name}', '{self.age}', '{self.ic}', '{self.gender}', '{self.phone_number}', '{self.marital_status}', '{self.applicant_id}')"

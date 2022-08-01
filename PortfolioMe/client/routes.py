@@ -1,10 +1,11 @@
 import os
 from flask import Blueprint, jsonify, render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_required
+from sqlalchemy import not_
 from PortfolioMe import db, constants
-from PortfolioMe.client.forms import EditProfileForm, ResumeSubmissionForm
-from PortfolioMe.models import JobBoard, Resume
-from PortfolioMe.client.utils import save_resume, parse_resume, convert_pdf
+from PortfolioMe.client.forms import EditProfileForm, PersonalParticularsForm, ResumeSubmissionForm
+from PortfolioMe.models import JobBoard, Resume, Resume_Details
+from PortfolioMe.client.utils import save_resume, parse_resume
 
 client = Blueprint("client", __name__)
 
@@ -33,15 +34,26 @@ def edit_profile():
 
 @client.route("/job_board", methods=["GET", "POST"])
 def job_board():
+    '''
+    *
+    * not_(JobBoard.resumes_submitted_list.any(applicant_id=current_user.id))
+    *
+    - This query is to filter out the jobs the current applicant has submitted and 
+        only display the jobs that the applicant has not submitted otherwise if they 
+        submit their resumes to the same job twice there will a SQL error
+    '''
+
     JOBS_PER_PAGE = 12
     page = request.args.get('page', default=1, type=int)
-    jobs = JobBoard.query.order_by(
+    jobs = JobBoard.query.filter(not_(JobBoard.resumes_submitted_list.any(
+        applicant_id=current_user.id))).order_by(
         JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
 
     # Searching
     search_query = request.args.get('search')
     if search_query is not None:
-        jobs = JobBoard.query.filter(JobBoard.name.like(f"%{search_query}%")).order_by(
+        jobs = JobBoard.query.filter(JobBoard.name.like(f"%{search_query}%"), not_(JobBoard.resumes_submitted_list.any(
+            applicant_id=current_user.id))).order_by(
             JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
 
     # Filtering
@@ -53,39 +65,53 @@ def job_board():
     department = request.args.get('dept')
 
     if type != "All" and min_salary and max_salary and department != "All":
-        jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%")).order_by(
+        jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%"), not_(JobBoard.resumes_submitted_list.any(
+            applicant_id=current_user.id))).order_by(
             JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
     elif type == "All" and min_salary and max_salary and department == "All":
-        jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary)).order_by(
+        jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), not_(JobBoard.resumes_submitted_list.any(
+            applicant_id=current_user.id))).order_by(
             JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
     elif type == "All" and min_salary and max_salary and department:
-        jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%")).order_by(
+        jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%"), not_(JobBoard.resumes_submitted_list.any(
+            applicant_id=current_user.id))).order_by(
             JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
     elif type and min_salary and max_salary and department == "All":
-        jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary)).order_by(
+        jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), not_(JobBoard.resumes_submitted_list.any(
+            applicant_id=current_user.id))).order_by(
             JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
 
     return render_template("client/job_board.html", jobs=jobs, jobtype_filter=jobtype_filter, department_filter=department_filter)
 
 
-@client.route("/job_board/<int:job_id>")
+@client.route("/job_board/<int:job_id>", methods=["GET", "POST"])
 def job_detail(job_id):
     job = JobBoard.query.get_or_404(job_id)
     form = ResumeSubmissionForm()
+
+    if form.validate_on_submit():
+        resume_name = save_resume(form.resume.data)
+        # parse resume
+        resume = Resume(applicant_details='parsed text', image=resume_name,
+                        applicant_id=current_user.id, job_id=job.id)
+        # resume_details = Resume_Details(
+        #     applicant_id=current_user.id, resume_id=resume.id)
+        db.session.add(resume)
+        # db.session.add(resume_details)
+        db.session.commit()
+        # return redirect(url_for("client.upload_resume", job_id=job.id, resume_details_id=resume_details.id))
+
     return render_template("client/job_detail.html", job=job, form=form)
 
 
-@client.route("/job_board/<int:job_id>/upload_resume", methods=["GET", "POST"])
+@client.route("/job_board/<int:job_id>/upload_resume/<int:resume_details_id>", methods=["GET", "POST"])
 @login_required
-def upload_resume(job_id):
+def upload_resume(job_id, resume_details_id):
     job = JobBoard.query.get_or_404(job_id)
-    form = ResumeSubmissionForm()
+    resume_details = Resume_Details.query.get_or_404(resume_details_id)
+    form = PersonalParticularsForm()
+
     if form.validate_on_submit():
-        resume_name = save_resume(form.resume.data)
-        resume = Resume(applicant_details=form.output.data, image=resume_name,
-                        applicant_id=current_user.id, job_id=job.id)
-        db.session.add(resume)
-        db.session.commit()
         flash("Your resume has been saved.", "success")
         return redirect(url_for("client.job_board"))
     return render_template("client/upload_resume.html", form=form)
@@ -98,7 +124,6 @@ def parse_image():
         _, file_extension = os.path.splitext(request.files["file"].filename)
         if file_extension == ".pdf":
             file = request.files["file"].read()
-            resume = convert_pdf(file)
             parsed_text = parse_resume(resume, False)
         else:
             resume = request.files["file"].read()
@@ -106,8 +131,8 @@ def parse_image():
         return jsonify({"status": "success", "parsed_text": parsed_text})
 
 
-@client.route("/resume_list")
+@client.route("/resume_status")
 @login_required
-def resume_list():
+def resume_status():
     resumes = Resume.query.filter_by(applicant_id=current_user.id).all()
-    return render_template("client/resume_list.html", resumes=resumes)
+    return render_template("client/resume_status.html", resumes=resumes)
