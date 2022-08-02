@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Blueprint, jsonify, render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
 from PortfolioMe import db, bcrypt, mail
@@ -37,6 +38,8 @@ def login():
         applicant = Applicant.query.filter_by(email=form.email.data).first()
         if applicant and bcrypt.check_password_hash(applicant.password, form.password.data):
             if applicant.status == "Active":
+                applicant.last_active = datetime.utcnow()
+                db.session.commit()
                 login_user(applicant, remember=form.remember.data)
                 next_page = request.args.get('next')
                 return redirect(next_page) if next_page else redirect(url_for("main.home"))
