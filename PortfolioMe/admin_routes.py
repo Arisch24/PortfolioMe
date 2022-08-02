@@ -140,7 +140,7 @@ class ResumeView(ModelView):
         'resume_image': form.FileUploadField(label='Upload Resume Image Here',
                                              validators=None,
                                              base_path=resume_path,
-                                             namegen=filename_generation, allowed_extensions=['png', 'jpg', 'jpeg'], allow_overwrite=True),
+                                             namegen=filename_generation, allowed_extensions=['pdf'], allow_overwrite=True),
     }
 
     column_searchable_list = ["applicant_details", "date_edited", "status"]
