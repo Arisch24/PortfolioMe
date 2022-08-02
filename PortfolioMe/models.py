@@ -1,14 +1,16 @@
 from datetime import datetime
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask import current_app
-from numpy import unicode_
 from PortfolioMe import db, login_manager
-from flask_login import UserMixin
+from flask_login import UserMixin, logout_user
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Applicant.query.get(int(user_id))
+    applicant = Applicant.query.get(int(user_id))
+    if applicant.status != "Active":
+        return None and logout_user
+    return applicant
 
 
 class Applicant(db.Model, UserMixin):

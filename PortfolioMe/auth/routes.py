@@ -40,8 +40,12 @@ def login():
                 login_user(applicant, remember=form.remember.data)
                 next_page = request.args.get('next')
                 return redirect(next_page) if next_page else redirect(url_for("main.home"))
-            else:
+            elif applicant.status == "Inactive":
                 flash("Your account has been blocked due to inactivity", "failed")
+                return render_template("auth/login.html", form=form, button="Request Unblock")
+            else:
+                flash(
+                    "Your account has been blocked by the admin due to suspicious behaviour", "failed")
                 return render_template("auth/login.html", form=form, button="Request Unblock")
         else:
             flash(f"Login Unsuccessful! Check your email and password", "failed")

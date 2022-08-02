@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, jsonify, render_template, request, flash, redirect, url_for
+from flask import Blueprint, current_app, jsonify, render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_required
 from sqlalchemy import not_
 from PortfolioMe import db, constants
@@ -45,9 +45,13 @@ def job_board():
 
     JOBS_PER_PAGE = 12
     page = request.args.get('page', default=1, type=int)
-    jobs = JobBoard.query.filter(not_(JobBoard.resumes_submitted_list.any(
-        applicant_id=current_user.id))).order_by(
-        JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+    if current_user.is_authenticated:
+        jobs = JobBoard.query.filter(not_(JobBoard.resumes_submitted_list.any(
+            applicant_id=current_user.id))).order_by(
+            JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+    else:
+        jobs = JobBoard.query.order_by(
+            JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
 
     # Searching
     search_query = request.args.get('search')
@@ -94,12 +98,13 @@ def job_detail(job_id):
         # parse resume
         resume = Resume(applicant_details='parsed text', image=resume_name,
                         applicant_id=current_user.id, job_id=job.id)
-        # resume_details = Resume_Details(
-        #     applicant_id=current_user.id, resume_id=resume.id)
         db.session.add(resume)
-        # db.session.add(resume_details)
         db.session.commit()
-        # return redirect(url_for("client.upload_resume", job_id=job.id, resume_details_id=resume_details.id))
+        resume_details = Resume_Details(name='lol', age=34, ic='2049823', dob='12-02-1234', mailing_address='diajeodiaeoidj', postcode='14100', town='Somewhere', state='no where', gender='Male', phone_number=42034987, marital_status='none', linkedin_url='bla bla bla', skills='nothing', soft_skills='Not soft', work_experience='No experience at all',
+                                        applicant_id=current_user.id, resume_id=resume.id)
+        db.session.add(resume_details)
+        db.session.commit()
+        return redirect(url_for("client.upload_resume", job_id=job.id, resume_details_id=resume_details.id))
 
     return render_template("client/job_detail.html", job=job, form=form)
 
