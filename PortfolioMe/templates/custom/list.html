@@ -162,44 +162,48 @@ endblock %} {% block tail %} {{ super() }} {% if filter_groups %}
     // if the url is applicant then do this
     if (window.location.pathname.split('/').includes('applicant')) {
         $('.status-select').on('change', (e) => {
-            let selected = $('.status-select option:selected').text();
-            let key = $('.status-select').attr('name');
-            $.ajax({
-                url: '{{ url_for("applicant.update_status") }}',
-                type: 'POST',
-                contentType: 'application/json',
-                processData: false,
-                data: JSON.stringify({ id: key, status: selected }),
-                success: function (response) {
-                    alert('Status has been updated!');
-                },
-                error: function (xhr) {
-                    //Do Something to handle error
-                    alert(xhr.statusText);
-                },
-            });
+            if (confirm('Are you sure you want to proceed?')) {
+                let selected = $('.status-select option:selected').text();
+                let key = $('.status-select').attr('name');
+                $.ajax({
+                    url: '{{ url_for("applicant.update_status") }}',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    processData: false,
+                    data: JSON.stringify({ id: key, status: selected }),
+                    success: function (response) {
+                        // do nothing
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                        alert(xhr.statusText);
+                    },
+                });
+            }
         });
     }
 
     // if the url is applicant then do this
     if (window.location.pathname.split('/').includes('resume')) {
         $('.status-select').on('change', (e) => {
-            let selected = $('.status-select option:selected').text();
-            let key = $('.status-select').attr('name');
-            $.ajax({
-                url: '{{ url_for("resume.update_status") }}',
-                type: 'POST',
-                contentType: 'application/json',
-                processData: false,
-                data: JSON.stringify({ id: key, status: selected }),
-                success: function (response) {
-                    alert('Status has been updated!');
-                },
-                error: function (xhr) {
-                    //Do Something to handle error
-                    alert(xhr.statusText);
-                },
-            });
+            if (confirm('Are you sure you want to proceed?')) {
+                let selected = $('.status-select option:selected').text();
+                let key = $('.status-select').attr('name');
+                $.ajax({
+                    url: '{{ url_for("resume.update_status") }}',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    processData: false,
+                    data: JSON.stringify({ id: key, status: selected }),
+                    success: function (response) {
+                        // do nothing
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                        alert(xhr.statusText);
+                    },
+                });
+            }
         });
     }
 </script>
