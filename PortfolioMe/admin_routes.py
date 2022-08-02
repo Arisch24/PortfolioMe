@@ -1,10 +1,11 @@
 import os
 import secrets
-from flask import session, redirect, url_for, request, flash, abort, Markup, jsonify
+from flask import (session, redirect, url_for, request, flash, abort, Markup,
+                   jsonify, current_app)
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import AdminIndexView, Admin, expose, BaseView, form
 from flask_login import current_user
-from PortfolioMe import models, bcrypt, db, admin
+from PortfolioMe import models, bcrypt, db, admin, scheduler
 from PortfolioMe.constants import account_status, resume_status
 from PortfolioMe.admin_forms import AdminLoginForm
 from wtforms import PasswordField, SelectField
@@ -35,7 +36,7 @@ class ApplicantView(ModelView):
             else:
                 status.append(
                     f'<option value="{account_status[i]}">{account_status[i]}</option>')
-        return Markup(f'<label for="status"></label><select class="status-select" id="status" name="{model.id}">{status}</select>')
+        return Markup(f'<label for="status"></label><select class="form-control status-select" id="status" name="{model.id}">{status}</select>')
 
     column_formatters = {
         'status': status_formatter
@@ -118,11 +119,20 @@ class ResumeView(ModelView):
 
     form_excluded_columns = ("resume_details_ref")
 
-    form_overrides = dict(status=SelectField)
+    def status_formatter(view, context, model, name):
+        status = []
+        for i in range(len(resume_status)):
+            if model.status == resume_status[i]:
+                status.append(
+                    f'<option value="{resume_status[i]}" selected>{resume_status[i]}</option>')
+            else:
+                status.append(
+                    f'<option value="{resume_status[i]}">{resume_status[i]}</option>')
+        return Markup(f'<label for="status"></label><select class="form-control status-select" id="status" name="{model.id}">{status}</select>')
 
-    form_args = dict(
-        status=dict(choices=resume_status)
-    )
+    column_formatters = {
+        'status': status_formatter
+    }
 
     form_extra_fields = {
         'old_image': form.Select2TagsField(label='Old image name',
@@ -152,6 +162,18 @@ class ResumeView(ModelView):
     edit_template = "custom/edit.html"
     details_template = "custom/details.html"
     list_template = "custom/list.html"
+
+    # AJAX request
+    @expose("/update_status", methods=["GET", "POST"])
+    def update_status(self):
+        if request.method == "POST":
+            id = request.json['id']
+            status = request.json['status']
+            resume = models.Resume.query.filter_by(id=id).first()
+            resume.status = status
+            db.session.commit()
+            return jsonify({"status": "success", "resume_status": status})
+        return jsonify({"request": "no function"})
 
     def is_accessible(self):
         if session.get("admin"):
