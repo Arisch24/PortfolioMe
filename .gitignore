@@ -8,5 +8,8 @@
 /flask_session
 
 # Images folder
-/PortfolioMe/static/resumes
-/PortfolioMe/static/jobs
+/PortfolioMe/static/resumes/*
+/PortfolioMe/static/jobs/*
+
+# dotenv
+.env
