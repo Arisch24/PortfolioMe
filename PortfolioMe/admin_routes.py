@@ -110,7 +110,7 @@ class ResumeView(ModelView):
     '''This view is same as other views but allows file uploading'''
 
     def resume_image_formatter(view, context, model, name):
-        return Markup(f'<img class="resume-image" src="{ url_for("static", filename="resumes/" + model.image) }" />')
+        return Markup(f'<a class="resume-image" target="_blank" href="{ url_for("static", filename="resumes/" + model.image) }">resume.pdf</a>')
 
     column_formatters = {
         'image': resume_image_formatter
