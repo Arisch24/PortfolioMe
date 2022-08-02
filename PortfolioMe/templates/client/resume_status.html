@@ -2,27 +2,61 @@
 endblock %} {% block css %}
 <link
     rel="stylesheet"
-    href="{{ url_for('static', filename='css/client/resume_list.css') }}"
+    href="{{ url_for('static', filename='css/client/resume_status.css') }}"
 />{% endblock %} {% block content %}
 <main class="resume-list-container">
     <div class="resume-list-header">
         <h1>Submitted Resumes</h1>
         <p>List of the resumes that you have submitted.</p>
     </div>
-    {% if resume is not none %} {% for resume in resumes %}
-    <div>
-        <p>{{ resume.applicant_details }}</p>
-        <p>{{ resume.date_edited }}</p>
-        <p>{{ resume.applicant_id }}</p>
-        <p>{{ resume.job_id }}</p>
-        <img src="{{ url_for('static', filename='resumes/' + resume.image) }}" /
-        width="100" height="100">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Applicant Details</th>
+                    <th>Last Edited Date</th>
+                    <th>Resume File</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            {% if resume is not none %} {% for resume in resumes %}
+            <tbody>
+                <tr>
+                    <td>{{ resume.applicant_details }}</td>
+                    <td>{{ resume.date_edited }}</td>
+                    <td>
+                        <a
+                            href="{{ url_for('static', filename='resumes/' + resume.image) }}"
+                            target="_blank"
+                            >resume.pdf</a
+                        >
+                    </td>
+                    <td>{{ resume.status }}</td>
+                    <td>
+                        {% if resume.status == "Pending" %}
+                        <a
+                            class="edit-resume-details-btn"
+                            target="_blank"
+                            href="{{ url_for('client.upload_resume', job_id=resume.job_id, resume_details_id=resume.resume_details_ref.id) }}"
+                            >dkdoedk</a
+                        >
+                        {% else %} You can't edit this. {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %} {% else %}
+            <tbody>
+                <tr>
+                    <td colspan="5">
+                        You have not submitted any resumes. To submit your
+                        resume find a job to apply
+                        <a href="{{ url_for('client.job_board') }}">here.</a>
+                    </td>
+                </tr>
+            </tbody>
+            {% endif %}
+        </table>
     </div>
-    {% endfor %} {% else %}
-    <div>
-        You have not submitted any resumes. To submit your resume find a job to
-        apply <a href="{{ url_for('client.job_board') }}">here.</a>
-    </div>
-    {% endif %}
 </main>
 {% endblock %}

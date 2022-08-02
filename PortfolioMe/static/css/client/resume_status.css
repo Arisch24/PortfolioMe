@@ -1,7 +1,52 @@
 .resume-list-container {
-    padding: 0.5rem;
+    background-color: hsl(var(--light-blue));
+    padding: 2rem;
 }
 
 .resume-list-header h1 {
+    color: hsl(var(--accent-blue));
     font-size: 3rem;
+}
+
+.resume-list-header p {
+    font-size: 1.15rem;
+}
+
+.table-container {
+    margin-top: 2rem;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 0.5rem;
+}
+
+th {
+    color: hsl(var(--dark-blue));
+}
+
+td:first-child {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+td {
+    text-align: center;
+}
+
+td a:hover {
+    text-decoration: underline;
 }
