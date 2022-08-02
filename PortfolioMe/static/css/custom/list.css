@@ -1,3 +1,7 @@
 td.col-image iframe.resume-image {
     width: 200px;
 }
+
+td[class^='col'] select.status-select {
+    min-width: 130px;
+}
