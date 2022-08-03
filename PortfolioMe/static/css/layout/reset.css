@@ -3,12 +3,12 @@
 :root:not(.dark) {
     --pink: 351 60% 83%;
     --dark-blue: 230 33% 21%;
-    --light-blue: 230 58% 82%;
-    --light-accent-blue: 238 95% 66%;
+    --light-blue: 230 58% 85%;
+    --light-accent-blue: 238 95% 75%;
     --accent-blue: 250 80% 60%;
     --sky-blue: 202 74% 85%;
     --blue-shade: 230 90% 8%;
-    --navy-blue: 230 31% 46%;
+    --navy-blue: 230 31% 35%;
     --pure-white: 0 0% 100%;
     --pure-black: 0 0% 0%;
     --red: 13 69% 63%;
@@ -17,14 +17,14 @@
 }
 
 :root.dark {
-    --pink: 352 77% 62%;
+    --pink: 352 57% 52%;
     --dark-blue: 230 58% 82%;
     --light-blue: 230 33% 21%;
-    --light-accent-blue: 250 80% 60%;
+    --light-accent-blue: 250 60% 35%;
     --accent-blue: 238 95% 66%;
     --sky-blue: 230 90% 8%;
-    --blue-shade: 202 74% 88%;
-    --navy-blue: 230 31% 36%;
+    --blue-shade: 202 74% 78%;
+    --navy-blue: 230 31% 50%;
     --pure-white: 0 0% 0%;
     --pure-black: 0 0% 100%;
     --red: 13 69% 63%;
