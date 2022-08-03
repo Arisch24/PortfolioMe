@@ -1,13 +1,31 @@
 /* Main section */
 main {
-    min-height: 100vh;
-    background: url('../../images/resume\ image.png') no-repeat 50% 16rem,
-        hsl(var(--light-blue));
+    display: flex;
+    flex-direction: column;
+    --padding: 5rem 5rem 5rem;
+    --p-tag-font-size: 1.25rem;
 }
 
+/* Info / Signup section */
 main .info-section {
-    padding: 5rem 0 5rem 15rem;
-    max-width: 1000px;
+    background: url('../../images/resume\ image.png') no-repeat 50% 15rem,
+        hsl(var(--light-blue));
+    padding: var(--padding) 15rem;
+    min-height: 100vh;
+}
+
+main .desc {
+    color: hsl(var(--dark-blue));
+    font-weight: 500;
+}
+
+main button {
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .info-section .title {
@@ -16,40 +34,236 @@ main .info-section {
 }
 
 .info-section p {
-    color: hsl(var(--dark-blue));
-    font-size: 1.25rem;
-    font-weight: 500;
+    font-size: var(--p-tag-font-size);
 }
 
 .info-section button {
-    margin-top: 0.5rem;
-    padding: 0.75rem;
     background-color: hsl(var(--pink));
-    border-radius: 0.25rem;
-    border: none;
     color: #000;
-    font-weight: 700;
-    cursor: pointer;
+}
+
+/* Job section */
+.job-section {
+    background-color: hsl(var(--light-accent-blue));
+    padding: var(--padding) 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.job-section h2 {
+    color: hsl(var(--pink));
+    font-size: 2.5rem;
+}
+
+.job-section .job-board-showcase p {
+    font-size: var(--p-tag-font-size);
+}
+
+.job-section button {
+    background-color: hsl(var(--navy-blue));
+    color: hsl(var(--pure-white));
+}
+
+.job-section .job-board-showcase {
+    max-width: 40%;
+}
+
+.example-job-board {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    margin-bottom: 3rem;
+}
+
+.example-job-board div {
+    position: relative;
+    background-color: hsl(var(--sky-blue));
+    color: hsl(var(--blue-shade));
+    padding: 1rem;
+    width: 20vw;
+    height: 25vh;
+    transition: box-shadow 250ms ease;
+}
+
+.example-job-board div:hover {
+    box-shadow: 12px 12px 0px 0px hsl(var(--accent-blue));
+}
+
+.example-job-board div h3 {
+    font-size: 1.5rem;
+}
+
+.example-job-board div p {
+    height: 10vh;
+    overflow: hidden;
+}
+
+.example-job-board div a {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+}
+
+/* Resume section */
+.resume-section {
+    background-color: hsl(var(--pink));
+    padding: var(--padding) 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.resume-section > div:first-child {
+    max-width: 40%;
+}
+
+.resume-section h2 {
+    color: hsl(var(--light-accent-blue));
+    font-size: 2.5rem;
+}
+
+.resume-section p {
+    font-size: var(--p-tag-font-size);
+}
+
+.resume-section button {
+    background-color: hsl(var(--accent-blue));
+    color: hsl(var(--pure-white));
+}
+
+div.table-container {
+    padding: 4rem;
+    margin-bottom: 3rem;
+    background-color: hsl(var(--pure-white));
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+        rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+        rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+table {
+    table-layout: fixed;
+    background-color: hsl(var(--pink));
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 0.5rem;
+}
+
+td span {
+    padding: 0.25rem;
 }
 
 /* Tablet media query */
 @media screen and (max-width: 1200px) {
-    main {
-        background-position: 6rem 16rem;
+    main .info-section {
+        background-position: 6rem 14rem;
+        padding: 2rem 0 2rem 5rem;
     }
 
-    main .info-section {
-        padding: 2rem 0 2rem 5rem;
+    .job-section {
+        flex-direction: column;
+        row-gap: 4rem;
+        padding: 5rem;
+    }
+
+    .job-section .job-board-showcase {
+        max-width: none;
+    }
+
+    .job-board-showcase {
+        order: 1;
+    }
+
+    .example-job-board {
+        order: 2;
+        place-items: center;
+    }
+
+    .example-job-board div {
+        width: 100%;
+    }
+
+    .example-job-board div p {
+        height: 5vh;
+    }
+
+    .resume-section {
+        padding: 5rem;
+        flex-direction: column;
+        row-gap: 4rem;
+    }
+
+    .resume-section > div:first-child {
+        max-width: none;
     }
 }
 
 /* Smartphone media query */
 @media screen and (max-width: 800px) {
-    main {
-        background-position: 1rem 18rem;
+    main .info-section {
+        background-position: 0 18rem;
+        padding: 2rem 0 2rem 2rem;
     }
 
-    main .info-section {
-        padding: 2rem 0 2rem 5rem;
+    .job-section {
+        flex-direction: column;
+        row-gap: 4rem;
+        padding: 2rem;
+    }
+
+    .job-section .job-board-showcase {
+        max-width: none;
+    }
+
+    .job-board-showcase {
+        order: 1;
+    }
+
+    .example-job-board {
+        order: 2;
+        place-items: center;
+    }
+
+    .example-job-board div {
+        width: auto;
+    }
+
+    .example-job-board div p {
+        height: 5vh;
+    }
+
+    .resume-section {
+        padding: 2rem;
+        flex-direction: column;
+        row-gap: 4rem;
+    }
+
+    .resume-section > div:first-child {
+        max-width: none;
+    }
+
+    div.table-container {
+        padding: 2rem;
+    }
+
+    table {
+        table-layout: auto;
+    }
+
+    th,
+    td {
+        padding: 0.25rem;
+    }
+
+    td span {
+        padding: 0;
     }
 }

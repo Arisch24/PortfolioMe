@@ -6,9 +6,9 @@
 />
 {% endblock %}{% block content %}
 <main class="home-container">
-    <div class="info-section">
+    <section class="info-section">
         <h1 class="title">Management at its finest.</h1>
-        <p>
+        <p class="desc">
             This application is meant for managing all the resumes in a smarter
             way. Automation with Artificial Inteligence (AI) has never been
             better.
@@ -16,12 +16,157 @@
         {% if current_user.is_authenticated %} {% else %}
         <button id="signUp">Sign up now!</button>
         {% endif %}
-    </div>
+    </section>
+    <section class="job-section">
+        <div class="example-job-board">
+            <div>
+                <h3>Accountant</h3>
+                <span>Part-Time</span>
+                <br />
+                <i>Salary: RM 5000 - RM 7000</i>
+                <p>
+                    An Accountant helps businesses make critical financial
+                    decisions by collecting, tracking, and correcting the
+                    company's finances. They are responsible for financial
+                    audits, reconciling bank statements, and ensuring financial
+                    records are accurate throughout the year. Post this job for
+                    free.
+                </p>
+                <a href="#">Details</a>
+            </div>
+            <div>
+                <h3>IT Manager</h3>
+                <span>Full-Time</span>
+                <br />
+                <i>Salary: RM 10000 - RM 15000</i>
+                <p>
+                    An IT Manager is a professional who ensures that all
+                    employees have the technology they need to get their job
+                    done, from a reliable laptop and VPN access for remote
+                    workers who can't be reached otherwise, to up-close
+                    coordination with other departments like HR or finance so
+                    data is secure.
+                </p>
+                <a href="#">Details</a>
+            </div>
+            <div>
+                <h3>Digital Marketer</h3>
+                <span>Internship</span>
+                <br />
+                <i>Salary: RM 1000 - RM 1500</i>
+                <p>
+                    A Digital Marketing Manager is responsible for developing
+                    and implementing strategies that promote a company or
+                    brand's products. They manage various channels like social
+                    media networks, Google Ads, website content and email
+                    marketing to deliver a persuasive and cohesive marketing
+                    message to their audience.
+                </p>
+                <a href="#">Details</a>
+            </div>
+            <div>
+                <h3>Business Analyst</h3>
+                <span>Contract</span>
+                <br />
+                <i>Salary: RM 4500 - RM 6000</i>
+                <p>
+                    Business Analysts conduct market analyses, analysing both
+                    product lines and the overall profitability of the business.
+                    In addition, they develop and monitor data quality metrics
+                    and ensure business data and reporting needs are met. Strong
+                    technology, analytical and communication skills are
+                    must-have traits.
+                </p>
+                <a href="#">Details</a>
+            </div>
+        </div>
+        <div class="job-board-showcase">
+            <h2>Sign up for your dream job</h2>
+            <p class="desc">
+                Browse multiple job offers and pick the right one for you! If
+                you have trouble finding a job, fret not our filters are more
+                than likely able to help you find your dream job.
+            </p>
+            <button id="browseJob">Browse Jobs</button>
+        </div>
+    </section>
+    <section class="resume-section">
+        <div>
+            <h2>View your resume status</h2>
+            <p class="desc">
+                Upload your resume and watch the resume parser extract your data
+                into the form. Then, view your resume status and edit the
+                information while waiting for the HR manager to accept your
+                application.
+            </p>
+            {% if current_user.is_authenticated %}
+            <button id="resumeStatus">My resume status</button>
+            {% else %}
+            <button id="login">Login to view to resume status</button>
+            {% endif %}
+        </div>
+        <div class="table-container">
+            <table class="example-resume-status">
+                <tr>
+                    <th>Your Details</th>
+                    <th>Last Edited Date</th>
+                    <th>Resume File</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Max, 01216486, 34, Jalan ...</td>
+                    <td>2022-06-03 14:50:21.208389</td>
+                    <td><a href="#">resume.pdf</a></td>
+                    <td>
+                        <span style="background-color: hsl(var(--yellow))"
+                            >Pending</span
+                        >
+                    </td>
+                    <td><a href="#">Edit</a></td>
+                </tr>
+                <tr>
+                    <td>Arnold, 01946125, 122, Taman ...</td>
+                    <td>2022-05-21 18:10:21.208389</td>
+                    <td><a href="#">resume.pdf</a></td>
+                    <td>
+                        <span style="background-color: hsl(var(--green))"
+                            >Accepted</span
+                        >
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Mike, 01148974, 05, Jalan ...</td>
+                    <td>2022-10-30 22:49:11.208389</td>
+                    <td><a href="#">resume.pdf</a></td>
+                    <td>
+                        <span style="background-color: hsl(var(--red))"
+                            >Rejected</span
+                        >
+                    </td>
+                    <td><a href="#">Edit</a></td>
+                </tr>
+            </table>
+        </div>
+    </section>
 </main>
 {% endblock %} {% block javascript %}
 <script>
     $('#signUp').on('click', () => {
         location = '../register';
+    });
+
+    $('#browseJob').on('click', () => {
+        location = '../job_board';
+    });
+
+    $('#resumeStatus').on('click', () => {
+        location = '../resume_status';
+    });
+
+    $('#login').on('click', () => {
+        location = '../login';
     });
 </script>
 {% endblock %}
