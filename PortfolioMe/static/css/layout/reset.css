@@ -96,6 +96,7 @@ input[type='submit'] {
     align-items: center;
     border-radius: 0.5rem;
     animation: slide 7000ms linear forwards normal;
+    z-index: 999;
 }
 
 .alert.info {
