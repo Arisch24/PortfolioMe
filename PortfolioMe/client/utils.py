@@ -3,9 +3,7 @@ import os
 import cv2
 import pytesseract
 import numpy as np
-import pdf2image
-from PIL import Image
-from flask import current_app, url_for
+from flask import current_app
 from turtle import width
 
 
@@ -17,36 +15,14 @@ def save_resume(form_resume):
     '''
     random_hex = secrets.token_hex(8)
     _, file_extension = os.path.splitext(form_resume.filename)
-    if file_extension == ".pdf":
-        form_resume = form_resume.read()
-        pages = pdf2image.convert_from_bytes(
-            form_resume,  fmt="png", poppler_path='C:\\Program Files\\poppler-0.68.0\\bin')
 
-        resume_name = random_hex + ".png"
-        resume_path = os.path.join(
-            current_app.root_path, 'static/resumes')
-        for page in pages:
-            page.save(f'{resume_path}/{resume_name}')
-    else:
-        resume_name = random_hex + file_extension
-        resume_path = os.path.join(
-            current_app.root_path, 'static/resumes', resume_name)
+    resume_name = random_hex + file_extension
+    resume_path = os.path.join(
+        current_app.root_path, 'static/resumes', resume_name)
 
-        # Resizing image
-        output_size = (1080, 1920)  # size of image
-        image = Image.open(form_resume)
-        image = image.convert("RGB")
-        image.thumbnail(output_size)
-        image.save(resume_path)
+    form_resume.save(resume_path)
 
     return resume_name
-
-
-def convert_pdf(pdf):
-    # Convert pdf to image
-    pages = pdf2image.convert_from_bytes(
-        pdf,  fmt="png", poppler_path='C:\\Program Files\\poppler-0.68.0\\bin')
-    return pages
 
 
 ''' 
@@ -128,39 +104,31 @@ def apply_filters(retouche):
     return after_remove_noise
 
 
-def parse_resume(resume_image, bool):
+def parse_resume(resume_image):
     ''''
     Parse resume function
     @param(resume_image): resume_image to parse
-    @param(bool): false if its converted from pdf to image and true if image is read from form
     '''
-    if bool:
-        # convert string data to numpy array
-        npimg = np.fromstring(resume_image, np.uint8)
-        # convert numpy array to image
-        img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
-        height, width, _ = img.shape
-    else:
-        for page in resume_image:
-            # convert to img
-            img = np.array(page)
+    for page in resume_image:
+        # convert to img
+        img = np.array(page)
         width, height, _ = img.shape
 
-    # check if height and width are low
-    if height < 1280 or width < 720:
-        retouche = resize(img, 3.5, 3.5)
-        filtered_image = apply_filters(retouche)
-    elif height < 1920 or width < 1080:
-        retouche = resize(img, 3, 3)
-        filtered_image = apply_filters(retouche)
-    else:
-        filtered_image = img
+        # check if height and width are low
+        if height < 1280 or width < 720:
+            retouche = resize(img, 3.5, 3.5)
+            filtered_image = apply_filters(retouche)
+        elif height < 1920 or width < 1080:
+            retouche = resize(img, 3, 3)
+            filtered_image = apply_filters(retouche)
+        else:
+            filtered_image = img
 
-    # Adding custom options
-    custom_config = r'--oem 3'
-    pytesseract.pytesseract.tesseract_cmd = 'C:\\Users\\arisc\\AppData\\Local\\Programs\\Tesseract-OCR\\tesseract.exe'
+        # Adding custom options
+        custom_config = r'--oem 3'
+        pytesseract.pytesseract.tesseract_cmd = 'C:\\Users\\arisc\\AppData\\Local\\Programs\\Tesseract-OCR\\tesseract.exe'
 
-    text = pytesseract.image_to_string(
-        filtered_image, lang='eng', config=custom_config)
+        text += pytesseract.image_to_string(
+            filtered_image, lang='eng', config=custom_config)
 
     return text
