@@ -3,6 +3,7 @@ import os
 import cv2
 import pytesseract
 import numpy as np
+import pdf2image
 from flask import current_app
 from turtle import width
 
@@ -23,6 +24,13 @@ def save_resume(form_resume):
     form_resume.save(resume_path)
 
     return resume_name
+
+
+def convert_pdf(pdf):
+    # Convert pdf to image
+    pages = pdf2image.convert_from_bytes(
+        pdf,  fmt="png", poppler_path='C:\\Program Files\\poppler-0.68.0\\bin')
+    return pages
 
 
 ''' 
