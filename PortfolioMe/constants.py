@@ -1,6 +1,4 @@
-from turtle import position
-
-
+gender_radio = ["Male", "Female", "Prefer not to say"]
 job_types = ['All', 'Full-time', 'Part-time',
              'Temporary', 'Contract', 'Internship']
 department_types = ['All', 'Accounting', 'Operations', 'Finance', 'Sales', 'Human Resources', 'Purchase',
@@ -12,3 +10,5 @@ specialization_in = ['Accounting/Finance', 'Admin/Human Resources', 'Sales/Marke
                      'Education/Training', 'Computer/Information Technology', 'Engineering', 'Manufacturing', 'Building/Construction', 'Sciences', 'Healthcare', 'Others']
 account_status = ['Active', 'Inactive', 'Suspended']
 resume_status = ['Pending', 'Rejected', 'Accepted', 'Keep In View']
+marital_status_types = ['single', 'married',
+                        'widowed', 'divorced', 'separated']

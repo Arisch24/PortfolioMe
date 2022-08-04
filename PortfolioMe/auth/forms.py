@@ -4,6 +4,7 @@ from pyparsing import Regex
 from wtforms import StringField, PasswordField, TelField, RadioField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Regexp, ValidationError
 from PortfolioMe.models import Applicant
+from PortfolioMe.constants import gender_radio
 
 
 class RegistrationForm(FlaskForm):
@@ -20,9 +21,8 @@ class RegistrationForm(FlaskForm):
         DataRequired(), EqualTo('password')])
     phone_number = TelField('Phone Number', validators=[
         DataRequired(), Length(min=8, max=11, message="Follows Malaysian phone number format."), Regexp(r"(01)[0-9]{1}[0-9]{6,8}", message="Phone number is 9 to 11 characters without dash.")])
-    # Radio field
-    radio = ["Male", "Female", "Prefer not to say"]
-    gender = RadioField('Gender', validators=[DataRequired()], choices=radio)
+    gender = RadioField('Gender', validators=[
+                        DataRequired()], choices=gender_radio)
     submit = SubmitField('Register')
 
     def validate_username(self, username):
