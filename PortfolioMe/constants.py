@@ -1,5 +1,5 @@
-job_types = ['All', 'full-time', 'part-time',
-             'temporary', 'contract', 'internship']
+job_types = ['All', 'Full-time', 'Part-time',
+             'Temporary', 'Contract', 'Internship']
 department_types = ['All', 'Marketing', 'Operations', 'Finance', 'Sales', 'Human Resources', 'Purchase',
                     'Information Technology', 'Production', 'Quality Assurance', 'Accounting', 'Production']
 account_status = ['Active', 'Inactive', 'Suspended']
