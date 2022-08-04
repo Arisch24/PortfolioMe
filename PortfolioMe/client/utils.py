@@ -137,6 +137,6 @@ def parse_resume(resume_image):
         pytesseract.pytesseract.tesseract_cmd = 'C:\\Users\\arisc\\AppData\\Local\\Programs\\Tesseract-OCR\\tesseract.exe'
 
         text += pytesseract.image_to_string(
-            filtered_image, lang='eng', config=custom_config)
+            filtered_image, lang='eng', config=custom_config) + "\n"
 
     return text
