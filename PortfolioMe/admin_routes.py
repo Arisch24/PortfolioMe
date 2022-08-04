@@ -7,7 +7,7 @@ from flask_admin import AdminIndexView, Admin, expose, BaseView, form
 from flask_login import current_user
 from PortfolioMe import models, bcrypt, db, admin, scheduler
 from PortfolioMe.constants import (
-    account_status, resume_status, job_types, department_types, position_level, experience_in_years)
+    account_status, resume_status, job_types, department_types, position_level, experience_in_years, specialization_in)
 from PortfolioMe.admin_forms import AdminLoginForm
 from wtforms import PasswordField, SelectField
 from wtforms.validators import DataRequired, Length
@@ -273,11 +273,13 @@ class JobBoardView(ModelView):
         position_level=dict(label='Position Level', validators=[
                             DataRequired()], choices=position_level),
         years_of_experience=dict(label='Years Of Experience', validators=[
-                                 DataRequired()], choices=experience_in_years)
+                                 DataRequired()], choices=experience_in_years),
+        specializations=dict(label='Specializations', validators=[
+                             DataRequired()], choices=specialization_in)
     )
 
     form_overrides = dict(department=SelectField,
-                          job_type=SelectField, position_level=SelectField, years_of_experience=SelectField)
+                          job_type=SelectField, position_level=SelectField, years_of_experience=SelectField, specializations=SelectField)
 
     column_searchable_list = ["name", "description",
                               "department", "job_type"]
