@@ -38,7 +38,7 @@ endblock %} {% block css %}
                         <a
                             class="edit-resume-details-btn"
                             target="_blank"
-                            href="{{ url_for('client.upload_resume', job_id=resume.job_id, resume_details_id=resume.resume_details_ref.id) }}"
+                            href="{{ url_for('client.upload_resume_details', job_id=resume.job_id, resume_details_id=resume.resume_details_ref.id) }}"
                             >dkdoedk</a
                         >
                         {% else %} You can't edit this. {% endif %}

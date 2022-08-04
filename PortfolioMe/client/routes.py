@@ -94,32 +94,39 @@ def job_detail(job_id):
     form = ResumeSubmissionForm()
 
     if form.validate_on_submit():
-        resume_name = save_resume(form.resume.data)
         # parse resume
+        resume_name = save_resume(form.resume.data)
         resume = Resume(applicant_details='parsed text', image=resume_name,
                         applicant_id=current_user.id, job_id=job.id)
         db.session.add(resume)
         db.session.commit()
-        resume_details = Resume_Details(name='lol', age=34, ic='2049823', dob='12-02-1234', mailing_address='diajeodiaeoidj', postcode='14100', town='Somewhere', state='no where', gender='Male', phone_number=42034987, marital_status='none', linkedin_url='bla bla bla', skills='nothing', soft_skills='Not soft', work_experience='No experience at all',
+        resume_details = Resume_Details(name='lol', age=34, ic='2049823', dob='12-02-1234',
+                                        mailing_address='diajeodiaeoidj', postcode='14100',
+                                        town='Somewhere', state='no where', gender='Male',
+                                        phone_number=42034987, marital_status='none',
+                                        linkedin_url='bla bla bla', education='nothing',
+                                        certificates='degree in failure', skills='nothing',
+                                        soft_skills='Not soft', work_experience='No experience at all',
                                         applicant_id=current_user.id, resume_id=resume.id)
         db.session.add(resume_details)
         db.session.commit()
-        return redirect(url_for("client.upload_resume", job_id=job.id, resume_details_id=resume_details.id))
+        return redirect(url_for("client.upload_resume_details", job_id=job.id, resume_details_id=resume_details.id))
 
     return render_template("client/job_detail.html", job=job, form=form)
 
 
-@client.route("/job_board/<int:job_id>/upload_resume/<int:resume_details_id>", methods=["GET", "POST"])
+@client.route("/job_board/<int:job_id>/upload_resume_details/<int:resume_details_id>", methods=["GET", "POST"])
 @login_required
-def upload_resume(job_id, resume_details_id):
+def upload_resume_details(job_id, resume_details_id):
     job = JobBoard.query.get_or_404(job_id)
     resume_details = Resume_Details.query.get_or_404(resume_details_id)
     form = PersonalParticularsForm()
 
     if form.validate_on_submit():
-        flash("Your resume has been saved.", "success")
+        # save resume details
+        flash("Your form has been saved.", "success")
         return redirect(url_for("client.job_board"))
-    return render_template("client/upload_resume.html", form=form)
+    return render_template("client/upload_resume_details.html", form=form)
 
 
 @client.route("/resume_status")

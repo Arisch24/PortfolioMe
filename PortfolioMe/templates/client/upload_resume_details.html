@@ -1,0 +1,31 @@
+{% extends "layout/base.html" %} {% block title %}PortfolioMe : Upload Resume{%
+endblock %} {% block css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/client/upload_resume_details.css') }}"
+/>
+{% endblock %} {% block content %}
+<main class="upload-resume-container">
+    <div class="upload-resume-header">
+        <h1>Resume</h1>
+        Upload your resumes here.
+    </div>
+    <form
+        method="POST"
+        class="form-container"
+        novalidate
+        enctype="multipart/form-data"
+    >
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.agreement }} {% if form.agreement.errors %}
+            <p class="error-msg">
+                {% for error in form.agreement.errors %} {{ error }} {% endfor
+                %}
+            </p>
+            {% endif %}
+        </div>
+        <div>{{ form.submit }}</div>
+    </form>
+</main>
+{% endblock %} {% block javascript %} {% endblock %}
