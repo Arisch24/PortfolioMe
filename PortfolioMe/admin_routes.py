@@ -143,6 +143,17 @@ class ResumeView(ModelView):
                                              namegen=filename_generation, allowed_extensions=['pdf'], allow_overwrite=True),
     }
 
+    form_widget_args = {
+        'image': {
+            'readonly': True,
+            'placeholder': 'This is readonly upload your file below.'
+        },
+        'old_image': {
+            'disabled': True,
+            'placeholder': 'Disabled field.'
+        }
+    }
+
     column_searchable_list = ["applicant_details", "date_edited", "status"]
 
     def on_model_change(self, form, model, is_created):
@@ -238,6 +249,17 @@ class JobBoardView(ModelView):
                                       validators=None,
                                       base_path=job_board_path,
                                       namegen=filename_generation, allowed_extensions=['png', 'jpg', 'jpeg'], allow_overwrite=True),
+    }
+
+    form_widget_args = {
+        'job_image': {
+            'readonly': True,
+            'placeholder': 'This is readonly upload your file below.'
+        },
+        'old_image': {
+            'readonly': True,
+            'placeholder': 'Readonly field.'
+        }
     }
 
     column_searchable_list = ["name", "description",

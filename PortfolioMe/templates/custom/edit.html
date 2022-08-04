@@ -43,10 +43,6 @@ extra(), form_opts) }} {% endblock %} {% endblock %} {% block tail %} {{ super()
 <script>
     // if the url is jobboard then do this
     if (window.location.pathname.split('/').includes('jobboard')) {
-        // Make job_image input readonly so admin only uploads to file input
-        $('#job_image').prop('readonly', true);
-        $('#old_image').prop('readonly', true);
-
         $('#image').on('change', function (e) {
             $('#old_image').val($('#job_image').val());
             let filename = e.target.files[0].name;
@@ -56,10 +52,6 @@ extra(), form_opts) }} {% endblock %} {% endblock %} {% block tail %} {{ super()
 
     // if the url is resume then do this
     if (window.location.pathname.split('/').includes('resume')) {
-        // Make image input readonly so admin only uploads to file input
-        $('#image').prop('readonly', true);
-        $('#old_image').prop('readonly', true);
-
         $('#resume_image').on('change', function (e) {
             $('#old_image').val($('#image').val());
             let filename = e.target.files[0].name;
