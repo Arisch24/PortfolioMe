@@ -71,6 +71,12 @@ input[type='submit'] {
     transition: 200ms ease-in-out;
 }
 
+button[class$='btn']:hover,
+a[class$='btn']:hover,
+input[type='submit']:hover {
+    transform: scale(0.95);
+}
+
 /* Screen-reader only */
 .sr-only {
     position: absolute;

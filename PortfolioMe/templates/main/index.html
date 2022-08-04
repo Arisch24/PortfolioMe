@@ -14,7 +14,7 @@
             better.
         </p>
         {% if current_user.is_authenticated %} {% else %}
-        <button id="signUp">Sign up now!</button>
+        <button id="signUp" class="sign-up-btn">Sign up now!</button>
         {% endif %}
     </section>
     <section class="job-section">
@@ -87,7 +87,7 @@
                 you have trouble finding a job, fret not our filters are more
                 than likely able to help you find your dream job.
             </p>
-            <button id="browseJob">Browse Jobs</button>
+            <button id="browseJob" class="browse-job-btn">Browse Jobs</button>
         </div>
     </section>
     <section class="resume-section">
@@ -100,9 +100,13 @@
                 application.
             </p>
             {% if current_user.is_authenticated %}
-            <button id="resumeStatus">My resume status</button>
+            <button id="resumeStatus" class="resume-status-btn">
+                My resume status
+            </button>
             {% else %}
-            <button id="login">Login to view to resume status</button>
+            <button id="login" class="login-2nd-btn">
+                Login to view to resume status
+            </button>
             {% endif %}
         </div>
         <div class="table-container">

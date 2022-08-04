@@ -210,10 +210,6 @@ label[for='themeBtn'] {
     color: hsl(var(--pure-white));
 }
 
-.authentication-box .login-btn:hover {
-    background-color: hsl(var(--dark-blue) / 0.85);
-}
-
 /* Forms standardized */
 input[type='text'],
 input[type='password'],

@@ -83,15 +83,7 @@ main.job-detail-container {
     color: hsl(var(--pure-white));
 }
 
-.apply-btn:hover {
-    background-color: hsl(var(--light-accent-blue) / 0.85);
-}
-
 .cancel-btn {
     background-color: hsl(var(--red));
     color: hsl(var(--pure-white));
-}
-
-.cancel-btn:hover {
-    background-color: hsl(var(--red) / 0.85);
 }

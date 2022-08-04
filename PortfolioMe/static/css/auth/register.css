@@ -51,11 +51,6 @@ body {
     color: #fff;
 }
 
-.form-container input[type='submit']:hover,
-.form-container input[type='submit']:focus {
-    background-color: hsl(var(--light-accent-blue) / 0.85);
-}
-
 .form-container div:nth-child(10) {
     grid-column: span 2;
     width: 50%;
