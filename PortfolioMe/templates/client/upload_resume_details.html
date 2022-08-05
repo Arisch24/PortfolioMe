@@ -7,8 +7,9 @@ endblock %} {% block css %}
 {% endblock %} {% block content %}
 <main class="upload-resume-container">
     <div class="upload-resume-header">
-        <h1>Resume</h1>
-        Upload your resumes here.
+        <h1>Resume Details</h1>
+        You can check your resume details here and ensure that all the data is
+        correct before submitting to us for approval.
     </div>
     <form
         method="POST"
@@ -86,12 +87,15 @@ endblock %} {% block css %}
         </div>
 
         <div>
-            {{ form.gender.label }} {% if form.gender.errors %} {{ form.gender
-            }}
-            <p class="error-msg">
-                {% for error in form.gender.errors %} {{ error }} {% endfor %}
-            </p>
-            {% else %} {{ form.gender }} {% endif %}
+            {{ form.gender.label }}
+            <span>
+                {% if form.gender.errors %} {{ form.gender }}
+                <p class="error-msg">
+                    {% for error in form.gender.errors %} {{ error }} {% endfor
+                    %}
+                </p>
+                {% else %} {{ form.gender }} {% endif %}
+            </span>
         </div>
 
         <div>
@@ -105,13 +109,15 @@ endblock %} {% block css %}
         </div>
 
         <div>
-            {{ form.marital_status.label }} {% if form.marital_status.errors %}
-            {{ form.marital_status }}
-            <p class="error-msg">
-                {% for error in form.marital_status.errors %} {{ error }} {%
-                endfor %}
-            </p>
-            {% else %} {{ form.marital_status }} {% endif %}
+            {{ form.marital_status.label }}
+            <span>
+                {% if form.marital_status.errors %} {{ form.marital_status }}
+                <p class="error-msg">
+                    {% for error in form.marital_status.errors %} {{ error }} {%
+                    endfor %}
+                </p>
+                {% else %} {{ form.marital_status }} {% endif %}
+            </span>
         </div>
 
         <div>
