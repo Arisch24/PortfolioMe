@@ -216,7 +216,9 @@ input[type='password'],
 input[type='email'],
 input[type='file'],
 input[type='tel'],
-input[type='number'] {
+input[type='number'],
+input[type='url'],
+textarea {
     display: block;
     padding: 0.5rem;
     border-radius: 0.25rem;
