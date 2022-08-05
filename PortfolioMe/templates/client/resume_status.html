@@ -13,7 +13,7 @@ endblock %} {% block css %}
         <table>
             <thead>
                 <tr>
-                    <th>Applicant Details</th>
+                    <th>Full Details</th>
                     <th>Last Edited Date</th>
                     <th>Resume File</th>
                     <th>Status</th>
@@ -32,14 +32,32 @@ endblock %} {% block css %}
                             >resume.pdf</a
                         >
                     </td>
-                    <td>{{ resume.status }}</td>
+                    <td>
+                        {% if resume.status == "Accepted" %}
+                        <span style="background-color: hsl(var(--green))"
+                            >Accepted</span
+                        >
+                        {% elif resume.status == "Rejected" %}
+                        <span style="background-color: hsl(var(--red))"
+                            >Rejected</span
+                        >
+                        {% elif resume.status == "Pending" %}
+                        <span style="background-color: hsl(var(--yellow))"
+                            >Pending</span
+                        >
+                        {% elif resume.status == "Keep In View" %}
+                        <span style="background-color: hsl(var(--accent-blue))"
+                            >Keep In View</span
+                        >
+                        {% endif %}
+                    </td>
                     <td>
                         {% if resume.status == "Pending" %}
                         <a
                             class="edit-resume-details-btn"
                             target="_blank"
                             href="{{ url_for('client.upload_resume_details', job_id=resume.job_id, resume_details_id=resume.resume_details_ref.id) }}"
-                            >dkdoedk</a
+                            >Edit</a
                         >
                         {% else %} You can't edit this. {% endif %}
                     </td>
