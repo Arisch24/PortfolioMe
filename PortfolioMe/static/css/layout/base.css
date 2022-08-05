@@ -215,7 +215,8 @@ input[type='text'],
 input[type='password'],
 input[type='email'],
 input[type='file'],
-input[type='tel'] {
+input[type='tel'],
+input[type='number'] {
     display: block;
     padding: 0.5rem;
     border-radius: 0.25rem;
