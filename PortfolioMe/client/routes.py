@@ -1,11 +1,14 @@
 import os
+import random
+from cv2 import reduce
+from werkzeug.datastructures import FileStorage
 from flask import Blueprint, current_app, jsonify, render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_required
 from sqlalchemy import not_
 from PortfolioMe import db, constants
 from PortfolioMe.client.forms import EditProfileForm, PersonalParticularsForm, ResumeSubmissionForm
 from PortfolioMe.models import JobBoard, Resume, Resume_Details
-from PortfolioMe.client.utils import save_resume, parse_resume
+from PortfolioMe.client.utils import convert_pdf, extract_resume_data, save_multiple_documents, save_resume, parse_resume
 
 client = Blueprint("client", __name__)
 
@@ -94,20 +97,49 @@ def job_detail(job_id):
     form = ResumeSubmissionForm()
 
     if form.validate_on_submit():
-        # parse resume
+
+        # save resume
         resume_name = save_resume(form.resume.data)
-        resume = Resume(applicant_details='parsed text', image=resume_name,
+        resume_path = os.path.join(
+            current_app.root_path, 'static/resumes', resume_name)
+
+        file = None
+        parsed_text = None
+        with open(resume_path, 'rb') as fp:
+            file = FileStorage(fp)
+            # parse resume
+            image = convert_pdf(file.read())
+            parsed_text = parse_resume(image)
+
+        # clean raw text data
+        json_dict = extract_resume_data(parsed_text)
+
+        if form.documents.data:
+            documents_list = save_multiple_documents(form.documents.data)
+        documents_list = ", ".join(documents_list)
+        resume = Resume(applicant_details=parsed_text, image=resume_name,
+                        additional_documents=documents_list,
                         applicant_id=current_user.id, job_id=job.id)
         db.session.add(resume)
         db.session.commit()
-        resume_details = Resume_Details(name='lol', age=34, ic='2049823', dob='12-02-1234',
-                                        mailing_address='diajeodiaeoidj', postcode='14100',
-                                        town='Somewhere', state='no where', gender='Male',
-                                        phone_number=42034987, marital_status='none',
-                                        linkedin_url='bla bla bla', education='nothing',
-                                        certificates='degree in failure', skills='nothing',
-                                        soft_skills='Not soft', work_experience='No experience at all',
+
+        # save resume_details
+        resume_details = Resume_Details(name=current_user.username, age=random.randint(18, 60), ic=current_user.ic,
+                                        dob=current_user.ic.split()[0],
+                                        mailing_address=current_user.mailing_address, postcode='14100',
+                                        town='Not found', state='Not found', gender=current_user.gender,
+                                        phone_number=current_user.phone_number, marital_status='Not found',
+                                        linkedin_url='https://linkedin.com', education=json_dict.get("education", 'Not found'),
+                                        certificates=json_dict.get(
+                                            "certificates", 'Not found'),
+                                        skills=json_dict.get(
+                                            "skills", 'Not found'),
+                                        soft_skills=json_dict.get(
+                                            "soft_skills", 'Not found'),
+                                        work_experience=json_dict.get(
+                                            "work_experience", 'Not found'),
                                         applicant_id=current_user.id, resume_id=resume.id)
+        print(resume.id)
         db.session.add(resume_details)
         db.session.commit()
         return redirect(url_for("client.upload_resume_details", job_id=job.id, resume_details_id=resume_details.id))
@@ -120,12 +152,50 @@ def job_detail(job_id):
 def upload_resume_details(job_id, resume_details_id):
     job = JobBoard.query.get_or_404(job_id)
     resume_details = Resume_Details.query.get_or_404(resume_details_id)
+    resume = Resume.query.filter_by(id=resume_details.resume_id).first()
+
+    if resume.status != "Pending":
+        flash("Your resume is not allowed to be edited anymore", "failed")
+        return redirect(url_for("client.resume_status"))
+
     form = PersonalParticularsForm()
 
     if form.validate_on_submit():
         # save resume details
+        resume_details.name = form.name.data
+        resume_details.age = form.age.data
+        resume_details.ic = form.ic.data
+        resume_details.dob = form.dob.data
+        resume_details.mailing_address = form.mailing_address.data
+        resume_details.postcode = form.postcode.data
+        resume_details.town = form.town.data
+        resume_details.state = form.state.data
+        resume_details.gender = form.gender.data
+        resume_details.phone_number = form.phone_number.data
+        resume_details.marital_status = form.marital_status.data
+        resume_details.linkedin_url = form.linkedin_url.data
+        resume_details.skills = form.skills.data
+        resume_details.soft_skills = form.soft_skills.data
+        resume_details.work_experience = form.work_experience.data
+        db.session.commit()
         flash("Your form has been saved.", "success")
         return redirect(url_for("client.job_board"))
+    elif request.method == "GET":
+        form.name.data = resume_details.name
+        form.age.data = resume_details.age
+        form.ic.data = resume_details.ic
+        form.dob.data = resume_details.dob
+        form.mailing_address.data = resume_details.mailing_address
+        form.postcode.data = resume_details.postcode
+        form.town.data = resume_details.town
+        form.state.data = resume_details.state
+        form.gender.data = resume_details.gender
+        form.phone_number.data = resume_details.phone_number
+        form.marital_status.data = resume_details.marital_status
+        form.linkedin_url.data = resume_details.linkedin_url
+        form.skills.data = resume_details.skills
+        form.soft_skills.data = resume_details.soft_skills
+        form.work_experience.data = resume_details.work_experience
     return render_template("client/upload_resume_details.html", form=form)
 
 

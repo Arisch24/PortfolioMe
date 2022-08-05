@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, TelField, RadioField,
-                     SubmitField, BooleanField, URLField, IntegerField, MultipleFileField)
+                     SubmitField, BooleanField, URLField, IntegerField, MultipleFileField, TextAreaField)
 from wtforms.validators import DataRequired, Length, Email, URL, Regexp, NumberRange, ValidationError
 from flask_wtf.file import FileAllowed, FileRequired, FileField
 from flask_login import current_user
@@ -50,7 +50,7 @@ class PersonalParticularsForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     age = IntegerField('Age', validators=[DataRequired(), NumberRange(18, 65)])
     ic = StringField('IC', validators=[DataRequired(), Regexp(
-        r"[0-9]{6}-[0-9]{2}-[0-9]{4}", message="Follows Malaysian IC format e.g XXXXXX-XX-XXXX")])
+        r"[0-9]{6}[0-9]{2}[0-9]{4}", message="Follows Malaysian IC format")])
     dob = StringField('Date of Birth(DOB)', validators=[DataRequired()])
     mailing_address = StringField(
         'Mailing address', validators=[DataRequired()])
@@ -65,13 +65,15 @@ class PersonalParticularsForm(FlaskForm):
     marital_status = RadioField('Marital Status', validators=[
         DataRequired()], choices=marital_status_types, default=marital_status_types[0])
     linkedin_url = URLField('LinkedIn URL', validators=[DataRequired(), URL()])
-    skills = StringField('Skills', validators=[DataRequired()])
-    soft_skills = StringField('Soft skills', validators=[DataRequired()])
-    work_experience = StringField(
+    skills = TextAreaField('Skills', validators=[DataRequired()])
+    soft_skills = TextAreaField('Soft skills', validators=[DataRequired()])
+    work_experience = TextAreaField(
         'Work Experience', validators=[DataRequired()])
-    agreement = BooleanField('', validators=[DataRequired()])
+    agreement = BooleanField(
+        'I agree that the data submitted here is valid', validators=None)
+    submit = SubmitField('Confirm')
 
     def validate_agreement(self, agreement):
         if agreement.data == False:
             raise ValidationError(
-                'Please read our terms & conditions.')
+                'Please tick the checkbox above.')
