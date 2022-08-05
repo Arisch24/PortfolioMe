@@ -1,10 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, TelField, RadioField,
-                     SubmitField, TextAreaField)
-from wtforms.validators import DataRequired, Length, Email, Regexp, ValidationError
-from flask_wtf.file import FileField, FileAllowed, FileRequired
+                     SubmitField, BooleanField, URLField, IntegerField, MultipleFileField)
+from wtforms.validators import DataRequired, Length, Email, URL, Regexp, NumberRange, ValidationError
+from flask_wtf.file import FileAllowed, FileRequired, FileField
 from flask_login import current_user
 from PortfolioMe.models import Applicant
+from PortfolioMe.constants import marital_status_types, gender_radio
 
 
 class EditProfileForm(FlaskForm):
@@ -15,9 +16,8 @@ class EditProfileForm(FlaskForm):
         'Mailing Address', validators=[DataRequired()])
     phone_number = TelField('Phone Number', validators=[
         DataRequired(), Length(min=8, max=11, message="Follows Malaysian phone number format."), Regexp(r"(01)[0-9]{1}[0-9]{6,8}", message="Phone number is 9 to 11 characters without dash.")])
-    # Radio field
-    radio = ["Male", "Female", "Prefer not to say"]
-    gender = RadioField('Gender', validators=[DataRequired()], choices=radio)
+    gender = RadioField('Gender', validators=[
+                        DataRequired()], choices=gender_radio)
     submit = SubmitField('Save Changes')
 
     def validate_username(self, username):
@@ -38,6 +38,40 @@ class EditProfileForm(FlaskForm):
 
 class ResumeSubmissionForm(FlaskForm):
     resume = FileField('Resume', validators=[
-                       FileRequired(), FileAllowed(['jpg', 'png', 'jpeg', 'pdf'])])
-    output = TextAreaField('Output', validators=None)
+                       FileRequired(), FileAllowed(['pdf'])])
+    documents = MultipleFileField('Additional Documents', validators=[
+        FileAllowed(['pdf', 'jpg', 'png', 'jpeg'])])
     submit = SubmitField('Send resume')
+
+
+class PersonalParticularsForm(FlaskForm):
+    '''Basically resume_details form'''
+
+    name = StringField('Name', validators=[DataRequired()])
+    age = IntegerField('Age', validators=[DataRequired(), NumberRange(18, 65)])
+    ic = StringField('IC', validators=[DataRequired(), Regexp(
+        r"[0-9]{6}-[0-9]{2}-[0-9]{4}", message="Follows Malaysian IC format e.g XXXXXX-XX-XXXX")])
+    dob = StringField('Date of Birth(DOB)', validators=[DataRequired()])
+    mailing_address = StringField(
+        'Mailing address', validators=[DataRequired()])
+    postcode = StringField('Postcode', validators=[
+                           DataRequired(), Regexp(r"[0-9]{5}")])
+    town = StringField('Town', validators=[DataRequired()])
+    state = StringField('State', validators=[DataRequired()])
+    gender = RadioField('Gender', validators=[
+                        DataRequired()], choices=gender_radio)
+    phone_number = StringField('Phone Number', validators=[DataRequired(), Regexp(
+        r"(01)[0-9]{1}[0-9]{6,8}", message="Phone number is 9 to 11 characters without dash.")])
+    marital_status = RadioField('Marital Status', validators=[
+        DataRequired()], choices=marital_status_types, default=marital_status_types[0])
+    linkedin_url = URLField('LinkedIn URL', validators=[DataRequired(), URL()])
+    skills = StringField('Skills', validators=[DataRequired()])
+    soft_skills = StringField('Soft skills', validators=[DataRequired()])
+    work_experience = StringField(
+        'Work Experience', validators=[DataRequired()])
+    agreement = BooleanField('', validators=[DataRequired()])
+
+    def validate_agreement(self, agreement):
+        if agreement.data == False:
+            raise ValidationError(
+                'Please read our terms & conditions.')
