@@ -148,7 +148,7 @@
 }
 
 .jobs-available a:hover {
-    box-shadow: 12px 12px 0px 0px hsl(var(--accent-blue) / 0.7);
+    box-shadow: 15px 15px 0px 0px hsl(var(--accent-blue) / 0.7);
 }
 
 .jobs-available h2 {

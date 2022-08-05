@@ -244,7 +244,7 @@ footer {
         'Lining Lining'
         'Copyright Copyright';
     row-gap: 1rem;
-    background-color: hsl(var(--sky-blue));
+    background-color: hsl(237, 80%, 80%);
     color: hsl(var(--pure-white));
     padding: 2rem;
 }
