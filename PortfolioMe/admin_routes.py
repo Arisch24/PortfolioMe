@@ -157,6 +157,8 @@ class ResumeView(ModelView):
 
     column_searchable_list = ["applicant_details", "date_edited", "status"]
 
+    column_exclude_list = ("applicant_details")
+
     def on_model_change(self, form, model, is_created):
         model.image = model.resume_image
 
@@ -249,7 +251,7 @@ class JobBoardView(ModelView):
         'image': form.FileUploadField(label='Upload Image Here',
                                       validators=None,
                                       base_path=job_board_path,
-                                      namegen=filename_generation, allowed_extensions=['png', 'jpg', 'jpeg'], allow_overwrite=True),
+                                      namegen=filename_generation, allowed_extensions=['png', 'jpg', 'jpeg', 'webp'], allow_overwrite=True),
     }
 
     form_widget_args = {

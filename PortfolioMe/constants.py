@@ -2,7 +2,7 @@ gender_radio = ["Male", "Female", "Prefer not to say"]
 job_types = ['All', 'Full-time', 'Part-time',
              'Temporary', 'Contract', 'Internship']
 department_types = ['All', 'Accounting', 'Operations', 'Finance', 'Sales', 'Human Resources', 'Purchase',
-                    'Information Technology', 'Production', 'Quality Assurance', 'Marketing', 'Production']
+                    'Information Technology', 'Production', 'Quality Assurance', 'Marketing', 'Production', 'Healthcare', 'Law', 'Public Services', 'Retail']
 position_level = ['Junior Executive', 'Senior Executive',
                   'Executive', 'Entry Level', 'Mid-Level']
 experience_in_years = ['1 year', '3 years', '5 years', '10 years', 'Any']
