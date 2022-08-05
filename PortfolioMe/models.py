@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import datetime, date, time
+from enum import unique
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask import current_app
 from PortfolioMe import db, login_manager
@@ -72,6 +73,7 @@ class Resume(db.Model):
     status = db.Column(db.String(20), unique=False,
                        nullable=False, default="Pending")
     image = db.Column(db.String(50), unique=False, nullable=False)
+    additional_documents = db.Column(db.Text, unique=False, default="")
     applicant_id = db.Column(db.Integer, db.ForeignKey(
         'applicant.id'), nullable=False)
     job_id = db.Column(db.Integer, db.ForeignKey(
@@ -133,6 +135,14 @@ class JobBoard(db.Model):
 
     def __repr__(self):
         return f"JobBoard('{self.name}', '{self.min_salary}', '{self.max_salary}', '{self.department}', '{self.job_type}', '{self.years_of_experience}', '{self.job_image}')"
+
+
+class Interview(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    column = db.Column(db.Integer, unique=False, nullable=False)
+    row = db.Column(db.Integer, unique=False, nullable=False)
+    date = db.Column(db.Date, unique=False, nullable=False)
+    time = db.Column(db.Time, unique=False, nullable=False)
 
 
 class Insights(db.Model):
