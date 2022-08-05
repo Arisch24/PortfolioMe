@@ -265,8 +265,6 @@ class JobBoardView(ModelView):
         }
     }
 
-    department_types.remove("All")
-    job_types.remove("All")
     form_args = dict(
         department=dict(label='Department', validators=[
                         DataRequired()], choices=department_types),
