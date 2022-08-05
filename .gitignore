@@ -2,7 +2,7 @@
 **/__pycache__
 
 # Ignore test files
-/test
+/test/*
 
 # Ignore flask session folder
 /flask_session
