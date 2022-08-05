@@ -74,22 +74,37 @@ endblock %} {% block css %}<link
                 enctype="multipart/form-data"
             >
                 {{ form.hidden_tag() }}
+
                 <div class="upload">
                     <iframe src="" class="iframe"></iframe>
-                    {{ form.resume }} {% if form.resume.errors %}
+                    {{ form.resume.label }} {% if form.resume.errors %} {{
+                    form.resume }}
                     <p class="error-msg">
                         {% for error in form.resume.errors %} {{ error }} {%
                         endfor %}
                     </p>
-                    {% endif %}
+                    {% else %} {{ form.resume }} {% endif %}
                 </div>
+
+                <hr />
+
+                <div>
+                    {{ form.documents.label }} {% if form.documents.errors %} {{
+                    form.documents }}
+                    <p class="error-msg">
+                        {% for error in form.documents.errors %} {{ error }} {%
+                        endfor %}
+                    </p>
+                    {% else %} {{ form.documents }} {% endif %}
+                </div>
+
                 <div>
                     <a
                         href="{{ url_for('client.job_board') }}"
                         class="cancel-btn"
                         >Back</a
                     >
-                    <div>{{ form.submit }}</div>
+                    {{ form.submit }}
                 </div>
             </form>
             {% else %}

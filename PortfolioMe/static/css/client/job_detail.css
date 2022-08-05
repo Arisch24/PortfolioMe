@@ -58,9 +58,13 @@ main.job-detail-container {
 }
 
 .form-container div:last-child {
-    align-self: stretch;
     display: flex;
     justify-content: space-between;
+}
+
+.form-container div label {
+    margin-top: 1rem;
+    font-size: 1.25rem;
 }
 
 .upload iframe {
