@@ -143,6 +143,8 @@ class Interview(db.Model):
     row = db.Column(db.Integer, unique=False, nullable=False)
     date = db.Column(db.Date, unique=False, nullable=False)
     time = db.Column(db.Time, unique=False, nullable=False)
+    applicant_id = db.Column(db.Integer, db.ForeignKey(
+        'applicant.id'), nullable=False)
 
 
 class Insights(db.Model):
