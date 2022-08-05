@@ -58,35 +58,52 @@ def job_board():
 
     # Searching
     search_query = request.args.get('search')
-    if search_query is not None:
+    if search_query is not None and current_user.is_authenticated:
         jobs = JobBoard.query.filter(JobBoard.name.like(f"%{search_query}%"), not_(JobBoard.resumes_submitted_list.any(
             applicant_id=current_user.id))).order_by(
+            JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+    elif search_query is not None and not current_user.is_authenticated:
+        jobs = JobBoard.query.filter(JobBoard.name.like(f"%{search_query}%")).order_by(
             JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
 
     # Filtering
     jobtype_filter = constants.job_types
     department_filter = constants.department_types
-    type = request.args.get('type')
-    min_salary = request.args.get('min_salary')
-    max_salary = request.args.get('max_salary')
-    department = request.args.get('dept')
+    type = request.args.get('type', 'All')
+    min_salary = request.args.get('min_salary', 0)
+    max_salary = request.args.get('max_salary', 20000)
+    department = request.args.get('dept', 'All')
 
-    if type != "All" and min_salary and max_salary and department != "All":
-        jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%"), not_(JobBoard.resumes_submitted_list.any(
-            applicant_id=current_user.id))).order_by(
-            JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
-    elif type == "All" and min_salary and max_salary and department == "All":
-        jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), not_(JobBoard.resumes_submitted_list.any(
-            applicant_id=current_user.id))).order_by(
-            JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
-    elif type == "All" and min_salary and max_salary and department:
-        jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%"), not_(JobBoard.resumes_submitted_list.any(
-            applicant_id=current_user.id))).order_by(
-            JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
-    elif type and min_salary and max_salary and department == "All":
-        jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), not_(JobBoard.resumes_submitted_list.any(
-            applicant_id=current_user.id))).order_by(
-            JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+    if current_user.is_authenticated:
+        if type != "All" and min_salary and max_salary and department != "All":
+            jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%"), not_(JobBoard.resumes_submitted_list.any(
+                applicant_id=current_user.id))).order_by(
+                JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+        elif type == "All" and min_salary and max_salary and department == "All":
+            jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), not_(JobBoard.resumes_submitted_list.any(
+                applicant_id=current_user.id))).order_by(
+                JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+        elif type == "All" and min_salary and max_salary and department:
+            jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%"), not_(JobBoard.resumes_submitted_list.any(
+                applicant_id=current_user.id))).order_by(
+                JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+        elif type and min_salary and max_salary and department == "All":
+            jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), not_(JobBoard.resumes_submitted_list.any(
+                applicant_id=current_user.id))).order_by(
+                JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+    else:
+        if type != "All" and min_salary and max_salary and department != "All":
+            jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%")).order_by(
+                JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+        elif type == "All" and min_salary and max_salary and department == "All":
+            jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary)).order_by(
+                JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+        elif type == "All" and min_salary and max_salary and department:
+            jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%")).order_by(
+                JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
+        elif type and min_salary and max_salary and department == "All":
+            jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary)).order_by(
+                JobBoard.id.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
 
     return render_template("client/job_board.html", jobs=jobs, jobtype_filter=jobtype_filter, department_filter=department_filter)
 
@@ -139,7 +156,6 @@ def job_detail(job_id):
                                         work_experience=json_dict.get(
                                             "work_experience", 'Not found'),
                                         applicant_id=current_user.id, resume_id=resume.id)
-        print(resume.id)
         db.session.add(resume_details)
         db.session.commit()
         return redirect(url_for("client.upload_resume_details", job_id=job.id, resume_details_id=resume_details.id))

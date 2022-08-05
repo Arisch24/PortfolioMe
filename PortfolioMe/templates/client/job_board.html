@@ -135,16 +135,15 @@ endblock %} {% block css %}<link
     </div>
     <div class="jobs-available">
         {% for job in jobs.items %}
-        <div>
-            <h2>{{ job.name }}</h2>
-            <span>{{ job.job_type }}</span>
-            <br />
-            <i>Salary: RM {{ job.min_salary }} - RM{{ job.max_salary }}</i>
-            <p>{{ job.description }}</p>
-            <a href="{{ url_for('client.job_detail', job_id=job.id) }}"
-                >Details</a
-            >
-        </div>
+        <a href="{{ url_for('client.job_detail', job_id=job.id) }}">
+            <div>
+                <h2>{{ job.name }}</h2>
+                <span>{{ job.job_type }}</span>
+                <br />
+                <i>Salary: RM {{ job.min_salary }} - RM{{ job.max_salary }}</i>
+                <p>{{ job.description }}</p>
+            </div>
+       </a>
         {% endfor %}
     </div>
     <div class="pagination">
@@ -195,7 +194,6 @@ endblock %} {% block css %}<link
 
     // Searching
     $('#searchBtn').on('click', (e) => {
-        alert('jdiejdp');
         $('.search-form').submit();
     });
 

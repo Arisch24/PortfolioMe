@@ -36,13 +36,11 @@ def save_multiple_documents(docs):
         random_hex = secrets.token_hex(8)
         _, file_extension = os.path.splitext(doc.filename)
         doc_name = random_hex + file_extension
-        # os.makedirs(current_app.root_path +
-        #             f"/static/resumes/{current_user.id}")
         doc_path = os.path.join(
             current_app.root_path, f'static/resumes', doc_name)
 
-        doc.save(doc_path)
         all_docs_name.append(doc_name)
+        doc.save(doc_path)
 
     return all_docs_name
 
