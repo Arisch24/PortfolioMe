@@ -161,10 +161,10 @@ endblock %} {% block tail %} {{ super() }} {% if filter_groups %}
 <script>
     // if the url is applicant then do this
     if (window.location.pathname.split('/').includes('applicant')) {
-        $('.status-select').on('change', (e) => {
+        $('.status-select').change(function (e) {
             if (confirm('Are you sure you want to proceed?')) {
-                let selected = $('.status-select option:selected').text();
-                let key = $('.status-select').attr('name');
+                let selected = $(this).children('option:selected').val();
+                let key = $(this).prop('name');
                 $.ajax({
                     url: '{{ url_for("applicant.update_status") }}',
                     type: 'POST',
@@ -185,10 +185,10 @@ endblock %} {% block tail %} {{ super() }} {% if filter_groups %}
 
     // if the url is applicant then do this
     if (window.location.pathname.split('/').includes('resume')) {
-        $('.status-select').on('change', (e) => {
+        $('.status-select').change(function (e) {
             if (confirm('Are you sure you want to proceed?')) {
-                let selected = $('.status-select option:selected').text();
-                let key = $('.status-select').attr('name');
+                let selected = $(this).children('option:selected').val();
+                let key = $(this).prop('name');
                 $.ajax({
                     url: '{{ url_for("resume.update_status") }}',
                     type: 'POST',
