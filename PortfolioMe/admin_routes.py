@@ -209,7 +209,8 @@ class ResumeView(ModelView):
 class ResumeDetailsView(ModelView):
     '''This view is for resume details'''
 
-    column_exclude_list = ("associated_resume")
+    column_exclude_list = ("mailing_address", "education", "skills", "soft_skills",
+                           "work_experience", "associated_resume")
 
     # Custom filters
     can_create = False
