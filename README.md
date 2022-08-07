@@ -7,6 +7,36 @@
 - Register/Login
 - Edit Profile
 - Reset Password
+- Blocking/Unblock Account
+- Unactive Account user not logged in for > 3 months
+- Apply for jobs
+- Job searching and filtering
+- Upload resume and additional documents
+- Resume converted to image and parsed with OCR
+- Parsed text is segmented and processed with NLP algorithm
+
+## Samples
+
+## Cloning the repo
+
+1. Install python if you don't have it on your machine with `sudo apt install python3.8` for Linux/Mac and [click here](https://www.python.org/downloads/) for Windows. Make sure you have the latest installation on your machine.
+2. Next, create a new virtual environment `$ virtualenv .venv` and activate it. The steps for activating are [here](#virtual-environment-activation).
+3. Download the requirements of this repo with `pip install -r requirements.txt` command.
+4. Then run `python run.py` in the terminal and navigate to your browser and go to `localhost:5000`
+
+### Virtual Environment Activation
+
+Windows
+
+```console
+source .venv/Scripts/activate
+```
+
+Mac/Linux
+
+```console
+source .venv/bin/activate
+```
 
 ## App Structure
 
@@ -28,6 +58,7 @@
 |   |   |-- routes.py
 |   |   `-- utils.py
 |   |-- config.py
+|   |-- constants.py
 |   |-- errors
 |   |   |-- __init__.py
 |   |   `-- handlers.py
@@ -52,17 +83,13 @@
 |   |   |   |   |-- edit_profile.css
 |   |   |   |   |-- job_board.css
 |   |   |   |   |-- job_detail.css
-|   |   |   |   |-- resume_list.css
-|   |   |   |   `-- upload_resume.css
+|   |   |   |   |-- resume_status.css
+|   |   |   |   `-- upload_resume_details.css
 |   |   |   |-- custom
 |   |   |   |   |-- create.css
 |   |   |   |   |-- details.css
 |   |   |   |   |-- edit.css
-|   |   |   |   |-- list.css
-|   |   |   |   `-- resume
-|   |   |   |       |-- details_resume.css
-|   |   |   |       |-- edit_resume.css
-|   |   |   |       `-- home_resume.css
+|   |   |   |   `-- list.css
 |   |   |   |-- errors
 |   |   |   |   `-- errors.css
 |   |   |   |-- layout
@@ -107,18 +134,14 @@
 |       |   |-- edit_profile.html
 |       |   |-- job_board.html
 |       |   |-- job_detail.html
-|       |   |-- resume_list.html
-|       |   `-- upload_resume.html
+|       |   |-- resume_status.html
+|       |   `-- upload_resume_details.html
 |       |-- custom
 |       |   |-- create.html
 |       |   |-- details.html
 |       |   |-- edit.html
 |       |   |-- email_body.html
-|       |   |-- list.html
-|       |   `-- resume
-|       |       |-- details_resume.html
-|       |       |-- edit_resume.html
-|       |       `-- home_resume.html
+|       |   `-- list.html
 |       |-- errors
 |       |   |-- 403.html
 |       |   |-- 404.html
@@ -130,33 +153,12 @@
 |       `-- main
 |           `-- index.html
 |-- README.md
+|-- example.env
 |-- requirements.txt
 |-- run.py
 `-- tree.txt
 
-26 directories, 95 files
+24 directories, 91 files
 
-```
 
-## Samples
-
-## Cloning the repo
-
-1. Install python if you don't have it on your machine with `sudo apt install python3.8` for Linux/Mac and [click here](https://www.python.org/downloads/) for Windows. Make sure you have the latest installation on your machine.
-2. Next, create a new virtual environment `$ virtualenv .venv` and activate it. The steps for activating are [here](#virtual-environment-activation).
-3. Download the requirements of this repo with `pip install -r requirements.txt` command.
-4. Then run `python run.py` in the terminal and navigate to your browser and go to `localhost:5000`
-
-### Virtual Environment Activation
-
-Windows
-
-```console
-source .venv/Scripts/activate
-```
-
-Mac/Linux
-
-```console
-source .venv/bin/activate
 ```

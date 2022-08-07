@@ -15,6 +15,7 @@
 |   |   |-- routes.py
 |   |   `-- utils.py
 |   |-- config.py
+|   |-- constants.py
 |   |-- errors
 |   |   |-- __init__.py
 |   |   `-- handlers.py
@@ -39,17 +40,13 @@
 |   |   |   |   |-- edit_profile.css
 |   |   |   |   |-- job_board.css
 |   |   |   |   |-- job_detail.css
-|   |   |   |   |-- resume_list.css
-|   |   |   |   `-- upload_resume.css
+|   |   |   |   |-- resume_status.css
+|   |   |   |   `-- upload_resume_details.css
 |   |   |   |-- custom
 |   |   |   |   |-- create.css
 |   |   |   |   |-- details.css
 |   |   |   |   |-- edit.css
-|   |   |   |   |-- list.css
-|   |   |   |   `-- resume
-|   |   |   |       |-- details_resume.css
-|   |   |   |       |-- edit_resume.css
-|   |   |   |       `-- home_resume.css
+|   |   |   |   `-- list.css
 |   |   |   |-- errors
 |   |   |   |   `-- errors.css
 |   |   |   |-- layout
@@ -94,18 +91,14 @@
 |       |   |-- edit_profile.html
 |       |   |-- job_board.html
 |       |   |-- job_detail.html
-|       |   |-- resume_list.html
-|       |   `-- upload_resume.html
+|       |   |-- resume_status.html
+|       |   `-- upload_resume_details.html
 |       |-- custom
 |       |   |-- create.html
 |       |   |-- details.html
 |       |   |-- edit.html
 |       |   |-- email_body.html
-|       |   |-- list.html
-|       |   `-- resume
-|       |       |-- details_resume.html
-|       |       |-- edit_resume.html
-|       |       `-- home_resume.html
+|       |   `-- list.html
 |       |-- errors
 |       |   |-- 403.html
 |       |   |-- 404.html
@@ -117,8 +110,9 @@
 |       `-- main
 |           `-- index.html
 |-- README.md
+|-- example.env
 |-- requirements.txt
 |-- run.py
 `-- tree.txt
 
-26 directories, 95 files
+24 directories, 91 files
