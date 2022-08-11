@@ -175,7 +175,7 @@ def find_keywords(sentences, words, raw):
     skills_keywords = ['technical', 'technical skills', 'technical skill']
     soft_skills_keywords = ['soft', 'soft skills', 'soft skill']
     work_experience_keywords = [
-        'working experience', 'work experience']
+        'working experience', 'work experience', 'employment', 'employment history']
     other_keywords = ['references', 'interests', 'contact me',
                       'personal information', 'personal profile']
 
@@ -234,7 +234,7 @@ def find_keywords(sentences, words, raw):
                 m = m + 1
                 if m >= len(sentences):
                     break
-        if difflib.get_close_matches(sentences[i].lower(), work_experience_keywords, CLOSE_MATCHES):
+        if difflib.get_close_matches(sentences[i].lower(), work_experience_keywords, CLOSE_MATCHES) and sentences[i].lower() not in other_keywords:
             n = i + 1
             text = ""
             while not (difflib.get_close_matches(sentences[n].lower(), edu_keywords, CLOSE_MATCHES)
@@ -247,7 +247,7 @@ def find_keywords(sentences, words, raw):
                 n = n + 1
                 if n >= len(sentences):
                     break
-        if difflib.get_close_matches(sentences[i].lower(), other_keywords, CLOSE_MATCHES):
+        if difflib.get_close_matches(sentences[i].lower(), other_keywords, CLOSE_MATCHES) and sentences[i].lower() not in work_experience_keywords:
             o = i + 1
             text = ""
             while not (difflib.get_close_matches(sentences[o].lower(), edu_keywords, CLOSE_MATCHES)
