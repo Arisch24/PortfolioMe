@@ -164,6 +164,12 @@ class ResumeView(ModelView):
 
     def on_model_delete(self, model):
         os.remove(resume_path + f"\{model.image}")
+        documents = model.additional_documents.split("-")
+        for doc in documents:
+            os.remove(resume_path + f"\{doc}")
+        resume_details = models.Resume_Details.query.filter_by(
+            id=model.resume_details_ref.id).delete()
+        db.session.commit()
 
     # Custom filters
     can_create = False
@@ -215,6 +221,7 @@ class ResumeDetailsView(ModelView):
     # Custom filters
     can_create = False
     can_edit = False
+    can_delete = False
     can_view_details = True
     can_export = True
     can_set_page_size = True
