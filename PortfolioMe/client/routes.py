@@ -141,12 +141,29 @@ def job_detail(job_id):
         db.session.commit()
 
         # save resume_details
-        resume_details = Resume_Details(name=current_user.username, age=random.randint(18, 60), ic=current_user.ic,
-                                        dob=current_user.ic.split()[0],
-                                        mailing_address=current_user.mailing_address, postcode='14100',
-                                        town='Not found', state='Not found', gender=current_user.gender,
-                                        phone_number=current_user.phone_number, marital_status='Not found',
-                                        linkedin_url='https://linkedin.com', education=json_dict.get("education", 'Not found'),
+        resume_details = Resume_Details(name=json_dict.get("name", current_user.username),
+                                        age=json_dict.get(
+                                            "age", random.randint(18, 40)),
+                                        ic=json_dict.get(
+                                            "ic", current_user.ic),
+                                        dob=json_dict.get(
+                                            "ic", current_user.ic),
+                                        mailing_address=json_dict.get(
+                                            "address", current_user.mailing_address),
+                                        postcode=json_dict.get(
+                                            "postcode", 'Not found'),
+                                        town=json_dict.get(
+                                            "town", 'Not found'),
+                                        state=json_dict.get(
+                                            "state", 'Not found'),
+                                        gender=current_user.gender,
+                                        phone_number=json_dict.get(
+                                            "phone_number", 'Not found'),
+                                        marital_status='Not found',
+                                        linkedin_url=json_dict.get(
+                                            "linked_in_url", 'Not found'),
+                                        education=json_dict.get(
+                                            "education", 'Not found'),
                                         certificates=json_dict.get(
                                             "certificates", 'Not found'),
                                         skills=json_dict.get(
@@ -155,7 +172,8 @@ def job_detail(job_id):
                                             "soft_skills", 'Not found'),
                                         work_experience=json_dict.get(
                                             "work_experience", 'Not found'),
-                                        applicant_id=current_user.id, resume_id=resume.id)
+                                        applicant_id=current_user.id,
+                                        resume_id=resume.id)
         db.session.add(resume_details)
         db.session.commit()
         return redirect(url_for("client.upload_resume_details", job_id=job.id, resume_details_id=resume_details.id))

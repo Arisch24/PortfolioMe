@@ -1,14 +1,14 @@
 import secrets
 import os
 import cv2
-from flask_login import current_user
 import pytesseract
 import numpy as np
 import pdf2image
-import enchant
 import difflib
 import re
-from pathlib import Path
+import nltk
+import spacy
+from flask_login import current_user
 from flask import current_app
 
 
@@ -162,11 +162,13 @@ def parse_resume(resume_image):
     return text
 
 
-def find_keywords(data):
+def find_keywords(sentences, words, raw):
     '''
     Find keywords in raw resume data
     @param(data): data in list format
     '''
+
+    # section to find the hireable criteria
     edu_keywords = ['education', 'edu', 'curriculum', 'educational history']
     cert_keywords = ['certification', 'certificate',
                      'certificates', 'cert', 'agency', 'other credentials']
@@ -179,127 +181,141 @@ def find_keywords(data):
 
     json_data = {}
     CLOSE_MATCHES = 1
-    for i in range(len(data)):
-        if difflib.get_close_matches(data[i].lower(), edu_keywords, CLOSE_MATCHES):
+    for i in range(len(sentences)):
+        if difflib.get_close_matches(sentences[i].lower(), edu_keywords, CLOSE_MATCHES):
             j = i + 1
             text = ""
-            while not (difflib.get_close_matches(data[j].lower(), cert_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[j].lower(), skills_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[j].lower(), soft_skills_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[j].lower(), work_experience_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[j].lower(), other_keywords, CLOSE_MATCHES)):
-                text = text + data[j] + "\n"
+            while not (difflib.get_close_matches(sentences[j].lower(), cert_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[j].lower(), skills_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[j].lower(), soft_skills_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[j].lower(), work_experience_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[j].lower(), other_keywords, CLOSE_MATCHES)):
+                text = text + sentences[j] + "\n"
                 json_data.update({"education": text})
                 j = j + 1
-                if j >= len(data):
+                if j >= len(sentences):
                     break
-        if difflib.get_close_matches(data[i].lower(), cert_keywords, CLOSE_MATCHES):
+        if difflib.get_close_matches(sentences[i].lower(), cert_keywords, CLOSE_MATCHES):
             k = i + 1
             text = ""
-            while not (difflib.get_close_matches(data[k].lower(), edu_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[k].lower(), skills_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[k].lower(), soft_skills_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[k].lower(), work_experience_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[k].lower(), other_keywords, CLOSE_MATCHES)):
-                text = text + data[k] + "\n"
+            while not (difflib.get_close_matches(sentences[k].lower(), edu_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[k].lower(), skills_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[k].lower(), soft_skills_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[k].lower(), work_experience_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[k].lower(), other_keywords, CLOSE_MATCHES)):
+                text = text + sentences[k] + "\n"
                 json_data.update({"certification": text})
                 k = k + 1
-                if k >= len(data):
+                if k >= len(sentences):
                     break
-        if difflib.get_close_matches(data[i].lower(), skills_keywords, CLOSE_MATCHES):
+        if difflib.get_close_matches(sentences[i].lower(), skills_keywords, CLOSE_MATCHES):
             l = i + 1
             text = ""
-            while not (difflib.get_close_matches(data[l].lower(), edu_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[l].lower(), cert_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[l].lower(), soft_skills_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[l].lower(), work_experience_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[l].lower(), other_keywords, CLOSE_MATCHES)):
-                text = text + data[l] + "\n"
+            while not (difflib.get_close_matches(sentences[l].lower(), edu_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[l].lower(), cert_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[l].lower(), soft_skills_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[l].lower(), work_experience_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[l].lower(), other_keywords, CLOSE_MATCHES)):
+                text = text + sentences[l] + "\n"
                 json_data.update({"skills": text})
                 l = l + 1
-                if l >= len(data):
+                if l >= len(sentences):
                     break
-        if difflib.get_close_matches(data[i].lower(), soft_skills_keywords, CLOSE_MATCHES):
+        if difflib.get_close_matches(sentences[i].lower(), soft_skills_keywords, CLOSE_MATCHES):
             m = i + 1
             text = ""
-            while not (difflib.get_close_matches(data[m].lower(), edu_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[m].lower(), skills_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[m].lower(), cert_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[m].lower(), work_experience_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[m].lower(), other_keywords, CLOSE_MATCHES)):
-                text = text + data[m] + "\n"
+            while not (difflib.get_close_matches(sentences[m].lower(), edu_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[m].lower(), skills_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[m].lower(), cert_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[m].lower(), work_experience_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[m].lower(), other_keywords, CLOSE_MATCHES)):
+                text = text + sentences[m] + "\n"
                 json_data.update({"soft_skills": text})
                 m = m + 1
-                if m >= len(data):
+                if m >= len(sentences):
                     break
-        if difflib.get_close_matches(data[i].lower(), work_experience_keywords, CLOSE_MATCHES):
+        if difflib.get_close_matches(sentences[i].lower(), work_experience_keywords, CLOSE_MATCHES):
             n = i + 1
             text = ""
-            while not (difflib.get_close_matches(data[n].lower(), edu_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[n].lower(), skills_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[n].lower(), soft_skills_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[n].lower(), cert_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[n].lower(), other_keywords, CLOSE_MATCHES)):
-                text = text + data[n] + "\n"
+            while not (difflib.get_close_matches(sentences[n].lower(), edu_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[n].lower(), skills_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[n].lower(), soft_skills_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[n].lower(), cert_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[n].lower(), other_keywords, CLOSE_MATCHES)):
+                text = text + sentences[n] + "\n"
                 json_data.update({"work_experience": text})
                 n = n + 1
-                if n >= len(data):
+                if n >= len(sentences):
                     break
-        if difflib.get_close_matches(data[i].lower(), other_keywords, CLOSE_MATCHES):
+        if difflib.get_close_matches(sentences[i].lower(), other_keywords, CLOSE_MATCHES):
             o = i + 1
             text = ""
-            while not (difflib.get_close_matches(data[o].lower(), edu_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[o].lower(), skills_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[o].lower(), soft_skills_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[o].lower(), cert_keywords, CLOSE_MATCHES)
-                       or difflib.get_close_matches(data[o].lower(), work_experience_keywords, CLOSE_MATCHES)):
-                text = text + data[o] + "\n"
+            while not (difflib.get_close_matches(sentences[o].lower(), edu_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[o].lower(), skills_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[o].lower(), soft_skills_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[o].lower(), cert_keywords, CLOSE_MATCHES)
+                       or difflib.get_close_matches(sentences[o].lower(), work_experience_keywords, CLOSE_MATCHES)):
+                text = text + sentences[o] + "\n"
                 json_data.update({"others": text})
                 o = o + 1
-                if o >= len(data):
+                if o >= len(sentences):
                     break
+
+    # section to find the personal particulars from the data
+    phone_number_pattern = r'\d{3}-\d{7,8}'
+    linked_in_url_pattern = r'((http(s?)://)*([www])*\.|[linkedin])[linkedin/~\-]+\.[a-zA-Z0-9/~\-_,&=\?\.;]+[^\.,\s<]'
+    postcode_pattern = r'\D(\d{5})\D'
+    ic_pattern = r'\d{6}-\d{2}-\d{4}'
+    address_pattern = r'[0-9]{1,3} .+, .+, [a-zA-Z]{2} [0-9]{5}'
+    # Only Malaysian states
+    state_pattern = r'Negeri Sembilan|Pahang|Perak|Perlis|Kedah|Selangor|Melaka|Sarawak|Penang|Terengganu|Kelantan|Sabah|Johor'
+
+    for d in words:
+        # search for phone number
+        if re.search(phone_number_pattern, d.strip(), re.IGNORECASE):
+            json_data.update(
+                {"phone_number": re.search(phone_number_pattern, d.strip()).group()})
+        # search for linked_in url
+        elif re.search(linked_in_url_pattern, d.strip(), re.IGNORECASE):
+            json_data.update(
+                {"linked_in_url": re.search(linked_in_url_pattern, d.strip()).group()})
+        # search for postcode
+        elif re.search(postcode_pattern, " " + d.strip() + " "):
+            json_data.update({"postcode": re.search(
+                postcode_pattern, " " + d.strip() + " ").group().strip()})
+        # search for ic
+        elif re.search(ic_pattern, d.strip()):
+            json_data.update({"ic": re.search(ic_pattern, d.strip()).group()})
+        # search for address
+        elif re.search(address_pattern, d.strip(), re.IGNORECASE):
+            json_data.update({"address": re.search(
+                address_pattern, d.strip()).group()})
+        # search for address
+        elif re.search(state_pattern, d.strip(), re.IGNORECASE):
+            json_data.update({"state": re.search(
+                state_pattern, d.strip()).group()})
+
+    english_nlp = spacy.load('en_core_web_sm')
+    spacy_parser = english_nlp(raw.lower())
+
+    for entity in spacy_parser.ents:
+        if entity.label_ == "PERSON":
+            json_data.update({"name": entity.text})
+
     return json_data
 
 
 def extract_resume_data(text):
-    englishDictionary = enchant.Dict("en_US")
-    line_list = text.split("\n")
-    word_list = []
-
-    for t in line_list:
-        word_list.append(t.split())
-
-    for list in word_list:
-        for word in list:
-            # check if word exists in english dictionary
-            if not englishDictionary.check(word):
-                list.remove(word)
-
-    filtered_list = []
-    for list in word_list:
-        filtered_list.append([" ".join(list)])
-
-    # remove empty array
-    filtered_list = [el for el in filtered_list if el != [''] and el != []]
-
-    # to extract information and put to resume_details class
-    data = []
-    for information in filtered_list:
-        data.append("".join(information))
-
+    words = nltk.word_tokenize(text=text)
+    sentences = nltk.line_tokenize(text=text)
     # pass data for keyword checking
-    json_dict = find_keywords(data)
+    json_dict = find_keywords(sentences, words, text)
 
-    # finding more keywords with NLTK library
-
-    # RESUME CLASS
-    # to store full data into resume class
-    line_list = text.split("\n")
-
+    # to store raw parsed text
     applicant_details = ""
-    for index in line_list:
+    for index in sentences:
         if index == "":
-            line_list.remove(index)
+            sentences.remove(index)
         else:
             applicant_details += "".join(index) + "\n"
 
