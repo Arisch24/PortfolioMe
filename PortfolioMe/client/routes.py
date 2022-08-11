@@ -208,6 +208,8 @@ def upload_resume_details(job_id, resume_details_id):
         resume_details.phone_number = form.phone_number.data
         resume_details.marital_status = form.marital_status.data
         resume_details.linkedin_url = form.linkedin_url.data
+        resume_details.education = form.education.data
+        resume_details.certificates = form.certificates.data
         resume_details.skills = form.skills.data
         resume_details.soft_skills = form.soft_skills.data
         resume_details.work_experience = form.work_experience.data
@@ -227,6 +229,8 @@ def upload_resume_details(job_id, resume_details_id):
         form.phone_number.data = resume_details.phone_number
         form.marital_status.data = resume_details.marital_status
         form.linkedin_url.data = resume_details.linkedin_url
+        form.education.data = resume_details.education
+        form.certificates.data = resume_details.certificates
         form.skills.data = resume_details.skills
         form.soft_skills.data = resume_details.soft_skills
         form.work_experience.data = resume_details.work_experience
