@@ -65,6 +65,8 @@ class PersonalParticularsForm(FlaskForm):
     marital_status = RadioField('Marital Status', validators=[
         DataRequired()], choices=marital_status_types, default=marital_status_types[0])
     linkedin_url = URLField('LinkedIn URL', validators=[DataRequired(), URL()])
+    education = TextAreaField('Education', validators=[DataRequired()])
+    certificates = TextAreaField('Certificates', validators=[DataRequired()])
     skills = TextAreaField('Skills', validators=[DataRequired()])
     soft_skills = TextAreaField('Soft skills', validators=[DataRequired()])
     work_experience = TextAreaField(

@@ -131,6 +131,26 @@ endblock %} {% block css %}
         </div>
 
         <div>
+            {{ form.education.label }} {% if form.education.errors %} {{
+            form.education }}
+            <p class="error-msg">
+                {% for error in form.education.errors %} {{ error }} {% endfor
+                %}
+            </p>
+            {% else %} {{ form.education }} {% endif %}
+        </div>
+
+        <div>
+            {{ form.certificates.label }} {% if form.certificates.errors %} {{
+            form.certificates }}
+            <p class="error-msg">
+                {% for error in form.certificates.errors %} {{ error }} {%
+                endfor %}
+            </p>
+            {% else %} {{ form.certificates }} {% endif %}
+        </div>
+
+        <div>
             {{ form.skills.label }} {% if form.skills.errors %} {{ form.skills
             }}
             <p class="error-msg">
