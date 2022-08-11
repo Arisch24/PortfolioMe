@@ -4,6 +4,14 @@ endblock %} {% block css %}<link
     href="{{ url_for('static', filename='css/client/job_detail.css') }}"
 />
 {% endblock %} {% block content %}
+<div class="spinner-container">
+    <div class="spinner">
+        Loading
+        <div class="spinner-sector spinner-sector-red"></div>
+        <div class="spinner-sector spinner-sector-blue"></div>
+        <div class="spinner-sector spinner-sector-green"></div>
+    </div>
+</div>
 <main class="job-detail-container">
     <section class="card">
         <div class="job-header">
@@ -129,6 +137,7 @@ endblock %} {% block css %}<link
 {% endblock %}{% block javascript %}
 <script>
     $('#submit').prop('disabled', true);
+
     $('#temp').on('click', () => {
         $('#resume').click();
     });
@@ -147,6 +156,11 @@ endblock %} {% block css %}<link
             $('.iframe').css('display', 'none');
             $('#submit').prop('disabled', true);
         }
+    });
+
+    $('#submit').on('click', (e) => {
+        // show spinner
+        $('.spinner-container').addClass('active');
     });
 </script>
 {% endblock %}
