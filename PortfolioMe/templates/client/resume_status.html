@@ -13,7 +13,7 @@ endblock %} {% block css %}
         <table>
             <thead>
                 <tr>
-                    <th>Full Details</th>
+                    <th>Job Applied For</th>
                     <th>Last Edited Date</th>
                     <th>Resume File</th>
                     <th>Status</th>
@@ -23,7 +23,10 @@ endblock %} {% block css %}
             {% if resume is not none %} {% for resume in resumes %}
             <tbody>
                 <tr>
-                    <td>{{ resume.applicant_details }}</td>
+                    <td>
+                        {% for job in jobs %} {% if job.id == resume.job_id %}
+                        {{ job.name }} {% endif %} {% endfor %}
+                    </td>
                     <td>{{ resume.date_edited }}</td>
                     <td>
                         <a

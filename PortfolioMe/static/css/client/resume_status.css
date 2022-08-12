@@ -50,3 +50,8 @@ td {
 td a:hover {
     text-decoration: underline;
 }
+
+td span {
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+}

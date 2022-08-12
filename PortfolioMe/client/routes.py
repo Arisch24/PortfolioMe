@@ -113,6 +113,18 @@ def job_detail(job_id):
     job = JobBoard.query.get_or_404(job_id)
     form = ResumeSubmissionForm()
 
+    def get_dob_from_ic(ic):
+        ic = ic[0:6]
+        year = ic[0:2]
+        month = ic[2:4]
+        day = ic[4:6]
+        if int(year) < 22:
+            year = "20" + year
+        elif int(year) > 22:
+            year = "19" + year
+        dob = f"{day}-{month}-{year}"
+        return dob
+
     if form.validate_on_submit():
 
         # save resume
@@ -147,7 +159,7 @@ def job_detail(job_id):
                                         ic=json_dict.get(
                                             "ic", current_user.ic),
                                         dob=json_dict.get(
-                                            "ic", current_user.ic),
+                                            "dob", get_dob_from_ic(current_user.ic)),
                                         mailing_address=json_dict.get(
                                             "address", current_user.mailing_address),
                                         postcode=json_dict.get(
@@ -159,7 +171,8 @@ def job_detail(job_id):
                                         gender=current_user.gender,
                                         phone_number=json_dict.get(
                                             "phone_number", 'Not found'),
-                                        marital_status='Not found',
+                                        marital_status=json_dict.get(
+                                            "marital_status", 'Not found'),
                                         linkedin_url=json_dict.get(
                                             "linked_in_url", 'Not found'),
                                         education=json_dict.get(
@@ -241,4 +254,6 @@ def upload_resume_details(job_id, resume_details_id):
 @login_required
 def resume_status():
     resumes = Resume.query.filter_by(applicant_id=current_user.id).all()
-    return render_template("client/resume_status.html", resumes=resumes)
+    jobs = JobBoard.query.filter(JobBoard.resumes_submitted_list.any(
+        applicant_id=current_user.id)).all()
+    return render_template("client/resume_status.html", resumes=resumes, jobs=jobs)

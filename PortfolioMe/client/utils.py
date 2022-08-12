@@ -170,17 +170,17 @@ def find_keywords(sentences, words, raw):
 
     # section to find the hireable criteria
     edu_keywords = ['education', 'edu', 'curriculum', 'educational history']
-    cert_keywords = ['certification', 'certificate',
-                     'certificates', 'cert', 'agency', 'other credentials']
-    skills_keywords = ['technical', 'technical skills', 'technical skill']
+    cert_keywords = ['certification', 'certificates',
+                     'certificate', 'cert', 'agency', 'other credentials', 'courses', 'course']
+    skills_keywords = ['skills', 'technical skills', 'technical skill']
     soft_skills_keywords = ['soft', 'soft skills', 'soft skill']
     work_experience_keywords = [
         'working experience', 'work experience', 'employment', 'employment history']
     other_keywords = ['references', 'interests', 'contact me',
-                      'personal information', 'personal profile']
+                      'personal information', 'personal profile', 'profile', 'languages', 'hobbies', 'links', 'activities', 'details']
 
     json_data = {}
-    CLOSE_MATCHES = 1
+    CLOSE_MATCHES = 2
     for i in range(len(sentences)):
         if difflib.get_close_matches(sentences[i].lower(), edu_keywords, CLOSE_MATCHES):
             j = i + 1
@@ -195,7 +195,7 @@ def find_keywords(sentences, words, raw):
                 j = j + 1
                 if j >= len(sentences):
                     break
-        if difflib.get_close_matches(sentences[i].lower(), cert_keywords, CLOSE_MATCHES):
+        if difflib.get_close_matches(sentences[i].lower(), cert_keywords, CLOSE_MATCHES) and sentences[i].lower() not in other_keywords:
             k = i + 1
             text = ""
             while not (difflib.get_close_matches(sentences[k].lower(), edu_keywords, CLOSE_MATCHES)
@@ -204,7 +204,7 @@ def find_keywords(sentences, words, raw):
                        or difflib.get_close_matches(sentences[k].lower(), work_experience_keywords, CLOSE_MATCHES)
                        or difflib.get_close_matches(sentences[k].lower(), other_keywords, CLOSE_MATCHES)):
                 text = text + sentences[k] + "\n"
-                json_data.update({"certification": text})
+                json_data.update({"certificates": text})
                 k = k + 1
                 if k >= len(sentences):
                     break
