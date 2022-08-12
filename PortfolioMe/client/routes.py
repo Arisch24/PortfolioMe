@@ -76,33 +76,37 @@ def job_board():
 
     if current_user.is_authenticated:
         if type != "All" and min_salary and max_salary and department != "All":
-            jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%"), not_(JobBoard.resumes_submitted_list.any(
+            print("1st")
+            jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary), (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%"), not_(JobBoard.resumes_submitted_list.any(
                 applicant_id=current_user.id))).order_by(
                 JobBoard.name.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
         elif type == "All" and min_salary and max_salary and department == "All":
-            jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), not_(JobBoard.resumes_submitted_list.any(
+            print("2nd")
+            jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary), (JobBoard.max_salary < max_salary), not_(JobBoard.resumes_submitted_list.any(
                 applicant_id=current_user.id))).order_by(
                 JobBoard.name.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
         elif type == "All" and min_salary and max_salary and department:
-            jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%"), not_(JobBoard.resumes_submitted_list.any(
+            print("3rd")
+            jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary), (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%"), not_(JobBoard.resumes_submitted_list.any(
                 applicant_id=current_user.id))).order_by(
                 JobBoard.name.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
         elif type and min_salary and max_salary and department == "All":
-            jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), not_(JobBoard.resumes_submitted_list.any(
+            print("4th")
+            jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary),  (JobBoard.max_salary < max_salary), not_(JobBoard.resumes_submitted_list.any(
                 applicant_id=current_user.id))).order_by(
                 JobBoard.name.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
     else:
         if type != "All" and min_salary and max_salary and department != "All":
-            jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%")).order_by(
+            jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary), (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%")).order_by(
                 JobBoard.name.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
         elif type == "All" and min_salary and max_salary and department == "All":
-            jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary)).order_by(
+            jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary), (JobBoard.max_salary < max_salary)).order_by(
                 JobBoard.name.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
         elif type == "All" and min_salary and max_salary and department:
-            jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%")).order_by(
+            jobs = JobBoard.query.filter((JobBoard.min_salary > min_salary), (JobBoard.max_salary < max_salary), JobBoard.department.like(f"%{department}%")).order_by(
                 JobBoard.name.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
         elif type and min_salary and max_salary and department == "All":
-            jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary) | (JobBoard.max_salary < max_salary)).order_by(
+            jobs = JobBoard.query.filter(JobBoard.job_type.like(f"%{type}%"), (JobBoard.min_salary > min_salary), (JobBoard.max_salary < max_salary)).order_by(
                 JobBoard.name.asc()).paginate(page=page, per_page=JOBS_PER_PAGE)
 
     return render_template("client/job_board.html", jobs=jobs, jobtype_filter=jobtype_filter, department_filter=department_filter)
