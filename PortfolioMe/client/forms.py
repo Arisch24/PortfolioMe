@@ -72,7 +72,7 @@ class PersonalParticularsForm(FlaskForm):
     work_experience = TextAreaField(
         'Work Experience', validators=[DataRequired()])
     agreement = BooleanField(
-        'I agree that the data submitted here is valid', validators=None)
+        'I agree to the Privacy Policy', validators=None)
     submit = SubmitField('Confirm')
 
     def validate_agreement(self, agreement):
