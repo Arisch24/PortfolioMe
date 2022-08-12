@@ -1,0 +1,9 @@
+.row-fluid {
+    height: 100%;
+    padding: 3rem;
+    border-radius: 0.5rem;
+    background-color: hsl(var(--light-blue));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
