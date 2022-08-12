@@ -46,7 +46,7 @@ def job_board():
         submit their resumes to the same job twice there will a SQL error
     '''
 
-    JOBS_PER_PAGE = 12
+    JOBS_PER_PAGE = 9
     page = request.args.get('page', default=1, type=int)
     if current_user.is_authenticated:
         jobs = JobBoard.query.filter(not_(JobBoard.resumes_submitted_list.any(
