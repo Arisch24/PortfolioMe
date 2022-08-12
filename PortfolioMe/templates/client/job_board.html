@@ -138,6 +138,8 @@ endblock %} {% block css %}<link
         <a href="{{ url_for('client.job_detail', job_id=job.id) }}">
             <div>
                 <h2>{{ job.name }}</h2>
+                <b>Department: {{ job.department }}</b>
+                <br>
                 <span>{{ job.job_type }}</span>
                 <br />
                 <i>Salary: RM {{ job.min_salary }} - RM{{ job.max_salary }}</i>
