@@ -13,3 +13,6 @@
 
 # dotenv
 .env
+
+# database file
+*.db
